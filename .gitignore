@@ -1,0 +1,11 @@
+# Source design files & unreferenced raw video folders (moving to YouTube)
+Design/
+Works/Videos/
+Works/3d/
+*.mp4
+
+# Local tooling & OS files
+.vercel/
+.taste-skill/
+.DS_Store
+Thumbs.db
