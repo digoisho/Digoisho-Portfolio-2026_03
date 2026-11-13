@@ -359,32 +359,36 @@ img{display:block;max-width:100%}
 #ll{left:133px}#lr{left:1767px}
 
 /* mobile / portrait stage (560x900) */
-.m .fold{left:-52px;top:146px}
-.m .pill{left:230px;top:752px}
-.m .dots{top:806px}
+.m .fold{left:-52px;top:150px}
+.m .fold.side .ttl,.m .fold.side .lbl,.m .fold.side .pen,
+.m .fold.far .ttl,.m .fold.far .lbl,.m .fold.far .pen{opacity:0;pointer-events:none}
+.m .fold.far,.m.go .fold:not(.lipmode){opacity:0;pointer-events:none}
+.m .pill{left:230px;top:656px}
+.m .dots{top:714px}
 .m .nav{width:72px;height:72px}
-.m #cp{left:100px;top:735px}.m #cn{left:388px;top:735px}
-.m #gp{left:130px;top:754px}.m #gn{left:358px;top:754px}
-.m .cards{clip-path:inset(100px 18px 150px 18px)}
-.m .line{top:100px;height:650px;width:4px}
-.m #ll{left:16px}.m #lr{left:540px}
-.m .card{left:70px;top:150px;width:420px;height:480px}
+.m #cp{left:108px;top:638px}.m #cn{left:380px;top:638px}
+.m #gp{left:184px;top:684px}.m #gn{left:304px;top:684px}
+.m #gal .nav.hide{transform:scale(1);opacity:.22;pointer-events:none}
+.m .cards{clip-path:inset(118px 47px 243px 47px)}
+.m .line{top:78px;height:678px;width:3px}
+.m #ll{left:18px}.m #lr{left:539px}
+.m .card{left:48px;top:136px;width:464px;height:488px}
 .m .card b{font-size:36px;left:20px;top:14px}
 .m .card.has-img b{font-size:17px;left:16px;top:16px;padding:5px 10px}
 .m .card.empty-card{padding:36px 28px 115px}
 .m .empty-ico{width:84px;height:84px;margin-bottom:14px}
 .m .empty-sub{font-size:17px}
-.m .card.l{transform:translate(-380px,1px) rotate(10.23deg)}
-.m .card.r{transform:translate(380px,28px) rotate(10.23deg)}
-.m .card.x.xl{transform:translate(-700px,1px) rotate(10.23deg)}
-.m .card.x.xr{transform:translate(700px,28px) rotate(10.23deg)}
-.m .gt{left:70px;top:82px;font-size:22px;max-width:345px;flex-wrap:wrap;gap:4px 10px}
+.m .card.l{transform:translate(-520px,1px) rotate(10.23deg)}
+.m .card.r{transform:translate(520px,28px) rotate(10.23deg)}
+.m .card.x.xl{transform:translate(-740px,1px) rotate(10.23deg)}
+.m .card.x.xr{transform:translate(740px,28px) rotate(10.23deg)}
+.m .gt{left:48px;top:76px;font-size:22px;max-width:380px;flex-wrap:wrap;gap:4px 10px}
 .m .gt small{font-size:15px}
-.m .close{left:420px;top:52px;width:80px;height:80px}
-.m .fold.lipmode{top:512px}
-.stage.m:not(.go) .card{top:360px;height:150px}
+.m .close{left:450px;top:52px;width:76px;height:76px}
+.m .fold.lipmode{top:482px}
+.stage.m:not(.go) .card{top:340px;height:150px}
 
-.fold.lipmode{top:715px;height:207px}
+.fold.lipmode{top:715px;height:207px;filter:drop-shadow(0 -1.5px 0 rgba(255,255,255,.16)) drop-shadow(0 20px 30px rgba(10,10,10,.18))}
 .fold.lipmode .body{height:108px}
 .fold.lipmode .lbl{transform:translateY(80px);opacity:0;transition:transform .38s var(--ease),opacity .18s ease}
 .fold.lipmode .ttl{opacity:0;transform:translateY(18px);transition:opacity .16s ease,transform .2s ease}
@@ -1468,9 +1472,9 @@ function renderCar(){
   folds.forEach((b,i)=>{
     const o=off(i-cur);
     b.className='fold'+(o===0?(open?' lipmode':''):Math.abs(o)===1?' side':' far');
-    b.style.zIndex=o===0?3:1;
-    const C=M?{dx:320,c:.7,s:.4375,f:.35,l:.705}:{dx:691,c:1,s:.6213,f:.5,l:1};
-    b.style.transform=o===0?`scale(${open?C.l:C.c})`:`translateX(${o*C.dx*(open?3:1)}px) scale(${Math.abs(o)===1?C.s:C.f})`;
+    b.style.zIndex=o===0?3:Math.abs(o)===1?2:1;
+    const C=M?{dx:84,c:.7,s:.55,f:.38,l:.7}:{dx:691,c:1,s:.6213,f:.5,l:1};
+    b.style.transform=o===0?`scale(${open?C.l:C.c})`:`translateX(${o*C.dx*(open?(M?6:3):1)}px) scale(${Math.abs(o)===1?C.s:C.f})`;
     b.tabIndex=Math.abs(o)<=1&&!open?0:-1;
     if(b._o!==undefined&&Math.abs(o-b._o)>2){b.style.transition='none';void b.offsetWidth;b.style.transition=''}
     b._o=o;
