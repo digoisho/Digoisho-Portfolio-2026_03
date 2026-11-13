@@ -965,7 +965,10 @@ img{display:block;max-width:100%}
   .stage-sec{padding-left:0}
   .env-body{padding-left:0}
   #contact{--flap-up-h:clamp(165px,22vh,215px)}
-  #hero{padding-top:74px;padding-bottom:84px}
+  #hero{padding-top:70px;padding-bottom:44px;min-height:auto}
+  #work{transition:height .68s var(--ease)}
+  #work,#about,#contact{scroll-margin-top:54px}
+  #about{padding-top:24px;padding-bottom:52px;min-height:auto}
   .folder-strip{padding-right:var(--gutter);display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 14px}
   .folder-jump{font-size:11px;gap:6px}
   .studio-id{display:none}
@@ -1453,8 +1456,9 @@ function smoothScrollTo(targetEl,dur=860){
   if(!targetEl)return;
   stopSmoothScroll();
   const startY=window.scrollY;
+  const navOff=window.innerWidth<=768?54:0;
   const destY=Math.max(0,Math.min(
-    targetEl.getBoundingClientRect().top+startY,
+    targetEl.getBoundingClientRect().top+startY-navOff,
     document.documentElement.scrollHeight-window.innerHeight
   ));
   const dist=destY-startY;
@@ -1552,7 +1556,7 @@ function openGal(i){
 
   $('#gal').setAttribute('aria-hidden','false');
   requestAnimationFrame(()=>requestAnimationFrame(()=>{
-    open=true;st.classList.add('go');renderCar();renderGal();
+    open=true;st.classList.add('go');renderCar();renderGal();fit();
   }));
   setTimeout(()=>{if(open)$('#close').focus({preventScroll:true})},900);
 }
@@ -1568,7 +1572,7 @@ function closeGal(){
     c.style.zIndex='';
   });
   $('#gal').setAttribute('aria-hidden','true');
-  renderCar();
+  renderCar();fit();
 }
 
 function renderGal(){
@@ -1721,17 +1725,27 @@ if(document.fonts&&document.fonts.ready)document.fonts.ready.then(syncTabs);
 function fit(){
   syncTabs();
   const rail=window.innerWidth>768?($('.m-tab')?.offsetWidth||0):0;
-  const w=sec.clientWidth-rail,h=sec.clientHeight,mm=(w<820&&h>w*.85);
+  const w=sec.clientWidth-rail,vh=window.innerHeight,mm=(w<820&&vh>w*.85);
   if(mm!==M){
     M=mm;st.classList.toggle('m',M);
     st.style.width=(M?560:1920)+'px';
     st.style.height=(M?900:1080)+'px';
     renderCar();if(open)renderGal();
   }
-  const W=M?560:1920,H=M?900:1080,s=Math.min(w/W,h/H);
-  st.style.left=(rail+(w-W*s)/2)+'px';
-  st.style.top=(M?Math.max(54,Math.min((h-H*s)*.42,68)):(h-H*s)/2)+'px';
-  st.style.transform=`scale(${s})`;
+  if(M){
+    const W=560,s=Math.min(w/W,(vh-54)/760);
+    const targetH=Math.round(14+(open?744:676)*s)+'px';
+    if(sec.style.height!==targetH)sec.style.height=targetH;
+    st.style.left=(rail+(w-W*s)/2)+'px';
+    st.style.top='14px';
+    st.style.transform=`scale(${s})`;
+  }else{
+    if(sec.style.height)sec.style.height='';
+    const h=sec.clientHeight,W=1920,H=1080,s=Math.min(w/W,h/H);
+    st.style.left=(rail+(w-W*s)/2)+'px';
+    st.style.top=((h-H*s)/2)+'px';
+    st.style.transform=`scale(${s})`;
+  }
 }
 let raf=0;
 new ResizeObserver(()=>{cancelAnimationFrame(raf);raf=requestAnimationFrame(fit)}).observe(sec);
