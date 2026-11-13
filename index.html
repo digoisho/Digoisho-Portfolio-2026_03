@@ -286,8 +286,8 @@ img{display:block;max-width:100%}
 /* folders */
 .fold{
   position:absolute;left:628px;top:296px;width:664px;height:488px;
-  will-change:transform;
-  transition:transform .84s var(--ease),top .84s var(--ease),height .84s var(--ease),--fc .48s var(--ease);
+  will-change:transform,opacity;
+  transition:transform .84s var(--ease),top .84s var(--ease),height .84s var(--ease),opacity .48s var(--ease),--fc .48s var(--ease);
   filter:drop-shadow(0 20px 30px rgba(10,10,10,.16));
 }
 .fold>*{position:absolute}
@@ -295,8 +295,8 @@ img{display:block;max-width:100%}
 .fold .tab::after{content:"";position:absolute;left:calc(100% - 2px);top:61px;width:40px;height:40px;background:radial-gradient(circle at 100% 0,transparent 38px,var(--fc) 38.6px)}
 .fold .body{left:0;top:99px;width:664px;height:389px;background:var(--fc);border-radius:0 38px 38px 38px;z-index:2;box-shadow:inset 0 1px 0 rgba(255,255,255,.06);transition:height .84s var(--ease)}
 .fold .lbl{left:300px;top:31px;width:330px;height:69px;background:var(--orange);border-radius:0 55px 0 0;color:var(--white);font-weight:700;font-size:24.5px;letter-spacing:.02em;display:flex;align-items:center;justify-content:center;padding:0 0 0 52px;z-index:1;transition:transform .58s var(--ease) .18s,opacity .42s var(--ease) .18s}
-.fold .ttl{left:0;right:0;bottom:54px;text-align:center;font-weight:700;font-size:73px;line-height:1.02;color:var(--white);z-index:3;transition:color .48s var(--ease),opacity .42s var(--ease) .32s,transform .48s var(--ease) .28s}
-.fold .pen{left:3px;top:-12px;width:165px;height:165px;z-index:3;fill:var(--orange);pointer-events:none;transition:fill .48s var(--ease)}
+.fold .ttl{left:0;right:0;bottom:54px;text-align:center;font-weight:700;font-size:73px;line-height:1.02;color:var(--white);z-index:3;transition:color .48s var(--ease),opacity .42s var(--ease) .18s,transform .48s var(--ease) .18s}
+.fold .pen{left:3px;top:-12px;width:165px;height:165px;z-index:3;fill:var(--orange);pointer-events:none;transition:fill .48s var(--ease),opacity .42s var(--ease) .18s}
 .fold{--fc:#0C0C0C}
 .fold.side{--fc:#E6E5E4;filter:drop-shadow(0 16px 24px rgba(10,10,10,.10))}
 .fold.side .ttl{color:var(--black)}
@@ -359,9 +359,10 @@ img{display:block;max-width:100%}
 #ll{left:133px}#lr{left:1767px}
 
 /* mobile / portrait stage (560x900) */
-.m .fold{left:-52px;top:150px}
+.m .fold{left:-52px;top:224px;transform-origin:50% 0%;transition:transform .68s var(--ease),opacity .42s var(--ease),--fc .42s var(--ease)}
+.m .fold .body{transition:height .68s var(--ease)}
 .m .fold.side .ttl,.m .fold.side .lbl,.m .fold.side .pen,
-.m .fold.far .ttl,.m .fold.far .lbl,.m .fold.far .pen{opacity:0;pointer-events:none}
+.m .fold.far .ttl,.m .fold.far .lbl,.m .fold.far .pen{opacity:0;pointer-events:none;transition-delay:0s}
 .m .fold.far,.m.go .fold:not(.lipmode){opacity:0;pointer-events:none}
 .m .pill{left:230px;top:656px}
 .m .dots{top:714px}
@@ -369,24 +370,23 @@ img{display:block;max-width:100%}
 .m #cp{left:108px;top:638px}.m #cn{left:380px;top:638px}
 .m #gp{left:184px;top:684px}.m #gn{left:304px;top:684px}
 .m #gal .nav.hide{transform:scale(1);opacity:.22;pointer-events:none}
-.m .cards{clip-path:inset(118px 47px 243px 47px)}
+.m .cards{clip-path:inset(118px 54px 241px 54px round 0 0 26px 26px)}
 .m .line{top:78px;height:678px;width:3px}
 .m #ll{left:18px}.m #lr{left:539px}
-.m .card{left:48px;top:136px;width:464px;height:488px}
+.m .card{left:54px;top:144px;width:452px;height:486px;will-change:transform,top,height;transition:transform .68s var(--ease),top .68s var(--ease),height .68s var(--ease)}
 .m .card b{font-size:36px;left:20px;top:14px}
 .m .card.has-img b{font-size:17px;left:16px;top:16px;padding:5px 10px}
 .m .card.empty-card{padding:36px 28px 115px}
 .m .empty-ico{width:84px;height:84px;margin-bottom:14px}
 .m .empty-sub{font-size:17px}
-.m .card.l{transform:translate(-520px,1px) rotate(10.23deg)}
-.m .card.r{transform:translate(520px,28px) rotate(10.23deg)}
-.m .card.x.xl{transform:translate(-740px,1px) rotate(10.23deg)}
-.m .card.x.xr{transform:translate(740px,28px) rotate(10.23deg)}
-.m .gt{left:48px;top:76px;font-size:22px;max-width:380px;flex-wrap:wrap;gap:4px 10px}
+.m .card.l{transform:translate3d(495px,18px,0) rotate(6deg)}
+.m .card.r{transform:translate3d(-495px,18px,0) rotate(-6deg)}
+.m .card.x.xl{transform:translate3d(680px,32px,0) rotate(8deg)}
+.m .card.x.xr{transform:translate3d(-680px,32px,0) rotate(-8deg)}
+.m .gt{left:54px;top:76px;font-size:22px;max-width:374px;flex-wrap:wrap;gap:4px 10px}
 .m .gt small{font-size:15px}
-.m .close{left:450px;top:52px;width:76px;height:76px}
-.m .fold.lipmode{top:482px}
-.stage.m:not(.go) .card{top:340px;height:150px}
+.m .close{left:444px;top:52px;width:76px;height:76px}
+.m .fold.lipmode{top:224px;height:488px}
 
 .fold.lipmode{top:715px;height:207px;filter:drop-shadow(0 -1.5px 0 rgba(255,255,255,.16)) drop-shadow(0 20px 30px rgba(10,10,10,.18))}
 .fold.lipmode .body{height:108px}
@@ -395,12 +395,13 @@ img{display:block;max-width:100%}
 .pill,.dots{transition:transform .8s var(--ease),opacity .35s ease}
 #cp,#cn{transition:transform .65s var(--ease),color .3s var(--ease),opacity .35s ease}
 .go #cp,.go #cn,.go .pill,.go .dots{transform:translateY(240px);opacity:0;pointer-events:none}
-#gal .gt,#gal .close,#gal .line,#gal .nav{transition-delay:.5s}
-#gal .nav{transition:transform .5s var(--ease),color .3s var(--ease),opacity .5s var(--ease) .5s}
-#gal .gt,#gal .line{transition:opacity .5s var(--ease) .5s}
-#gal .close{transition:color .3s var(--ease),opacity .5s var(--ease) .5s}
+#gal .gt,#gal .close,#gal .line,#gal .nav{transition-delay:.38s}
+#gal .nav{transition:transform .5s var(--ease),color .3s var(--ease),opacity .45s var(--ease) .38s}
+#gal .gt,#gal .line{transition:opacity .45s var(--ease) .38s}
+#gal .close{transition:color .3s var(--ease),opacity .45s var(--ease) .38s}
 .stage:not(.go) #gal .gt,.stage:not(.go) #gal .close,.stage:not(.go) #gal .line,.stage:not(.go) #gal .nav{opacity:0;transition:opacity .25s}
 .stage:not(.go) .card{top:565px;height:190px;visibility:hidden;transition:transform .8s var(--ease),top .8s var(--ease),height .8s var(--ease),visibility 0s linear .9s}
+.stage.m:not(.go) .card{top:380px;height:150px;visibility:hidden;transition:transform .68s var(--ease),top .68s var(--ease),height .68s var(--ease),visibility 0s linear .7s}
 
 /* ============================================================
    3. ABOUT — Folder-Tabbed Studio Stage (One screen, zero boxes)
@@ -1473,8 +1474,13 @@ function renderCar(){
     const o=off(i-cur);
     b.className='fold'+(o===0?(open?' lipmode':''):Math.abs(o)===1?' side':' far');
     b.style.zIndex=o===0?3:Math.abs(o)===1?2:1;
-    const C=M?{dx:84,c:.7,s:.55,f:.38,l:.7}:{dx:691,c:1,s:.6213,f:.5,l:1};
-    b.style.transform=o===0?`scale(${open?C.l:C.c})`:`translateX(${o*C.dx*(open?(M?6:3):1)}px) scale(${Math.abs(o)===1?C.s:C.f})`;
+    if(M){
+      const dx=open?620:385,s=Math.abs(o)===1?.46:.36,dy=o===0?(open?294:0):54;
+      b.style.transform=o===0?`translate3d(0,${dy}px,0) scale(.68)`:`translate3d(${o*dx}px,${dy}px,0) scale(${s})`;
+    }else{
+      const C={dx:691,c:1,s:.6213,f:.5,l:1};
+      b.style.transform=o===0?`scale(${open?C.l:C.c})`:`translateX(${o*C.dx*(open?3:1)}px) scale(${Math.abs(o)===1?C.s:C.f})`;
+    }
     b.tabIndex=Math.abs(o)<=1&&!open?0:-1;
     if(b._o!==undefined&&Math.abs(o-b._o)>2){b.style.transition='none';void b.offsetWidth;b.style.transition=''}
     b._o=o;
@@ -1509,7 +1515,7 @@ function openGal(i){
   }else{
     for(let k=0;k<total;k++){
       const c=document.createElement('div');
-      c.className=(k===0?'card':'card x xl')+' has-img';
+      c.className=(k===0?'card':k===1?'card l':'card x xl')+' has-img';
       c.innerHTML=`<div class="c-amb"></div><img class="c-pic" alt="${f.name} ${pad(k+1)}" decoding="async"><b>${pad(k+1)}</b>`;
       c.onclick=()=>{if(g!==k){g=k;renderGal()}else{openLb()}};
       if(k<=2)hydrateCard(c,f,k);
@@ -1546,7 +1552,7 @@ function renderGal(){
     const d=k-g;
     const cls=c.classList.contains('has-img')?' has-img':c.classList.contains('empty-card')?' empty-card':'';
     c.className='card'+(d===0?'':d===1?' l':d===-1?' r':' x '+(d>0?'xl':'xr'))+cls;
-    c.style.zIndex=d===0?3:1;
+    c.style.zIndex=d===0?3:Math.abs(d)===1?2:1;
     if(total>0&&Math.abs(d)<=3)hydrateCard(c,f,k);
   });
   $('#gp').classList.toggle('hide',g===0);
