@@ -1804,17 +1804,18 @@ syncNav();
     const c=Math.cos(p*Math.PI);
     const isMob=window.innerWidth<=768;
     const closedDepth=Math.min(H*.92,Math.max(320,window.innerHeight*.52));
-    /* Keep the rounded peak comfortably inside flapUpH (and below mobile nav bar) */
-    const openHeight=isMob?Math.max(60,(flapUpH-72)*.94):(flapUpH*1.02);
+    /* Keep the 50px-rounded peak comfortably inside flapUpH (and below mobile nav bar) */
+    const openHeight=isMob?Math.max(60,(flapUpH-68)*.95):(flapUpH*.95);
     const dy=c>=0?(c*closedDepth):(-(-c)*openHeight);
     const tipY=hy+dy;
 
-    /* G1 tangent-continuous rounded apex & rounded base corners */
-    const tApex=0.25; /* 25% down each slope -> wide, smooth rounded envelope nose */
+    /* G1 tangent-continuous 50px max rounded apex & subtle base corners */
+    const rApex=Math.min(50,W*.055);
+    const tApex=rApex/Math.max(120,cx);
     const ax1=cx*(1-tApex), ay1=hy+dy*(1-tApex);
     const ax2=cx+(W-cx)*tApex, ay2=hy+dy*(1-tApex);
 
-    const tBase=Math.min(0.04, 38/W);
+    const tBase=Math.min(0.018, 22/W);
     const bx1=cx*tBase, by1=hy+dy*tBase;
     const bx2=W-(W-cx)*tBase, by2=hy+dy*tBase;
 
