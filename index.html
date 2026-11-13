@@ -583,15 +583,73 @@ img{display:block;max-width:100%}
 .tk-group p span{color:var(--ink-45);font-weight:400;font-size:.8em}
 
 /* ============================================================
-   4. CONTACT & POEM — Bold Studio Stage (Same unified backdrop)
+   4. CONTACT & POEM — Scroll-Reactive Dark-Mode Envelope Stage
+   (Closed envelope at scroll entry -> Flap unfolds up & reveals
+    dark-mode #0A0A0A contact stage as user scrolls to bottom)
    ============================================================ */
-#contact{padding-top:72px;padding-bottom:36px}
+#contact{
+  --flap-up-h:clamp(215px,28vh,310px);
+  padding-top:var(--flap-up-h);
+  padding-bottom:0;
+  padding-left:0;
+  min-height:100svh;
+  justify-content:flex-end;
+  position:relative;
+}
+.env-body{
+  position:relative;
+  width:100%;
+  flex:1;
+  min-height:calc(100svh - var(--flap-up-h));
+  padding-left:var(--rail-w);
+  padding-top:22px;
+  padding-bottom:20px;
+  background:var(--black);
+  color:var(--white);
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+}
+/* Non-clickable SVG Envelope Flap & Pocket Layers (strictly scroll-driven) */
+.env-flap-svg{
+  position:absolute;
+  left:0;right:0;
+  top:calc(-1 * var(--flap-up-h));
+  height:calc(100% + var(--flap-up-h));
+  width:100%;
+  pointer-events:none;
+  z-index:4;
+  overflow:visible;
+}
+.env-pocket-svg{
+  position:absolute;
+  inset:0;
+  width:100%;height:100%;
+  pointer-events:none;
+  z-index:3;
+  overflow:hidden;
+}
+.env-letter{
+  position:relative;
+  z-index:2;
+  width:100%;
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  will-change:transform,opacity;
+}
 
-.contact-main{margin-top:auto;margin-bottom:auto;padding-top:36px;padding-bottom:36px}
+#contact .eyebrow{
+  background:#1B1B1B;
+  color:var(--paper);
+  border:1px solid rgba(245,244,244,.12);
+}
+.contact-main{margin-top:auto;margin-bottom:auto;padding-top:16px;padding-bottom:20px}
 .contact-h2{
   font-weight:800;font-size:clamp(2rem,4.4vw,3.6rem);
   line-height:1;letter-spacing:-.035em;text-transform:uppercase;
-  color:var(--ink-70);
+  color:#9A9998;
 }
 .mail-stage{
   margin-top:22px;
@@ -600,7 +658,7 @@ img{display:block;max-width:100%}
 .big-mail{
   font-weight:800;
   font-size:clamp(1.85rem,5.8vw,4.8rem);
-  letter-spacing:-.04em;line-height:1.04;color:var(--black);
+  letter-spacing:-.04em;line-height:1.04;color:var(--white);
   word-break:break-word;
   transition:color .42s var(--ease);
 }
@@ -608,7 +666,7 @@ img{display:block;max-width:100%}
 
 .copy-pill{
   height:40px;padding:0 20px;border-radius:20px;
-  background:var(--stone);border:1px solid var(--rule);color:var(--black);
+  background:#1B1B1B;border:1px solid rgba(245,244,244,.18);color:var(--white);
   font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;
   transition:background-color .38s var(--ease),border-color .38s var(--ease),color .38s var(--ease),transform .38s var(--ease);
 }
@@ -616,35 +674,35 @@ img{display:block;max-width:100%}
 .copy-pill:active{transform:scale(.97)}
 
 .social-strip{
-  margin-top:42px;padding-top:26px;border-top:1px solid var(--rule);
+  margin-top:42px;padding-top:26px;border-top:1px solid rgba(245,244,244,.14);
   display:flex;align-items:center;gap:18px 42px;flex-wrap:wrap;
 }
 .soc-link{
   display:inline-flex;align-items:baseline;gap:10px;
-  font-weight:700;font-size:16px;color:var(--black);
+  font-weight:700;font-size:16px;color:var(--white);
   transition:color .38s var(--ease),transform .38s var(--ease);
 }
 .soc-link small{
   font-family:var(--mono);font-size:10.5px;font-weight:500;
-  letter-spacing:.12em;text-transform:uppercase;color:var(--ink-45);
+  letter-spacing:.12em;text-transform:uppercase;color:#8A8988;
 }
 .soc-link:hover{color:var(--orange);transform:translate3d(0,-2px,0)}
 
-/* Expandable DIGOISHO Poem — Horizontal 4-stanza spread */
+/* Expandable DIGOISHO Poem — Horizontal 4-stanza spread (Dark Mode inside Envelope) */
 .poem-drawer{margin-top:44px}
 .poem-trig{
   display:inline-flex;align-items:center;gap:12px;
   height:42px;padding:0 20px;border-radius:12px 22px 12px 12px;
-  background:var(--black);color:var(--white);
+  background:#1B1B1B;border:1px solid rgba(245,244,244,.16);color:var(--white);
   font-size:13px;font-weight:600;
-  transition:color .38s var(--ease),background-color .38s var(--ease),transform .38s var(--ease);
+  transition:color .38s var(--ease),background-color .38s var(--ease),border-color .38s var(--ease),transform .38s var(--ease);
 }
 .poem-trig em{font-style:normal;color:var(--orange);font-weight:700;transition:color .38s var(--ease)}
 .poem-trig i{
   font-style:normal;font-family:var(--mono);font-size:16px;color:var(--orange);
   transition:transform .54s var(--ease),color .38s var(--ease);
 }
-.poem-trig:hover{background:var(--orange);color:var(--white);transform:translate3d(0,-1px,0)}
+.poem-trig:hover{background:var(--orange);border-color:var(--orange);color:var(--white);transform:translate3d(0,-1px,0)}
 .poem-trig:hover em,.poem-trig:hover i{color:var(--white)}
 .poem-drawer.is-open .poem-trig i{transform:rotate(135deg)}
 
@@ -669,22 +727,27 @@ img{display:block;max-width:100%}
 .poem-meta strong{
   font-weight:800;font-size:16px;letter-spacing:.06em;color:var(--orange);
 }
-.poem-meta span{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--ink-45)}
+.poem-meta span{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:#8A8988}
 .poem-stanzas{
   display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
   gap:24px 32px;
 }
 .poem-stanzas p{
-  font-size:15px;line-height:1.6;color:var(--black);
+  font-size:15px;line-height:1.6;color:rgba(245,244,244,.86);
 }
 
 .foot-bar{
-  padding-top:20px;border-top:1px solid var(--rule);
+  padding-top:20px;border-top:1px solid rgba(245,244,244,.14);
   display:flex;align-items:center;justify-content:space-between;gap:12px 24px;flex-wrap:wrap;
   font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--ink-45);
+  color:#8A8988;
   padding-right:180px; /* leaves clear room for the floating bubble */
 }
+.foot-bar .u-link{
+  color:var(--white);
+  border-bottom-color:rgba(245,244,244,.3);
+}
+.foot-bar .u-link:hover{color:var(--orange)}
 
 /* ============================================================
    FLOATING BUBBLE -> REVEALS SPECIAL MENTIONS (Elma Zarin Khan)
@@ -700,13 +763,13 @@ img{display:block;max-width:100%}
   background:var(--black);
   color:var(--white);
   display:inline-flex;align-items:center;gap:12px;
-  box-shadow:0 12px 26px rgba(10,10,10,.16);
+  box-shadow:0 12px 26px rgba(10,10,10,.22),0 0 0 1px rgba(245,244,244,.16);
   transition:transform .46s var(--ease),box-shadow .46s var(--ease),background-color .46s var(--ease),opacity .42s var(--ease);
 }
 .sm-bubble:hover{
   transform:translate3d(0,-3px,0) scale(1.02);
   background:var(--carbon);
-  box-shadow:0 16px 30px rgba(10,10,10,.22);
+  box-shadow:0 16px 30px rgba(10,10,10,.32),0 0 0 1px rgba(250,77,17,.55);
 }
 .sm-bubble:active{transform:translate3d(0,0,0) scale(.985)}
 .sm-bubble.hide-bub{opacity:0;pointer-events:none;transform:scale(.88)}
@@ -873,6 +936,8 @@ img{display:block;max-width:100%}
   .menubar{display:none}
   .mob-nav{display:flex}
   .stage-sec{padding-left:0}
+  .env-body{padding-left:0}
+  #contact{--flap-up-h:clamp(165px,22vh,215px)}
   #hero{padding-top:74px;padding-bottom:84px}
   .folder-strip{padding-right:var(--gutter);display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 14px}
   .folder-jump{font-size:11px;gap:6px}
@@ -1143,54 +1208,74 @@ img{display:block;max-width:100%}
     </div>
   </section>
 
-  <!-- ============ 4. CONTACT & MEANING ============ -->
+  <!-- ============ 4. CONTACT & MEANING (Scroll-Driven Dark-Mode Envelope) ============ -->
   <footer id="contact" class="stage-sec" aria-labelledby="contact-h">
-    <div class="wrap contact-main">
-      <p class="eyebrow"> Siliguri, India · Worldwide</p>
-      <h2 class="contact-h2" id="contact-h">LET’S MAKE SOMETHING MOVE.</h2>
+    <div class="env-body" id="env-body">
+      <!-- Non-clickable SVG Envelope Flap (unfolds downward -> upward with scroll) -->
+      <svg class="env-flap-svg" id="env-flap-svg" aria-hidden="true">
+        <path id="env-flap-path" fill="#FA4D11" d=""/>
+        <line id="env-hinge-line" x1="0" y1="0" x2="0" y2="0" stroke="rgba(245,244,244,0.14)" stroke-width="1"/>
+      </svg>
 
-      <div class="mail-stage">
-        <a href="mailto:digoisho@gmail.com" class="big-mail">digoisho@gmail.com</a>
-        <button type="button" class="copy-pill" id="copy-mail">Copy</button>
-      </div>
+      <!-- Non-clickable SVG Envelope Side Pockets (visible when closed, part & recede as flap opens) -->
+      <svg class="env-pocket-svg" id="env-pocket-svg" aria-hidden="true">
+        <polygon id="env-pocket-l" fill="#0E0E0E" points=""/>
+        <polygon id="env-pocket-r" fill="#0E0E0E" points=""/>
+        <polygon id="env-pocket-b" fill="#0A0A0A" points=""/>
+        <polyline id="env-seam-l" fill="none" stroke="rgba(245,244,244,0.16)" stroke-width="1.5" points=""/>
+        <polyline id="env-seam-r" fill="none" stroke="rgba(245,244,244,0.16)" stroke-width="1.5" points=""/>
+      </svg>
 
-      <div class="social-strip">
-        <a href="https://www.instagram.com/digoisho" target="_blank" rel="noopener noreferrer" class="soc-link"><small>Instagram</small> @digoisho</a>
-        <a href="https://www.linkedin.com/in/digoisho/" target="_blank" rel="noopener noreferrer" class="soc-link"><small>LinkedIn</small> /in/digoisho</a>
-        <a href="https://www.behance.net/dg138" target="_blank" rel="noopener noreferrer" class="soc-link"><small>Behance</small> /dg138</a>
-        <a href="https://github.com/digoisho" target="_blank" rel="noopener noreferrer" class="soc-link"><small>GitHub</small> /digoisho</a>
-      </div>
+      <!-- Revealed Dark-Mode Content Inside Envelope -->
+      <div class="env-letter" id="env-letter">
+        <div class="wrap contact-main">
+          <p class="eyebrow"> Siliguri, India · Worldwide</p>
+          <h2 class="contact-h2" id="contact-h">LET’S MAKE SOMETHING MOVE.</h2>
 
-      <!-- Expandable Name Origin Poem -->
-      <div class="poem-drawer" id="poem-reveal">
-        <button type="button" class="poem-trig" id="poem-btn" aria-expanded="false" aria-controls="poem-clip">
-          <span>so what does <em>digoisho</em> actually mean?</span>
-          <i aria-hidden="true">+</i>
-        </button>
+          <div class="mail-stage">
+            <a href="mailto:digoisho@gmail.com" class="big-mail">digoisho@gmail.com</a>
+            <button type="button" class="copy-pill" id="copy-mail">Copy</button>
+          </div>
 
-        <div class="poem-collapse">
-          <div class="poem-inner" id="poem-clip">
-            <div class="poem-content">
-              <div class="poem-meta">
-                <strong>DIGOISHO,</strong>
-                <span>14 · 11 · 2001</span>
-              </div>
-              <div class="poem-stanzas">
-                <p>the word that<br>brings bad luck,<br>A curse that<br>makes one feel stuck,</p>
-                <p>It’s like a shadow<br>that never leaves,<br>A burden that<br>one always grieves.</p>
-                <p>It’s like a storm<br>that never ends,<br>A pain that one<br>can’t comprehend,</p>
-                <p>But remember,<br>it’s just a word,<br>And you can always<br>rise above the herd.</p>
+          <div class="social-strip">
+            <a href="https://www.instagram.com/digoisho" target="_blank" rel="noopener noreferrer" class="soc-link"><small>Instagram</small> @digoisho</a>
+            <a href="https://www.linkedin.com/in/digoisho/" target="_blank" rel="noopener noreferrer" class="soc-link"><small>LinkedIn</small> /in/digoisho</a>
+            <a href="https://www.behance.net/dg138" target="_blank" rel="noopener noreferrer" class="soc-link"><small>Behance</small> /dg138</a>
+            <a href="https://github.com/digoisho" target="_blank" rel="noopener noreferrer" class="soc-link"><small>GitHub</small> /digoisho</a>
+          </div>
+
+          <!-- Expandable Name Origin Poem -->
+          <div class="poem-drawer" id="poem-reveal">
+            <button type="button" class="poem-trig" id="poem-btn" aria-expanded="false" aria-controls="poem-clip">
+              <span>so what does <em>digoisho</em> actually mean?</span>
+              <i aria-hidden="true">+</i>
+            </button>
+
+            <div class="poem-collapse">
+              <div class="poem-inner" id="poem-clip">
+                <div class="poem-content">
+                  <div class="poem-meta">
+                    <strong>DIGOISHO,</strong>
+                    <span>14 · 11 · 2001</span>
+                  </div>
+                  <div class="poem-stanzas">
+                    <p>the word that<br>brings bad luck,<br>A curse that<br>makes one feel stuck,</p>
+                    <p>It’s like a shadow<br>that never leaves,<br>A burden that<br>one always grieves.</p>
+                    <p>It’s like a storm<br>that never ends,<br>A pain that one<br>can’t comprehend,</p>
+                    <p>But remember,<br>it’s just a word,<br>And you can always<br>rise above the herd.</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
 
-    <div class="wrap foot-bar">
-      <span>© 2026 digoisho</span>
-      <span>Design · Motion · Animation</span>
-      <a href="#hero" class="u-link">Top ↑</a>
+        <div class="wrap foot-bar">
+          <span>© 2026 digoisho</span>
+          <span>Design · Motion · Animation</span>
+          <a href="#hero" class="u-link">Top ↑</a>
+        </div>
+      </div>
     </div>
   </footer>
 
@@ -1675,6 +1760,119 @@ function syncNav(){
 }
 window.addEventListener('scroll',syncNav,{passive:true});
 syncNav();
+
+/* ============================================================
+   SCROLL-REACTIVE DARK-MODE ENVELOPE FOOTER (#contact)
+   (Closed orange-and-black envelope on approach -> unfolds upward
+    & reveals dark-mode contact stage as user scrolls to bottom)
+   ============================================================ */
+(function initContactEnvelope(){
+  const sec=$('#contact'),body=$('#env-body'),letter=$('#env-letter');
+  const flapSvg=$('#env-flap-svg'),flapPath=$('#env-flap-path'),hingeLine=$('#env-hinge-line');
+  const pocketSvg=$('#env-pocket-svg'),pktL=$('#env-pocket-l'),pktR=$('#env-pocket-r'),pktB=$('#env-pocket-b');
+  const seamL=$('#env-seam-l'),seamR=$('#env-seam-r');
+  if(!sec||!body||!letter||!flapSvg||!flapPath)return;
+
+  let envTarget=0,envMid=0,envCur=0;
+
+  function calcTarget(){
+    if(reducedMotion){envTarget=1;return;}
+    const vh=window.innerHeight;
+    const rect=body.getBoundingClientRect();
+    const flapUpH=parseFloat(getComputedStyle(sec).paddingTop)||150;
+    const startY=vh*.76;
+    const endY=Math.max(flapUpH+20,vh*.26);
+    const maxS=Math.max(1,document.documentElement.scrollHeight-vh);
+    let t=(startY-rect.top)/Math.max(90,startY-endY);
+    if(window.scrollY>=maxS-10||rev.classList.contains('is-open'))t=1;
+    t=Math.min(1,Math.max(0,t));
+    envTarget=t*t*(3-2*t);
+  }
+
+  function renderEnvelope(p){
+    const W=Math.max(320,body.clientWidth);
+    const H=Math.max(320,body.clientHeight);
+    const flapUpH=Math.max(80,parseFloat(getComputedStyle(sec).paddingTop)||150);
+    const railW=window.innerWidth<=768?0:(parseFloat(getComputedStyle(body).paddingLeft)||0);
+    const cx=railW*.5+W*.5;
+    const hy=flapUpH;
+
+    flapSvg.setAttribute('viewBox',`0 0 ${W} ${flapUpH+H}`);
+    pocketSvg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+
+    /* Cosine 3D hinge: c = +1 (closed down) -> 0 (hinge line) -> -1 (open up) */
+    const c=Math.cos(p*Math.PI);
+    const isMob=window.innerWidth<=768;
+    const closedDepth=Math.min(H*.92,Math.max(320,window.innerHeight*.52));
+    /* Keep the rounded peak comfortably inside flapUpH (and below mobile nav bar) */
+    const openHeight=isMob?Math.max(60,(flapUpH-72)*.94):(flapUpH*1.02);
+    const dy=c>=0?(c*closedDepth):(-(-c)*openHeight);
+    const tipY=hy+dy;
+
+    /* G1 tangent-continuous rounded apex & rounded base corners */
+    const tApex=0.25; /* 25% down each slope -> wide, smooth rounded envelope nose */
+    const ax1=cx*(1-tApex), ay1=hy+dy*(1-tApex);
+    const ax2=cx+(W-cx)*tApex, ay2=hy+dy*(1-tApex);
+
+    const tBase=Math.min(0.04, 38/W);
+    const bx1=cx*tBase, by1=hy+dy*tBase;
+    const bx2=W-(W-cx)*tBase, by2=hy+dy*tBase;
+
+    flapPath.setAttribute(
+      'd',
+      `M0 ${hy} `+
+      `Q${(bx1*.35).toFixed(1)} ${hy} ${bx1.toFixed(1)} ${by1.toFixed(1)} `+
+      `L${ax1.toFixed(1)} ${ay1.toFixed(1)} `+
+      `Q${cx.toFixed(1)} ${tipY.toFixed(1)} ${ax2.toFixed(1)} ${ay2.toFixed(1)} `+
+      `L${bx2.toFixed(1)} ${by2.toFixed(1)} `+
+      `Q${(W-(W-bx2)*.35).toFixed(1)} ${hy} ${W} ${hy} Z`
+    );
+    hingeLine.setAttribute('x1','0');
+    hingeLine.setAttribute('y1',hy.toFixed(1));
+    hingeLine.setAttribute('x2',W.toFixed(1));
+    hingeLine.setAttribute('y2',hy.toFixed(1));
+    flapSvg.style.zIndex=c>=0?'4':'1';
+
+    /* Black envelope side & bottom pocket folds (visible when closed, part smoothly as flap opens) */
+    const pFade=Math.min(1,Math.max(0,1-(p-.08)/.52));
+    const meetY=Math.min(H*.82,closedDepth*.94);
+    const spread=(1-pFade)*W*.42;
+    const lx=Math.max(0,cx-spread),rx=Math.min(W,cx+spread);
+    pktL.setAttribute('points',`0,0 ${lx.toFixed(1)},${meetY.toFixed(1)} 0,${H}`);
+    pktR.setAttribute('points',`${W},0 ${rx.toFixed(1)},${meetY.toFixed(1)} ${W},${H}`);
+    pktB.setAttribute('points',`0,${H} ${lx.toFixed(1)},${(meetY*.88).toFixed(1)} ${rx.toFixed(1)},${(meetY*.88).toFixed(1)} ${W},${H}`);
+    seamL.setAttribute('points',`0,0 ${lx.toFixed(1)},${meetY.toFixed(1)} 0,${H}`);
+    seamR.setAttribute('points',`${W},0 ${rx.toFixed(1)},${meetY.toFixed(1)} ${W},${H}`);
+    pocketSvg.style.opacity=pFade.toFixed(3);
+
+    /* Smooth letter reveal inside dark-mode envelope */
+    const revT=Math.min(1,Math.max(0,(p-.18)/.82));
+    const rs=revT*revT*(3-2*revT);
+    letter.style.opacity=rs.toFixed(3);
+    letter.style.transform=`translate3d(0,${((1-rs)*64).toFixed(1)}px,0)`;
+    letter.style.pointerEvents=rs>.45?'auto':'none';
+  }
+
+  window.addEventListener('scroll',calcTarget,{passive:true});
+  window.addEventListener('resize',()=>{calcTarget();renderEnvelope(envCur);},{passive:true});
+  calcTarget();
+  envMid=envCur=envTarget;
+  renderEnvelope(envCur);
+
+  let lastEnvT=performance.now();
+  function tickEnv(now){
+    const dt=Math.min(.05,Math.max(.001,(now-lastEnvT)*.001));
+    lastEnvT=now;
+    calcTarget();
+    const k1=reducedMotion?1:(1-Math.exp(-10.5*dt));
+    const k2=reducedMotion?1:(1-Math.exp(-8.5*dt));
+    envMid+=(envTarget-envMid)*k1;
+    envCur+=(envMid-envCur)*k2;
+    renderEnvelope(envCur);
+    if(!reducedMotion)requestAnimationFrame(tickEnv);
+  }
+  requestAnimationFrame(tickEnv);
+})();
 
 /* ============================================================
    30% OPACITY INTERACTIVE STUDIO PIXEL LATTICE (ZERO GLOW)
