@@ -2802,52 +2802,139 @@ syncNav();
 })();
 
 /* ============================================================
-   MOTION VIDEO BG — 1920x1080 @ 30fps PNG Sequence Loop
-   (Streams Images/Motion Video BG/Motion Video BG_00001.png .. 00268.png
-    with concurrency control and plays at 30fps when in viewport)
+   MOTION VIDEO BG — 1920x1080 @ Locked 30fps PNG Sequence Loop
+   (Streams Images/Motion Video BG/Motion Video BG_00001.png .. 00268.png,
+    pre-decodes a sliding ImageBitmap lookahead window off the main thread,
+    and paces playback at an exact 30.00 fps without VSync judder)
    ============================================================ */
 (function initMotionSequence(){
   const sec=$('#motion-showcase'),cvs=$('#motion-seq-canvas');
   if(!sec||!cvs)return;
-  const ctx=cvs.getContext('2d',{alpha:false});
+  const ctx=cvs.getContext('2d',{alpha:false,desynchronized:true})||cvs.getContext('2d',{alpha:false});
   if(!ctx)return;
 
   const START_FRAME=1;
   const END_FRAME=268;
   const TOTAL=END_FRAME-START_FRAME+1;
   const FPS=30;
-  const FRAME_MS=1000/FPS;
+  const FRAME_MS=1000/FPS;       /* 33.3333ms exact 30fps */
+  const VSYNC_SNAP_MS=2.0;       /* Prevents 60Hz rAF beat judder */
+  const MIN_BUFFER=30;           /* 1.0s @ 30fps buffered before advancing */
+  const LOOKAHEAD=24;            /* Pre-decoded ImageBitmaps ahead of playhead */
+  const MAX_NET_CONCURRENT=8;
+  const MAX_DEC_CONCURRENT=4;
 
-  const frames=new Array(TOTAL);
+  const imgs=new Array(TOTAL);
   const loaded=new Uint8Array(TOTAL);
-  let nextToLoad=0;
-  let activeLoads=0;
-  const MAX_CONCURRENT=6;
-  let drawnIdx=-1;
+  const bitmaps=new Array(TOTAL);
+  const decoding=new Uint8Array(TOTAL);
+
+  let nextToLoad=0,activeLoads=0,contiguousLoaded=0;
+  let activeDecodes=0;
+  let curIdx=0,drawnIdx=-1;
+  let buffering=true;
+  let inView=true;
+
+  if('IntersectionObserver' in window){
+    const io=new IntersectionObserver((entries)=>{
+      for(let i=0;i<entries.length;i++){
+        inView=entries[i].isIntersecting;
+      }
+    },{rootMargin:'250px 0px'});
+    io.observe(sec);
+  }
 
   function framePath(idx){
     const num=String(START_FRAME+idx).padStart(5,'0');
     return `Images/Motion%20Video%20BG/Motion%20Video%20BG_${num}.png`;
   }
 
+  function inDecodeWindow(idx){
+    const d=(idx-curIdx+TOTAL)%TOTAL;
+    return d<LOOKAHEAD||d>=TOTAL-2;
+  }
+
+  function releaseOldBitmaps(){
+    for(let i=0;i<TOTAL;i++){
+      if(bitmaps[i]&&!inDecodeWindow(i)){
+        if(typeof bitmaps[i].close==='function')bitmaps[i].close();
+        bitmaps[i]=null;
+      }
+    }
+  }
+
+  function decodeFrame(idx){
+    if(idx<0||idx>=TOTAL||!loaded[idx]||bitmaps[idx]||decoding[idx])return;
+    const img=imgs[idx];
+    if(!img)return;
+    decoding[idx]=1;
+    activeDecodes++;
+
+    const finish=(drawable)=>{
+      decoding[idx]=0;
+      activeDecodes--;
+      if(drawable&&inDecodeWindow(idx)){
+        bitmaps[idx]=drawable;
+        if(drawnIdx===-1&&idx===0){
+          ctx.drawImage(drawable,0,0,1920,1080);
+          drawnIdx=0;
+        }
+      }else if(drawable&&typeof drawable.close==='function'){
+        drawable.close();
+      }
+      pumpDecoder();
+    };
+
+    if(typeof createImageBitmap==='function'){
+      createImageBitmap(img).then(finish,()=>{
+        if(typeof img.decode==='function'){
+          img.decode().then(()=>finish(img),()=>finish(img));
+        }else{
+          finish(img);
+        }
+      });
+    }else if(typeof img.decode==='function'){
+      img.decode().then(()=>finish(img),()=>finish(img));
+    }else{
+      finish(img);
+    }
+  }
+
+  function pumpDecoder(){
+    if(!inView&&drawnIdx!==-1)return;
+    for(let off=0;off<LOOKAHEAD&&activeDecodes<MAX_DEC_CONCURRENT;off++){
+      const idx=(curIdx+off)%TOTAL;
+      if(loaded[idx]&&!bitmaps[idx]&&!decoding[idx]){
+        decodeFrame(idx);
+      }
+    }
+  }
+
+  function updateContiguous(){
+    while(contiguousLoaded<TOTAL&&loaded[contiguousLoaded]){
+      contiguousLoaded++;
+    }
+  }
+
   function pumpLoader(){
-    while(activeLoads<MAX_CONCURRENT&&nextToLoad<TOTAL){
+    while(activeLoads<MAX_NET_CONCURRENT&&nextToLoad<TOTAL){
       const idx=nextToLoad++;
       activeLoads++;
       const img=new Image();
       img.decoding='async';
       img.onload=()=>{
-        frames[idx]=img;
+        imgs[idx]=img;
         loaded[idx]=1;
         activeLoads--;
-        if(drawnIdx===-1&&idx===0){
-          ctx.drawImage(img,0,0,1920,1080);
-          drawnIdx=0;
-        }
+        updateContiguous();
+        if(inDecodeWindow(idx))pumpDecoder();
         pumpLoader();
       };
       img.onerror=()=>{
+        /* Mark skipped frame so one missing file cannot stall playback */
+        loaded[idx]=2;
         activeLoads--;
+        updateContiguous();
         pumpLoader();
       };
       img.src=framePath(idx);
@@ -2855,32 +2942,60 @@ syncNav();
   }
   pumpLoader();
 
-  let playAcc=0,lastTick=performance.now(),curIdx=0;
+  let accMs=0,lastTick=performance.now();
   function tickSeq(now){
     const dt=Math.min(100,Math.max(0,now-lastTick));
     lastTick=now;
 
-    const r=sec.getBoundingClientRect();
-    const inView=(r.bottom>-200&&r.top<window.innerHeight+200);
     if(inView){
-      playAcc+=dt;
-      if(playAcc>=FRAME_MS){
-        const steps=Math.floor(playAcc/FRAME_MS);
-        playAcc-=steps*FRAME_MS;
-        const nextIdx=(curIdx+steps)%TOTAL;
-        if(loaded[nextIdx]){
-          curIdx=nextIdx;
-        }else if(loaded[0]){
-          /* If catching up to preload frontier, wrap or hold latest ready frame */
-          let probe=nextIdx;
-          while(probe>0&&!loaded[probe])probe--;
-          curIdx=probe;
-        }
-        if(curIdx!==drawnIdx&&frames[curIdx]){
-          ctx.drawImage(frames[curIdx],0,0,1920,1080);
-          drawnIdx=curIdx;
+      pumpDecoder();
+
+      if(buffering){
+        const targetReady=Math.min(TOTAL,curIdx+MIN_BUFFER);
+        if(contiguousLoaded>=targetReady&&(bitmaps[curIdx]||loaded[curIdx]===2)){
+          buffering=false;
+          accMs=0;
         }
       }
+
+      if(!buffering){
+        accMs+=dt;
+        if(accMs+VSYNC_SNAP_MS>=FRAME_MS){
+          let steps=Math.floor((accMs+VSYNC_SNAP_MS)/FRAME_MS);
+          if(steps>2){
+            steps=2;
+            accMs=0;
+          }else{
+            accMs-=steps*FRAME_MS;
+          }
+
+          const rawNext=curIdx+steps;
+          if(contiguousLoaded<TOTAL&&rawNext>=contiguousLoaded){
+            /* Reached network frontier: pause briefly to buffer so playback stays 30fps */
+            curIdx=Math.max(0,contiguousLoaded-1);
+            buffering=true;
+            accMs=0;
+          }else{
+            const nextIdx=rawNext%TOTAL;
+            if(bitmaps[nextIdx]||loaded[nextIdx]===2){
+              curIdx=nextIdx;
+            }else if(loaded[nextIdx]===1&&imgs[nextIdx]){
+              /* Fallback if decode worker is 1 tick behind */
+              curIdx=nextIdx;
+            }
+          }
+
+          const drawable=bitmaps[curIdx]||(loaded[curIdx]===1?imgs[curIdx]:null);
+          if(curIdx!==drawnIdx&&drawable){
+            ctx.drawImage(drawable,0,0,1920,1080);
+            drawnIdx=curIdx;
+            releaseOldBitmaps();
+            pumpDecoder();
+          }
+        }
+      }
+    }else{
+      accMs=0;
     }
     requestAnimationFrame(tickSeq);
   }
