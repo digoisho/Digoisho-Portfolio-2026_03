@@ -106,6 +106,33 @@
     opacity: 1;
     transform: translate3d(0, 0, 0) scale(1);
   }
+  .m-hello-sga {
+    opacity: 1;
+    transform-box: fill-box;
+    transform-origin: 50% 50%;
+    transform: translateY(0) scale(1);
+    transition: opacity 0.34s cubic-bezier(0.22, 1, 0.36, 1), transform 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .m-thought.is-english .m-hello-sga {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.88);
+  }
+  .m-hello-eng {
+    opacity: 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 21px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    fill: #FFFFFF;
+    transform-box: fill-box;
+    transform-origin: 50% 50%;
+    transform: translateY(4px) scale(0.88);
+    transition: opacity 0.36s cubic-bezier(0.22, 1, 0.36, 1) 0.06s, transform 0.42s cubic-bezier(0.34, 1.56, 0.64, 1) 0.06s;
+  }
+  .m-thought.is-english .m-hello-eng {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 </style>
 </head>
 
@@ -301,14 +328,17 @@
               <g class="m-thought-top">
                 <rect x="-46" y="-68" width="144" height="44" rx="22" fill="#0E0E0E" stroke="rgba(255,255,255,0.22)" stroke-width="1.5"/>
                 <path d="M -24,-61 L 76,-61" stroke="rgba(255,255,255,0.14)" stroke-width="2" stroke-linecap="round"/>
-                <g transform="translate(-25, -55)" shape-rendering="crispEdges">
-                  <path fill="#FFFFFF" d="M0,0h15v3H0z M6,3h3v6H6z M6,12h3v6H6z"/>
-                  <path fill="#FFFFFF" transform="translate(21,0)" d="M0,0h9v3H0z M6,3h3v3H6z M3,6h3v3H3z M9,6h3v3H9z M0,9h3v3H0z M12,9h3v6h-3z M0,15h9v3H0z"/>
-                  <path fill="#FFFFFF" transform="translate(42,0)" d="M3,0h3v15H3z M9,3h3v12H9z M6,15h3v3H6z"/>
-                  <path fill="#FFFFFF" transform="translate(60,0)" d="M3,0h3v15H3z M9,3h3v12H9z M6,15h3v3H6z"/>
-                  <path fill="#FFFFFF" transform="translate(78,0)" d="M6,0h9v3H6z M6,3h3v12H6z M0,12h3v3H0z M0,15h9v3H0z"/>
-                  <rect x="99" y="15" width="3" height="3" fill="#FA4D11"/>
+                <g class="m-hello-sga">
+                  <g transform="translate(-25, -55)" shape-rendering="crispEdges">
+                    <path fill="#FFFFFF" d="M0,0h15v3H0z M6,3h3v6H6z M6,12h3v6H6z"/>
+                    <path fill="#FFFFFF" transform="translate(21,0)" d="M0,0h9v3H0z M6,3h3v3H6z M3,6h3v3H3z M9,6h3v3H9z M0,9h3v3H0z M12,9h3v6h-3z M0,15h9v3H0z"/>
+                    <path fill="#FFFFFF" transform="translate(42,0)" d="M3,0h3v15H3z M9,3h3v12H9z M6,15h3v3H6z"/>
+                    <path fill="#FFFFFF" transform="translate(60,0)" d="M3,0h3v15H3z M9,3h3v12H9z M6,15h3v3H6z"/>
+                    <path fill="#FFFFFF" transform="translate(78,0)" d="M6,0h9v3H6z M6,3h3v12H6z M0,12h3v3H0z M0,15h9v3H0z"/>
+                    <rect x="99" y="15" width="3" height="3" fill="#FA4D11"/>
+                  </g>
                 </g>
+                <text class="m-hello-eng" x="26" y="-39" text-anchor="middle">hello<tspan fill="#FA4D11">.</tspan></text>
               </g>
             </g>
           </g>
@@ -325,6 +355,7 @@
   const stage = document.getElementById('mascot-stage');
   const thought = document.getElementById('m-thought');
   setTimeout(() => { if (thought) thought.classList.add('is-popped'); }, 2000);
+  setTimeout(() => { if (thought) thought.classList.add('is-english'); }, 3000);
   const head = document.getElementById('m-head');
   const visor = document.getElementById('m-visor');
   const eyes = document.getElementById('m-eyes');
