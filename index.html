@@ -6,7 +6,7 @@
 <title>digoisho — Design, Motion &amp; Animation</title>
 <meta name="description" content="Portfolio of digoisho — Design Head, motion designer, animator and video editor based in Siliguri, India.">
 <meta name="theme-color" content="#F5F4F4">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230A0A0A'/%3E%3Cpath d='M9 9h8v6h6v8H9z' fill='%23FA4D11'/%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="Images/Digoisho%20logo.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -137,8 +137,8 @@ img{display:block;max-width:100%}
   background:rgba(245,244,244,.94);backdrop-filter:blur(12px);
   border-bottom:1px solid var(--rule);
 }
-.mob-mark{font-weight:800;font-size:15px;letter-spacing:-.02em;text-transform:uppercase;color:var(--black)}
-.mob-mark i{display:inline-block;width:7px;height:7px;background:var(--orange);margin-left:5px;vertical-align:middle}
+.mob-mark{display:inline-flex;align-items:center}
+.mob-mark img{width:34px;height:34px;display:block;border-radius:8.5px}
 .mob-links{display:flex;gap:16px;font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-70)}
 .mob-links a.is-active,.mob-links a:hover{color:var(--black);box-shadow:inset 0 -2px 0 var(--orange)}
 
@@ -181,10 +181,11 @@ img{display:block;max-width:100%}
   display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
 }
 .studio-id{
-  display:inline-flex;align-items:center;gap:12px;
-  font-weight:800;font-size:15px;letter-spacing:.04em;text-transform:uppercase;color:var(--black);
+  display:inline-flex;align-items:center;
+  transition:transform .38s var(--ease);
 }
-.studio-id svg{width:24px;height:24px;fill:var(--orange)}
+.studio-id:hover{transform:scale(1.05)}
+.studio-id img{width:46px;height:46px;display:block;border-radius:11.5px;box-shadow:0 6px 16px rgba(250,77,17,.16)}
 .studio-meta{
   display:flex;align-items:center;gap:24px;flex-wrap:wrap;
   font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;
@@ -269,7 +270,10 @@ img{display:block;max-width:100%}
   pointer-events:auto;
 }
 
-/* Semicolon Thought Cloud (Last mascot only: pops after 2s in Minecraft Enchantment Font, turns to English 'hello' after 1s) */
+/* Semicolon Thought Cloud (Last mascot only:
+   2.0s -> Minecraft Enchantment Font
+   3.0s -> 0.5s digit counter animation into English 'hello'
+   4.5s (after 1s displaying 'hello') -> 'do you play video games?') */
 .m-thought{
   opacity:0;
   transform-box:fill-box;
@@ -304,32 +308,73 @@ img{display:block;max-width:100%}
   opacity:1;
   transform:translate3d(0,0,0) scale(1);
 }
+.m-pill-sm{
+  opacity:1;
+  transition:opacity .32s var(--ease);
+}
+.m-thought.is-question .m-pill-sm{
+  opacity:0;
+}
+.m-pill-lg{
+  opacity:0;
+  transform-box:fill-box;
+  transform-origin:25% 100%;
+  transform:scale(0.76,0.82);
+  transition:opacity .32s var(--ease),transform .46s cubic-bezier(.34,1.56,.64,1);
+}
+.m-thought.is-question .m-pill-lg{
+  opacity:1;
+  transform:scale(1,1);
+}
 .m-hello-sga{
   opacity:1;
   transform-box:fill-box;
   transform-origin:50% 50%;
-  transform:translateY(0) scale(1);
-  transition:opacity .34s var(--ease),transform .38s var(--ease);
+  transform:translateY(0);
+  transition:opacity .22s var(--ease),transform .28s var(--ease);
 }
 .m-thought.is-english .m-hello-sga{
   opacity:0;
-  transform:translateY(-4px) scale(0.88);
+  transform:translateY(-22px);
 }
 .m-hello-eng{
   opacity:0;
-  font-family:var(--mono);
-  font-size:21px;
-  font-weight:700;
-  letter-spacing:.05em;
-  fill:#FFFFFF;
-  transform-box:fill-box;
-  transform-origin:50% 50%;
-  transform:translateY(4px) scale(0.88);
-  transition:opacity .36s var(--ease) .06s,transform .42s cubic-bezier(.34,1.56,.64,1) .06s;
+  transition:opacity .16s var(--ease),transform .32s var(--ease);
 }
 .m-thought.is-english .m-hello-eng{
   opacity:1;
-  transform:translateY(0) scale(1);
+}
+.m-thought.is-question .m-hello-eng{
+  opacity:0;
+  transform:translateY(-22px);
+}
+.m-reel{
+  font-family:var(--mono);
+  font-size:20px;
+  font-weight:700;
+  fill:#FFFFFF;
+  transform:translateY(0);
+}
+.m-thought.is-english .m-reel-0{transition:transform .50s cubic-bezier(.22,1,.36,1) .00s;transform:translateY(-144px)}
+.m-thought.is-english .m-reel-1{transition:transform .50s cubic-bezier(.22,1,.36,1) .02s;transform:translateY(-144px)}
+.m-thought.is-english .m-reel-2{transition:transform .50s cubic-bezier(.22,1,.36,1) .04s;transform:translateY(-144px)}
+.m-thought.is-english .m-reel-3{transition:transform .50s cubic-bezier(.22,1,.36,1) .06s;transform:translateY(-144px)}
+.m-thought.is-english .m-reel-4{transition:transform .50s cubic-bezier(.22,1,.36,1) .08s;transform:translateY(-144px)}
+.m-hello-game{
+  opacity:0;
+  font-family:var(--mono);
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:.02em;
+  fill:#FFFFFF;
+  transform-box:fill-box;
+  transform-origin:50% 50%;
+  transform:translateY(14px);
+  transition:opacity .34s var(--ease) .06s,transform .44s cubic-bezier(.22,1,.36,1) .06s;
+}
+.m-thought.is-question .m-hello-game{
+  opacity:1;
+  transform:translateY(0);
 }
 
 .hero-sub-row{
@@ -1241,7 +1286,7 @@ img{display:block;max-width:100%}
 
 <!-- Mobile Top Navigation -->
 <header class="mob-nav" aria-label="Mobile navigation">
-  <a href="#hero" class="mob-mark">digoisho<i></i></a>
+  <a href="#hero" class="mob-mark" aria-label="digoisho home"><img src="Images/Digoisho%20logo.svg" alt="digoisho logo"></a>
   <nav class="mob-links">
     <a href="#work" data-sec="work">Works</a>
     <a href="#about" data-sec="about">About</a>
@@ -1254,9 +1299,8 @@ img{display:block;max-width:100%}
   <!-- ============ 1. HERO ============ -->
   <section id="hero" class="stage-sec" aria-label="Introduction">
     <div class="wrap hero-top">
-      <a href="#hero" class="studio-id">
-        <svg viewBox="0 0 100 100" aria-hidden="true"><use href="#i-mo"/></svg>
-        <span>DIGOISHO</span>
+      <a href="#hero" class="studio-id" aria-label="digoisho home">
+        <img src="Images/Digoisho%20logo.svg" alt="digoisho logo">
       </a>
       <div class="studio-meta">
         <span>SILIGURI · <time id="slg-clock">--:--:--</time></span>
@@ -1534,6 +1578,9 @@ img{display:block;max-width:100%}
             <rect class="m-lid-top-r" x="-48" y="-98" width="96" height="68" rx="18" fill="black"/>
             <ellipse class="m-lid-bot-r" cx="0" cy="68" rx="40" ry="32" fill="black"/>
           </mask>
+          <clipPath id="m-counter-clip-foot">
+            <rect x="-42" y="-64" width="136" height="36" rx="16"/>
+          </clipPath>
         </defs>
         <ellipse class="m-shadow" cx="250" cy="436" rx="112" ry="16" fill="url(#m-floor-shadow-grad)"/>
         <g transform="translate(250, 256)">
@@ -1570,19 +1617,51 @@ img{display:block;max-width:100%}
                 <circle cx="94" cy="72" r="3.5" fill="#FA4D11" opacity="0.9"/>
               </g>
             </g>
-            <!-- Semicolon ";" Thought Cloud (Last mascot only: pops after 2s in Minecraft Enchantment Font, turns to English 'hello' after 1s) -->
+            <!-- Semicolon ";" Thought Cloud (Last mascot only:
+                 2.0s -> Minecraft Enchantment Font
+                 3.0s -> 0.5s digit counter animation into English 'hello'
+                 4.5s (after 1s displaying 'hello') -> 'do you play video games?') -->
             <g transform="translate(146, -134)">
-              <g class="m-thought" aria-label="hello">
+              <g class="m-thought" aria-label="hello — do you play video games?">
                 <g class="m-thought-comma">
                   <path d="M -11,-6 A 11,11 0 1,1 11,-6 C 11,7 1,17 -11,20 C -14,21 -15,17 -12,15 C -5,11 -2,5 -2,1 A 11,11 0 0,1 -11,-6 Z" fill="#0E0E0E" stroke="rgba(255,255,255,0.22)" stroke-width="1.5"/>
                 </g>
                 <g class="m-thought-top">
-                  <rect x="-46" y="-68" width="144" height="44" rx="22" fill="#0E0E0E" stroke="rgba(255,255,255,0.22)" stroke-width="1.5"/>
-                  <path d="M -24,-61 L 76,-61" stroke="rgba(255,255,255,0.14)" stroke-width="2" stroke-linecap="round"/>
+                  <g class="m-pill-sm">
+                    <rect x="-46" y="-68" width="144" height="44" rx="22" fill="#0E0E0E" stroke="rgba(255,255,255,0.22)" stroke-width="1.5"/>
+                    <path d="M -24,-61 L 76,-61" stroke="rgba(255,255,255,0.14)" stroke-width="2" stroke-linecap="round"/>
+                  </g>
+                  <g class="m-pill-lg">
+                    <rect x="-64" y="-76" width="184" height="54" rx="22" fill="#0E0E0E" stroke="rgba(255,255,255,0.22)" stroke-width="1.5"/>
+                    <path d="M -38,-69 L 94,-69" stroke="rgba(255,255,255,0.14)" stroke-width="2" stroke-linecap="round"/>
+                  </g>
                   <g class="m-hello-sga">
                     <use href="#m-sga-hello" transform="translate(-25, -55)"/>
                   </g>
-                  <text class="m-hello-eng" x="26" y="-39" text-anchor="middle">hello<tspan fill="#FA4D11">.</tspan></text>
+                  <!-- 0.5s Digit Counter Animation into English 'hello' -->
+                  <g class="m-hello-eng" clip-path="url(#m-counter-clip-foot)">
+                    <g class="m-reel m-reel-0">
+                      <text x="-18" y="-39" text-anchor="middle">0</text><text x="-18" y="-15" text-anchor="middle">3</text><text x="-18" y="9" text-anchor="middle">7</text><text x="-18" y="33" text-anchor="middle">9</text><text x="-18" y="57" text-anchor="middle">4</text><text x="-18" y="81" text-anchor="middle">8</text><text x="-18" y="105" text-anchor="middle">h</text>
+                    </g>
+                    <g class="m-reel m-reel-1">
+                      <text x="0" y="-39" text-anchor="middle">1</text><text x="0" y="-15" text-anchor="middle">5</text><text x="0" y="9" text-anchor="middle">8</text><text x="0" y="33" text-anchor="middle">2</text><text x="0" y="57" text-anchor="middle">6</text><text x="0" y="81" text-anchor="middle">9</text><text x="0" y="105" text-anchor="middle">e</text>
+                    </g>
+                    <g class="m-reel m-reel-2">
+                      <text x="18" y="-39" text-anchor="middle">2</text><text x="18" y="-15" text-anchor="middle">6</text><text x="18" y="9" text-anchor="middle">0</text><text x="18" y="33" text-anchor="middle">4</text><text x="18" y="57" text-anchor="middle">7</text><text x="18" y="81" text-anchor="middle">1</text><text x="18" y="105" text-anchor="middle">l</text>
+                    </g>
+                    <g class="m-reel m-reel-3">
+                      <text x="36" y="-39" text-anchor="middle">4</text><text x="36" y="-15" text-anchor="middle">8</text><text x="36" y="9" text-anchor="middle">1</text><text x="36" y="33" text-anchor="middle">5</text><text x="36" y="57" text-anchor="middle">9</text><text x="36" y="81" text-anchor="middle">3</text><text x="36" y="105" text-anchor="middle">l</text>
+                    </g>
+                    <g class="m-reel m-reel-4">
+                      <text x="54" y="-39" text-anchor="middle">7</text><text x="54" y="-15" text-anchor="middle">2</text><text x="54" y="9" text-anchor="middle">6</text><text x="54" y="33" text-anchor="middle">9</text><text x="54" y="57" text-anchor="middle">0</text><text x="54" y="81" text-anchor="middle">5</text><text x="54" y="105" text-anchor="middle">o</text>
+                    </g>
+                    <circle cx="68" cy="-41" r="2.2" fill="#FA4D11"/>
+                  </g>
+                  <!-- After 1s displaying 'hello' -> 'do you play video games?' -->
+                  <g class="m-hello-game">
+                    <text x="28" y="-53" text-anchor="middle">do you play</text>
+                    <text x="28" y="-35" text-anchor="middle">video games<tspan fill="#FA4D11">?</tspan></text>
+                  </g>
                 </g>
               </g>
             </g>
@@ -2476,7 +2555,7 @@ syncNav();
     headX:0,headY:0,headTilt:0,headVX:0,headVY:0,headVTilt:0,
     curSquint:0,curHappy:0,curMush:0,curSmirkSide:1,
     overIntensity:0,rubOffsetX:0,rubEnergy:0,tapMushUntil:-10,
-    visibleSec:0,thoughtPopped:false,thoughtEnglish:false,
+    visibleSec:0,thoughtPopped:false,thoughtEnglish:false,thoughtQuestion:false,
     prevTargetX:0,prevTargetY:0,
     blinkStart:-10,secondBlinkAt:-10,nextAutoBlink:1.6+idx*0.9,lastKfIdx:-1
   }));
@@ -2581,6 +2660,10 @@ syncNav();
         if(rig.thought&&rig.thoughtPopped&&!rig.thoughtEnglish&&rig.visibleSec>=3.0){
           rig.thoughtEnglish=true;
           rig.thought.classList.add('is-english');
+        }
+        if(rig.thought&&rig.thoughtEnglish&&!rig.thoughtQuestion&&rig.visibleSec>=4.5){
+          rig.thoughtQuestion=true;
+          rig.thought.classList.add('is-question');
         }
       }
 

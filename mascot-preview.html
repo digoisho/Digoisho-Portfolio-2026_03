@@ -2,54 +2,63 @@
 <html lang="en">
 
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>digoisho — 500x500 Mascot Head Animation</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&family=Open+Sans:wght@700;800&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --white: #FFFFFF;
-    --paper: #F5F4F4;
-    --black: #0A0A0A;
-    --orange: #FA4D11;
-    --rule: rgba(10, 10, 10, 0.10);
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
-    background: var(--white);
-    font-family: 'Open Sans', system-ui, sans-serif;
-    color: var(--black);
-    padding: 24px;
-    overflow: hidden;
-  }
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>digoisho — 500x500 Mascot Head Animation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&family=Open+Sans:wght@700;800&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --white: #FFFFFF;
+      --paper: #F5F4F4;
+      --black: #0A0A0A;
+      --orange: #FA4D11;
+      --rule: rgba(10, 10, 10, 0.10);
+    }
 
-  /* Exact 500x500 White Stage */
-  .mascot-stage {
-    position: relative;
-    width: 500px;
-    height: 500px;
-    background: #FFFFFF;
-    border-radius: 36px;
-    border: 1px solid var(--rule);
-    box-shadow: 0 24px 60px rgba(10, 10, 10, 0.06);
-    overflow: hidden;
-    display: grid;
-    place-items: center;
-    user-select: none;
-    cursor: grab;
-    touch-action: none;
-  }
-  .mascot-stage:active {
-    cursor: grabbing;
-  }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      background: var(--white);
+      font-family: 'Open Sans', system-ui, sans-serif;
+      color: var(--black);
+      padding: 24px;
+      overflow: hidden;
+    }
+
+    /* Exact 500x500 White Stage */
+    .mascot-stage {
+      position: relative;
+      width: 500px;
+      height: 500px;
+      background: #FFFFFF;
+      border-radius: 36px;
+      border: 1px solid var(--rule);
+      box-shadow: 0 24px 60px rgba(10, 10, 10, 0.06);
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      user-select: none;
+      cursor: grab;
+      touch-action: none;
+    }
+
+    .mascot-stage:active {
+      cursor: grabbing;
+    }
 
     body {
       min-height: 100vh;
@@ -106,40 +115,66 @@
     opacity: 1;
     transform: translate3d(0, 0, 0) scale(1);
   }
+  .m-pill-sm { opacity: 1; transition: opacity 0.32s cubic-bezier(0.22, 1, 0.36, 1); }
+  .m-thought.is-question .m-pill-sm { opacity: 0; }
+  .m-pill-lg {
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: 25% 100%;
+    transform: scale(0.76, 0.82);
+    transition: opacity 0.32s cubic-bezier(0.22, 1, 0.36, 1), transform 0.46s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .m-thought.is-question .m-pill-lg { opacity: 1; transform: scale(1, 1); }
   .m-hello-sga {
     opacity: 1;
     transform-box: fill-box;
     transform-origin: 50% 50%;
-    transform: translateY(0) scale(1);
-    transition: opacity 0.34s cubic-bezier(0.22, 1, 0.36, 1), transform 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+    transform: translateY(0);
+    transition: opacity 0.22s cubic-bezier(0.22, 1, 0.36, 1), transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
   }
   .m-thought.is-english .m-hello-sga {
     opacity: 0;
-    transform: translateY(-4px) scale(0.88);
+    transform: translateY(-22px);
   }
   .m-hello-eng {
     opacity: 0;
+    transition: opacity 0.16s cubic-bezier(0.22, 1, 0.36, 1), transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .m-thought.is-english .m-hello-eng { opacity: 1; }
+  .m-thought.is-question .m-hello-eng { opacity: 0; transform: translateY(-22px); }
+  .m-reel {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 21px;
+    font-size: 20px;
     font-weight: 700;
-    letter-spacing: 0.05em;
+    fill: #FFFFFF;
+    transform: translateY(0);
+  }
+  .m-thought.is-english .m-reel-0 { transition: transform 0.50s cubic-bezier(0.22, 1, 0.36, 1) 0.00s; transform: translateY(-144px); }
+  .m-thought.is-english .m-reel-1 { transition: transform 0.50s cubic-bezier(0.22, 1, 0.36, 1) 0.02s; transform: translateY(-144px); }
+  .m-thought.is-english .m-reel-2 { transition: transform 0.50s cubic-bezier(0.22, 1, 0.36, 1) 0.04s; transform: translateY(-144px); }
+  .m-thought.is-english .m-reel-3 { transition: transform 0.50s cubic-bezier(0.22, 1, 0.36, 1) 0.06s; transform: translateY(-144px); }
+  .m-thought.is-english .m-reel-4 { transition: transform 0.50s cubic-bezier(0.22, 1, 0.36, 1) 0.08s; transform: translateY(-144px); }
+  .m-hello-game {
+    opacity: 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
     fill: #FFFFFF;
     transform-box: fill-box;
     transform-origin: 50% 50%;
-    transform: translateY(4px) scale(0.88);
-    transition: opacity 0.36s cubic-bezier(0.22, 1, 0.36, 1) 0.06s, transform 0.42s cubic-bezier(0.34, 1.56, 0.64, 1) 0.06s;
+    transform: translateY(14px);
+    transition: opacity 0.34s cubic-bezier(0.22, 1, 0.36, 1) 0.06s, transform 0.44s cubic-bezier(0.22, 1, 0.36, 1) 0.06s;
   }
-  .m-thought.is-english .m-hello-eng {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+  .m-thought.is-question .m-hello-game { opacity: 1; transform: translateY(0); }
 </style>
 </head>
 
 <body>
 
   <!-- EXACT 500x500 WHITE STAGE (Pebble + Tuft + Pixel/Pebble Eyes Only) -->
-  <div class="mascot-stage" id="mascot-stage" title="Move cursor to look · Hover or drag over head to mush & shy smirk!">
+  <div class="mascot-stage" id="mascot-stage"
+    title="Move cursor to look · Hover or drag over head to mush & shy smirk!">
     <svg class="mascot-svg" id="mascot-svg" viewBox="0 0 500 500" width="500" height="500"
       aria-label="digoisho 500x500 mascot head looping animation">
       <defs>
@@ -181,9 +216,9 @@
 
         <!-- Shy Orange Cheek Blush (Only visible when hovering/dragging over head) -->
         <radialGradient id="shy-blush-grad" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stop-color="#FA4D11" stop-opacity="0.65"/>
-          <stop offset="55%" stop-color="#FA4D11" stop-opacity="0.22"/>
-          <stop offset="100%" stop-color="#FA4D11" stop-opacity="0"/>
+          <stop offset="0%" stop-color="#FA4D11" stop-opacity="0.65" />
+          <stop offset="55%" stop-color="#FA4D11" stop-opacity="0.22" />
+          <stop offset="100%" stop-color="#FA4D11" stop-opacity="0" />
         </radialGradient>
 
         <!-- Soft Floor Shadow on White BG -->
@@ -209,14 +244,14 @@
         <!-- Natural Eyelid Masks (Upper Blink/Smirk Lid + Lower Cheek/Smile Lid) -->
         <mask id="eye-mask-l" maskUnits="userSpaceOnUse" x="-60" y="-60" width="120" height="120">
           <rect x="-60" y="-60" width="120" height="120" fill="white" />
-          <rect id="m-lid-top-l" x="-48" y="-98" width="96" height="68" rx="18" fill="black"/>
-          <ellipse id="m-lid-bot-l" cx="0" cy="68" rx="40" ry="32" fill="black"/>
+          <rect id="m-lid-top-l" x="-48" y="-98" width="96" height="68" rx="18" fill="black" />
+          <ellipse id="m-lid-bot-l" cx="0" cy="68" rx="40" ry="32" fill="black" />
         </mask>
 
         <mask id="eye-mask-r" maskUnits="userSpaceOnUse" x="-60" y="-60" width="120" height="120">
-          <rect x="-60" y="-60" width="120" height="120" fill="white"/>
-          <rect id="m-lid-top-r" x="-48" y="-98" width="96" height="68" rx="18" fill="black"/>
-          <ellipse id="m-lid-bot-r" cx="0" cy="68" rx="40" ry="32" fill="black"/>
+          <rect x="-60" y="-60" width="120" height="120" fill="white" />
+          <rect id="m-lid-top-r" x="-48" y="-98" width="96" height="68" rx="18" fill="black" />
+          <ellipse id="m-lid-bot-r" cx="0" cy="68" rx="40" ry="32" fill="black" />
         </mask>
       </defs>
 
@@ -285,8 +320,8 @@
             <g clip-path="url(#visor-clip-pebble)">
               <!-- Shy Blush Cheeks (0 opacity normally; fades in softly on shy/mush hover) -->
               <g id="m-shy-blush" opacity="0">
-                <ellipse cx="-68" cy="48" rx="34" ry="20" fill="url(#shy-blush-grad)"/>
-                <ellipse cx="68" cy="48" rx="34" ry="20" fill="url(#shy-blush-grad)"/>
+                <ellipse cx="-68" cy="48" rx="34" ry="20" fill="url(#shy-blush-grad)" />
+                <ellipse cx="68" cy="48" rx="34" ry="20" fill="url(#shy-blush-grad)" />
               </g>
 
               <!-- 3. PEBBLE PIXEL EYES (100% Solid Eyelid-Masked Shapes) -->
@@ -295,14 +330,14 @@
                 <!-- LEFT EYE -->
                 <g id="m-eye-l" transform="translate(-44, 0)">
                   <g id="m-eye-l-shape" mask="url(#eye-mask-l)">
-                    <rect id="m-eye-l-rect" x="-23" y="-31" width="46" height="62" rx="10" ry="10" fill="#FFFFFF"/>
+                    <rect id="m-eye-l-rect" x="-23" y="-31" width="46" height="62" rx="10" ry="10" fill="#FFFFFF" />
                   </g>
                 </g>
 
                 <!-- RIGHT EYE -->
                 <g id="m-eye-r" transform="translate(44, 0)">
                   <g id="m-eye-r-shape" mask="url(#eye-mask-r)">
-                    <rect id="m-eye-r-rect" x="-23" y="-31" width="46" height="62" rx="10" ry="10" fill="#FFFFFF"/>
+                    <rect id="m-eye-r-rect" x="-23" y="-31" width="46" height="62" rx="10" ry="10" fill="#FFFFFF" />
                   </g>
                 </g>
 
@@ -319,15 +354,26 @@
             </g>
           </g>
 
-          <!-- Semicolon ";" Thought Cloud ("hello" in Minecraft Enchantment Font after 2s) -->
+          <!-- Semicolon ";" Thought Cloud (2s -> Minecraft Enchantment Font, 3s -> 0.5s digit counter 'hello', 4.5s -> 'do you play video games?') -->
           <g transform="translate(146, -134)">
-            <g class="m-thought" id="m-thought" aria-label="hello">
+            <defs>
+              <clipPath id="m-counter-clip-prev">
+                <rect x="-42" y="-64" width="136" height="36" rx="16"/>
+              </clipPath>
+            </defs>
+            <g class="m-thought" id="m-thought" aria-label="hello — do you play video games?">
               <g class="m-thought-comma">
                 <path d="M -11,-6 A 11,11 0 1,1 11,-6 C 11,7 1,17 -11,20 C -14,21 -15,17 -12,15 C -5,11 -2,5 -2,1 A 11,11 0 0,1 -11,-6 Z" fill="#0E0E0E" stroke="rgba(255,255,255,0.22)" stroke-width="1.5"/>
               </g>
               <g class="m-thought-top">
-                <rect x="-46" y="-68" width="144" height="44" rx="22" fill="#0E0E0E" stroke="rgba(255,255,255,0.22)" stroke-width="1.5"/>
-                <path d="M -24,-61 L 76,-61" stroke="rgba(255,255,255,0.14)" stroke-width="2" stroke-linecap="round"/>
+                <g class="m-pill-sm">
+                  <rect x="-46" y="-68" width="144" height="44" rx="22" fill="#0E0E0E" stroke="rgba(255,255,255,0.22)" stroke-width="1.5"/>
+                  <path d="M -24,-61 L 76,-61" stroke="rgba(255,255,255,0.14)" stroke-width="2" stroke-linecap="round"/>
+                </g>
+                <g class="m-pill-lg">
+                  <rect x="-64" y="-76" width="184" height="54" rx="22" fill="#0E0E0E" stroke="rgba(255,255,255,0.22)" stroke-width="1.5"/>
+                  <path d="M -38,-69 L 94,-69" stroke="rgba(255,255,255,0.14)" stroke-width="2" stroke-linecap="round"/>
+                </g>
                 <g class="m-hello-sga">
                   <g transform="translate(-25, -55)" shape-rendering="crispEdges">
                     <path fill="#FFFFFF" d="M0,0h15v3H0z M6,3h3v6H6z M6,12h3v6H6z"/>
@@ -338,7 +384,28 @@
                     <rect x="99" y="15" width="3" height="3" fill="#FA4D11"/>
                   </g>
                 </g>
-                <text class="m-hello-eng" x="26" y="-39" text-anchor="middle">hello<tspan fill="#FA4D11">.</tspan></text>
+                <g class="m-hello-eng" clip-path="url(#m-counter-clip-prev)">
+                  <g class="m-reel m-reel-0">
+                    <text x="-18" y="-39" text-anchor="middle">0</text><text x="-18" y="-15" text-anchor="middle">3</text><text x="-18" y="9" text-anchor="middle">7</text><text x="-18" y="33" text-anchor="middle">9</text><text x="-18" y="57" text-anchor="middle">4</text><text x="-18" y="81" text-anchor="middle">8</text><text x="-18" y="105" text-anchor="middle">h</text>
+                  </g>
+                  <g class="m-reel m-reel-1">
+                    <text x="0" y="-39" text-anchor="middle">1</text><text x="0" y="-15" text-anchor="middle">5</text><text x="0" y="9" text-anchor="middle">8</text><text x="0" y="33" text-anchor="middle">2</text><text x="0" y="57" text-anchor="middle">6</text><text x="0" y="81" text-anchor="middle">9</text><text x="0" y="105" text-anchor="middle">e</text>
+                  </g>
+                  <g class="m-reel m-reel-2">
+                    <text x="18" y="-39" text-anchor="middle">2</text><text x="18" y="-15" text-anchor="middle">6</text><text x="18" y="9" text-anchor="middle">0</text><text x="18" y="33" text-anchor="middle">4</text><text x="18" y="57" text-anchor="middle">7</text><text x="18" y="81" text-anchor="middle">1</text><text x="18" y="105" text-anchor="middle">l</text>
+                  </g>
+                  <g class="m-reel m-reel-3">
+                    <text x="36" y="-39" text-anchor="middle">4</text><text x="36" y="-15" text-anchor="middle">8</text><text x="36" y="9" text-anchor="middle">1</text><text x="36" y="33" text-anchor="middle">5</text><text x="36" y="57" text-anchor="middle">9</text><text x="36" y="81" text-anchor="middle">3</text><text x="36" y="105" text-anchor="middle">l</text>
+                  </g>
+                  <g class="m-reel m-reel-4">
+                    <text x="54" y="-39" text-anchor="middle">7</text><text x="54" y="-15" text-anchor="middle">2</text><text x="54" y="9" text-anchor="middle">6</text><text x="54" y="33" text-anchor="middle">9</text><text x="54" y="57" text-anchor="middle">0</text><text x="54" y="81" text-anchor="middle">5</text><text x="54" y="105" text-anchor="middle">o</text>
+                  </g>
+                  <circle cx="68" cy="-41" r="2.2" fill="#FA4D11"/>
+                </g>
+                <g class="m-hello-game">
+                  <text x="28" y="-53" text-anchor="middle">do you play</text>
+                  <text x="28" y="-35" text-anchor="middle">video games<tspan fill="#FA4D11">?</tspan></text>
+                </g>
               </g>
             </g>
           </g>
@@ -356,6 +423,7 @@
   const thought = document.getElementById('m-thought');
   setTimeout(() => { if (thought) thought.classList.add('is-popped'); }, 2000);
   setTimeout(() => { if (thought) thought.classList.add('is-english'); }, 3000);
+  setTimeout(() => { if (thought) thought.classList.add('is-question'); }, 4500);
   const head = document.getElementById('m-head');
   const visor = document.getElementById('m-visor');
   const eyes = document.getElementById('m-eyes');
@@ -371,8 +439,8 @@
   const lidBotR = document.getElementById('m-lid-bot-r');
   const shadow = document.getElementById('m-shadow');
 
-  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
-  const lerp = (a, b, t) => a + (b - a) * t;
+      const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+      const lerp = (a, b, t) => a + (b - a) * t;
 
       const easyEase = t => {
         const x = clamp(t, 0, 1);
@@ -412,71 +480,71 @@
         return 1 - easyEase(u);
       }
 
-  /* ---- 2. Always-On Window Cursor Tracking + Shy/Mush Smirk Detection ---- */
-  let cursorX = 0, cursorY = 0;
-  let lastCursorMoveSec = -10;
-  let prevTargetX = 0, prevTargetY = 0;
+      /* ---- 2. Always-On Window Cursor Tracking + Shy/Mush Smirk Detection ---- */
+      let cursorX = 0, cursorY = 0;
+      let lastCursorMoveSec = -10;
+      let prevTargetX = 0, prevTargetY = 0;
 
-  let isOverHead = false;
-  let isPointerDown = false;
-  let overIntensity = 0;
-  let rubOffsetX = 0;
-  let rubEnergy = 0;
-  let lastClientX = 0, lastClientY = 0;
+      let isOverHead = false;
+      let isPointerDown = false;
+      let overIntensity = 0;
+      let rubOffsetX = 0;
+      let rubEnergy = 0;
+      let lastClientX = 0, lastClientY = 0;
 
-  function onPointer(clientX, clientY) {
-    const nowSec = performance.now() * 0.001;
-    const r = stage.getBoundingClientRect();
-    const cx = r.left + r.width * 0.5;
-    const cy = r.top + r.height * 0.52;
+      function onPointer(clientX, clientY) {
+        const nowSec = performance.now() * 0.001;
+        const r = stage.getBoundingClientRect();
+        const cx = r.left + r.width * 0.5;
+        const cy = r.top + r.height * 0.52;
 
-    const dx = clientX - cx;
-    const dy = clientY - cy;
-    const headRadius = r.width * 0.36;
-    const dist = Math.hypot(dx, dy);
+        const dx = clientX - cx;
+        const dy = clientY - cy;
+        const headRadius = r.width * 0.36;
+        const dist = Math.hypot(dx, dy);
 
-    /* Detect when dragging or moving mouse directly over the mascot head */
-    if (dist < headRadius) {
-      isOverHead = true;
-      overIntensity = easyEase(1 - dist / headRadius * 0.55);
-      rubOffsetX = clamp(dx / (headRadius * 0.7), -1, 1);
-      const moveDelta = Math.hypot(clientX - lastClientX, clientY - lastClientY);
-      rubEnergy = clamp(rubEnergy + moveDelta * 0.025, 0, 1.35);
-    } else {
-      isOverHead = false;
-      overIntensity = 0;
-    }
-    lastClientX = clientX;
-    lastClientY = clientY;
+        /* Detect when dragging or moving mouse directly over the mascot head */
+        if (dist < headRadius) {
+          isOverHead = true;
+          overIntensity = easyEase(1 - dist / headRadius * 0.55);
+          rubOffsetX = clamp(dx / (headRadius * 0.7), -1, 1);
+          const moveDelta = Math.hypot(clientX - lastClientX, clientY - lastClientY);
+          rubEnergy = clamp(rubEnergy + moveDelta * 0.025, 0, 1.35);
+        } else {
+          isOverHead = false;
+          overIntensity = 0;
+        }
+        lastClientX = clientX;
+        lastClientY = clientY;
 
-    const rawX = dx / (Math.max(window.innerWidth, 500) * 0.40);
-    const rawY = dy / (Math.max(window.innerHeight, 500) * 0.40);
-    cursorX = Math.tanh(rawX * 1.4);
-    cursorY = Math.tanh(rawY * 1.4);
-    lastCursorMoveSec = nowSec;
-  }
+        const rawX = dx / (Math.max(window.innerWidth, 500) * 0.40);
+        const rawY = dy / (Math.max(window.innerHeight, 500) * 0.40);
+        cursorX = Math.tanh(rawX * 1.4);
+        cursorY = Math.tanh(rawY * 1.4);
+        lastCursorMoveSec = nowSec;
+      }
 
-  window.addEventListener('pointermove', e => onPointer(e.clientX, e.clientY), { passive: true });
-  window.addEventListener('pointerdown', e => {
-    isPointerDown = true;
-    onPointer(e.clientX, e.clientY);
-  }, { passive: true });
-  window.addEventListener('pointerup', () => { isPointerDown = false; }, { passive: true });
-  window.addEventListener('touchmove', e => {
-    if (e.touches[0]) onPointer(e.touches[0].clientX, e.touches[0].clientY);
-  }, { passive: true });
+      window.addEventListener('pointermove', e => onPointer(e.clientX, e.clientY), { passive: true });
+      window.addEventListener('pointerdown', e => {
+        isPointerDown = true;
+        onPointer(e.clientX, e.clientY);
+      }, { passive: true });
+      window.addEventListener('pointerup', () => { isPointerDown = false; }, { passive: true });
+      window.addEventListener('touchmove', e => {
+        if (e.touches[0]) onPointer(e.touches[0].clientX, e.touches[0].clientY);
+      }, { passive: true });
 
-  /* ---- 3. Autonomous Keyframed Saccade Loop (with Easy Ease) when Cursor Rests ---- */
-  const LOOP_DUR = 7.2;
-  const KEYFRAMES = [
-    { t: 0.00, d: 0.48, x:  0.00, y:  0.00, tilt:  0.0, sq:  0.00, hap: 0 },
-    { t: 0.75, d: 0.46, x: -0.76, y: -0.14, tilt: -6.2, sq:  0.22, hap: 0, blink: true },
-    { t: 2.00, d: 0.50, x:  0.82, y: -0.50, tilt:  6.4, sq: -0.26, hap: 0, blink: true },
-    { t: 3.20, d: 0.42, x:  0.08, y: -0.16, tilt:  2.8, sq:  0.00, hap: 1 },
-    { t: 4.60, d: 0.50, x: -0.40, y:  0.32, tilt: -3.4, sq:  0.12, hap: 0, blink: true },
-    { t: 5.90, d: 0.48, x:  0.00, y:  0.00, tilt:  0.0, sq:  0.00, hap: 0 },
-    { t: 7.20, d: 0.48, x:  0.00, y:  0.00, tilt:  0.0, sq:  0.00, hap: 0 }
-  ];
+      /* ---- 3. Autonomous Keyframed Saccade Loop (with Easy Ease) when Cursor Rests ---- */
+      const LOOP_DUR = 7.2;
+      const KEYFRAMES = [
+        { t: 0.00, d: 0.48, x: 0.00, y: 0.00, tilt: 0.0, sq: 0.00, hap: 0 },
+        { t: 0.75, d: 0.46, x: -0.76, y: -0.14, tilt: -6.2, sq: 0.22, hap: 0, blink: true },
+        { t: 2.00, d: 0.50, x: 0.82, y: -0.50, tilt: 6.4, sq: -0.26, hap: 0, blink: true },
+        { t: 3.20, d: 0.42, x: 0.08, y: -0.16, tilt: 2.8, sq: 0.00, hap: 1 },
+        { t: 4.60, d: 0.50, x: -0.40, y: 0.32, tilt: -3.4, sq: 0.12, hap: 0, blink: true },
+        { t: 5.90, d: 0.48, x: 0.00, y: 0.00, tilt: 0.0, sq: 0.00, hap: 0 },
+        { t: 7.20, d: 0.48, x: 0.00, y: 0.00, tilt: 0.0, sq: 0.00, hap: 0 }
+      ];
 
       let lastKfIdx = -1;
 
@@ -495,10 +563,10 @@
         const rawP = clamp((lt - k1.t) / d, 0, 1);
         const e = easyEaseInOut(rawP);
 
-    if (idx !== lastKfIdx) {
-      lastKfIdx = idx;
-      if (k1.blink) triggerBlink(nowSec, idx === 1);
-    }
+        if (idx !== lastKfIdx) {
+          lastKfIdx = idx;
+          if (k1.blink) triggerBlink(nowSec, idx === 1);
+        }
 
         return {
           x: lerp(k0.x, k1.x, e),
@@ -509,53 +577,53 @@
         };
       }
 
-  /* ---- 4. Dual-Rate Easy-Ease Spring State + Shy Mush Smirk ---- */
-  let eyeX = 0, eyeY = 0, eyeVX = 0, eyeVY = 0;
-  let headX = 0, headY = 0, headTilt = 0, headVX = 0, headVY = 0, headVTilt = 0;
-  let curSquint = 0, curHappy = 0, curMush = 0, curSmirkSide = 1;
+      /* ---- 4. Dual-Rate Easy-Ease Spring State + Shy Mush Smirk ---- */
+      let eyeX = 0, eyeY = 0, eyeVX = 0, eyeVY = 0;
+      let headX = 0, headY = 0, headTilt = 0, headVX = 0, headVY = 0, headVTilt = 0;
+      let curSquint = 0, curHappy = 0, curMush = 0, curSmirkSide = 1;
 
-  function stepAnimation(nowSec, dt) {
-    rubEnergy = Math.max(0, rubEnergy - dt * 1.8);
+      function stepAnimation(nowSec, dt) {
+        rubEnergy = Math.max(0, rubEnergy - dt * 1.8);
 
-    const timeSinceMove = nowSec - lastCursorMoveSec;
-    const cursorWeight = 1 - easyEaseInOut(clamp((timeSinceMove - 1.8) / 0.9, 0, 1));
+        const timeSinceMove = nowSec - lastCursorMoveSec;
+        const cursorWeight = 1 - easyEaseInOut(clamp((timeSinceMove - 1.8) / 0.9, 0, 1));
         const auto = sampleAutonomousLoop(nowSec);
 
-    /* Shy/mush state when hovering or dragging over the mascot head */
-    const targetMush = isOverHead
-      ? clamp(overIntensity * (isPointerDown ? 1.18 : 0.95) + rubEnergy * 0.25, 0, 1.25)
-      : 0;
-    const kMush = 1 - Math.exp(-10 * dt);
-    curMush = lerp(curMush, targetMush, kMush);
+        /* Shy/mush state when hovering or dragging over the mascot head */
+        const targetMush = isOverHead
+          ? clamp(overIntensity * (isPointerDown ? 1.18 : 0.95) + rubEnergy * 0.25, 0, 1.25)
+          : 0;
+        const kMush = 1 - Math.exp(-10 * dt);
+        curMush = lerp(curMush, targetMush, kMush);
 
-    const targetSmirkSide = Math.abs(rubOffsetX) > 0.12 ? Math.sign(rubOffsetX) : 1;
-    curSmirkSide = lerp(curSmirkSide, targetSmirkSide, 1 - Math.exp(-8 * dt));
+        const targetSmirkSide = Math.abs(rubOffsetX) > 0.12 ? Math.sign(rubOffsetX) : 1;
+        curSmirkSide = lerp(curSmirkSide, targetSmirkSide, 1 - Math.exp(-8 * dt));
 
-    if (nowSec >= nextAutoBlink) {
-      if (cursorWeight > 0.3 && curMush < 0.2) triggerBlink(nowSec, Math.random() < 0.28);
-      nextAutoBlink = nowSec + 2.2 + Math.random() * 2.4;
-    }
+        if (nowSec >= nextAutoBlink) {
+          if (cursorWeight > 0.3 && curMush < 0.2) triggerBlink(nowSec, Math.random() < 0.28);
+          nextAutoBlink = nowSec + 2.2 + Math.random() * 2.4;
+        }
 
-    /* When shy/mushed, eyes glance shyly down-and-aside with a cheeky smirk */
-    const shyLookX = curSmirkSide * 0.34 + Math.sin(nowSec * 9) * rubEnergy * 0.12;
-    const shyLookY = 0.24;
+        /* When shy/mushed, eyes glance shyly down-and-aside with a cheeky smirk */
+        const shyLookX = curSmirkSide * 0.34 + Math.sin(nowSec * 9) * rubEnergy * 0.12;
+        const shyLookY = 0.24;
 
-    const baseTargetX = lerp(auto.x, cursorX, cursorWeight);
-    const baseTargetY = lerp(auto.y, cursorY, cursorWeight);
-    const targetX = lerp(baseTargetX, shyLookX, clamp(curMush, 0, 1));
-    const targetY = lerp(baseTargetY, shyLookY, clamp(curMush, 0, 1));
+        const baseTargetX = lerp(auto.x, cursorX, cursorWeight);
+        const baseTargetY = lerp(auto.y, cursorY, cursorWeight);
+        const targetX = lerp(baseTargetX, shyLookX, clamp(curMush, 0, 1));
+        const targetY = lerp(baseTargetY, shyLookY, clamp(curMush, 0, 1));
 
-    const shyTilt = -curSmirkSide * 8.5 + rubOffsetX * 6.5 + Math.sin(nowSec * 11) * rubEnergy * 2.5;
-    const baseTilt = lerp(auto.tilt, cursorX * 7.5 - cursorY * 1.5, cursorWeight);
-    const targetTilt = lerp(baseTilt, shyTilt, clamp(curMush, 0, 1));
+        const shyTilt = -curSmirkSide * 8.5 + rubOffsetX * 6.5 + Math.sin(nowSec * 11) * rubEnergy * 2.5;
+        const baseTilt = lerp(auto.tilt, cursorX * 7.5 - cursorY * 1.5, cursorWeight);
+        const targetTilt = lerp(baseTilt, shyTilt, clamp(curMush, 0, 1));
 
-    const targetSq = lerp(auto.sq, -cursorX * 0.16, cursorWeight);
-    const targetHappy = Math.max(auto.hap * (1 - cursorWeight * 0.8), clamp(curMush * 1.05, 0, 1));
+        const targetSq = lerp(auto.sq, -cursorX * 0.16, cursorWeight);
+        const targetHappy = Math.max(auto.hap * (1 - cursorWeight * 0.8), clamp(curMush * 1.05, 0, 1));
 
-    const jumpDist = Math.hypot(targetX - prevTargetX, targetY - prevTargetY);
-    if (jumpDist > 0.55 && curMush < 0.2) triggerBlink(nowSec, false);
-    prevTargetX = lerp(prevTargetX, targetX, 0.25);
-    prevTargetY = lerp(prevTargetY, targetY, 0.25);
+        const jumpDist = Math.hypot(targetX - prevTargetX, targetY - prevTargetY);
+        if (jumpDist > 0.55 && curMush < 0.2) triggerBlink(nowSec, false);
+        prevTargetX = lerp(prevTargetX, targetX, 0.25);
+        prevTargetY = lerp(prevTargetY, targetY, 0.25);
 
         /* Eyes lead head: smooth Easy-Ease critically-damped dynamics */
         const eStiff = 220, eDamp = 27;
@@ -576,84 +644,84 @@
         curSquint = lerp(curSquint, targetSq, kExp);
         curHappy = lerp(curHappy, targetHappy, kExp);
 
-    /* Breathing float + tactile mush squash when cursor drags over head */
-    const breathPhase = nowSec * (Math.PI * 2 / 3.6);
-    const mushSquish = easyEase(clamp(curMush, 0, 1.2));
-    const rubWiggle = Math.sin(nowSec * 14) * rubEnergy * 0.022;
+        /* Breathing float + tactile mush squash when cursor drags over head */
+        const breathPhase = nowSec * (Math.PI * 2 / 3.6);
+        const mushSquish = easyEase(clamp(curMush, 0, 1.2));
+        const rubWiggle = Math.sin(nowSec * 14) * rubEnergy * 0.022;
 
-    const bobY = Math.sin(breathPhase) * 8.5 * (1 - mushSquish * 0.5) + mushSquish * 12;
-    const sx = 1 + Math.sin(breathPhase) * 0.018 + mushSquish * 0.088 + rubWiggle;
-    const sy = 1 - Math.sin(breathPhase) * 0.018 - mushSquish * 0.082 - rubWiggle;
+        const bobY = Math.sin(breathPhase) * 8.5 * (1 - mushSquish * 0.5) + mushSquish * 12;
+        const sx = 1 + Math.sin(breathPhase) * 0.018 + mushSquish * 0.088 + rubWiggle;
+        const sy = 1 - Math.sin(breathPhase) * 0.018 - mushSquish * 0.082 - rubWiggle;
 
-    /* 1. Apply Head Transform */
-    head.setAttribute(
-      'transform',
-      `translate(${(headX * 9 + rubOffsetX * mushSquish * 6).toFixed(2)}, ${(bobY + headY * 6).toFixed(2)}) rotate(${headTilt.toFixed(2)}) scale(${sx.toFixed(3)}, ${sy.toFixed(3)})`
-    );
+        /* 1. Apply Head Transform */
+        head.setAttribute(
+          'transform',
+          `translate(${(headX * 9 + rubOffsetX * mushSquish * 6).toFixed(2)}, ${(bobY + headY * 6).toFixed(2)}) rotate(${headTilt.toFixed(2)}) scale(${sx.toFixed(3)}, ${sy.toFixed(3)})`
+        );
 
-    /* 2. Ground Shadow Inverse Scale */
-    const shScale = 1 - (bobY + headY * 6) * 0.008 + mushSquish * 0.08;
-    shadow.setAttribute('rx', (112 * shScale).toFixed(1));
+        /* 2. Ground Shadow Inverse Scale */
+        const shScale = 1 - (bobY + headY * 6) * 0.008 + mushSquish * 0.08;
+        shadow.setAttribute('rx', (112 * shScale).toFixed(1));
 
-    /* 3. Visor Intermediate Parallax + Shy Blush */
-    const vx = lerp(headX, eyeX, 0.55) * 15;
-    const vy = 6 + lerp(headY, eyeY, 0.55) * 11 + mushSquish * 3;
-    visor.setAttribute('transform', `translate(${vx.toFixed(2)}, ${vy.toFixed(2)})`);
-    gloss.setAttribute('transform', `translate(${(-headX * 5).toFixed(2)}, ${(-headY * 4).toFixed(2)})`);
-    shyBlush.setAttribute('opacity', (clamp(mushSquish * 0.85, 0, 0.85)).toFixed(3));
+        /* 3. Visor Intermediate Parallax + Shy Blush */
+        const vx = lerp(headX, eyeX, 0.55) * 15;
+        const vy = 6 + lerp(headY, eyeY, 0.55) * 11 + mushSquish * 3;
+        visor.setAttribute('transform', `translate(${vx.toFixed(2)}, ${vy.toFixed(2)})`);
+        gloss.setAttribute('transform', `translate(${(-headX * 5).toFixed(2)}, ${(-headY * 4).toFixed(2)})`);
+        shyBlush.setAttribute('opacity', (clamp(mushSquish * 0.85, 0, 0.85)).toFixed(3));
 
         /* 4. Fast Leading Eye Parallax + 3D Sphere Foreshortening */
         const ex = eyeX * 24;
         const ey = 10 + eyeY * 16;
         eyes.setAttribute('transform', `translate(${ex.toFixed(2)}, ${ey.toFixed(2)})`);
 
-    const eyeSpread = 44 * (1 - Math.abs(eyeX) * 0.08 + mushSquish * 0.04);
-    eyeL.setAttribute('transform', `translate(${(-eyeSpread).toFixed(2)}, 0)`);
-    eyeR.setAttribute('transform', `translate(${(eyeSpread).toFixed(2)}, 0)`);
+        const eyeSpread = 44 * (1 - Math.abs(eyeX) * 0.08 + mushSquish * 0.04);
+        eyeL.setAttribute('transform', `translate(${(-eyeSpread).toFixed(2)}, 0)`);
+        eyeR.setAttribute('transform', `translate(${(eyeSpread).toFixed(2)}, 0)`);
 
-    /* 5. Physical Upper & Lower Eyelids inside Mask (with Asymmetric Shy Smirk!) */
-    const blinkAmt = evalBlink(nowSec);
+        /* 5. Physical Upper & Lower Eyelids inside Mask (with Asymmetric Shy Smirk!) */
+        const blinkAmt = evalBlink(nowSec);
 
-    /* Asymmetric smirk when mushed: one cheek pushes higher while the other brow tilts coyly */
-    const smirkL = clamp(curMush, 0, 1) * (curSmirkSide < 0 ? 1.18 : 0.72);
-    const smirkR = clamp(curMush, 0, 1) * (curSmirkSide >= 0 ? 1.18 : 0.72);
+        /* Asymmetric smirk when mushed: one cheek pushes higher while the other brow tilts coyly */
+        const smirkL = clamp(curMush, 0, 1) * (curSmirkSide < 0 ? 1.18 : 0.72);
+        const smirkR = clamp(curMush, 0, 1) * (curSmirkSide >= 0 ? 1.18 : 0.72);
 
-    const sqTopL = Math.max(0, -curSquint) * 14 + clamp(curMush, 0, 1) * (curSmirkSide >= 0 ? 11 : 4);
-    const sqTopR = Math.max(0,  curSquint) * 14 + clamp(curMush, 0, 1) * (curSmirkSide < 0 ? 11 : 4);
-    const topYL = -98 + sqTopL + blinkAmt * 62;
-    const topYR = -98 + sqTopR + blinkAmt * 62;
-    const topRotL = clamp(curMush, 0, 1) * (curSmirkSide >= 0 ? 8 : -5);
-    const topRotR = clamp(curMush, 0, 1) * (curSmirkSide >= 0 ? 5 : -8);
-    lidTopL.setAttribute('y', topYL.toFixed(2));
-    lidTopR.setAttribute('y', topYR.toFixed(2));
-    lidTopL.setAttribute('transform', `rotate(${topRotL.toFixed(2)})`);
-    lidTopR.setAttribute('transform', `rotate(${topRotR.toFixed(2)})`);
+        const sqTopL = Math.max(0, -curSquint) * 14 + clamp(curMush, 0, 1) * (curSmirkSide >= 0 ? 11 : 4);
+        const sqTopR = Math.max(0, curSquint) * 14 + clamp(curMush, 0, 1) * (curSmirkSide < 0 ? 11 : 4);
+        const topYL = -98 + sqTopL + blinkAmt * 62;
+        const topYR = -98 + sqTopR + blinkAmt * 62;
+        const topRotL = clamp(curMush, 0, 1) * (curSmirkSide >= 0 ? 8 : -5);
+        const topRotR = clamp(curMush, 0, 1) * (curSmirkSide >= 0 ? 5 : -8);
+        lidTopL.setAttribute('y', topYL.toFixed(2));
+        lidTopR.setAttribute('y', topYR.toFixed(2));
+        lidTopL.setAttribute('transform', `rotate(${topRotL.toFixed(2)})`);
+        lidTopR.setAttribute('transform', `rotate(${topRotR.toFixed(2)})`);
 
-    const sqBotL = Math.max(0, -curSquint) * 10;
-    const sqBotR = Math.max(0,  curSquint) * 10;
-    const happyLiftL = Math.max(curHappy * 44, smirkL * 45);
-    const happyLiftR = Math.max(curHappy * 44, smirkR * 45);
-    const botCYL = 68 - happyLiftL - sqBotL - blinkAmt * 12;
-    const botCYR = 68 - happyLiftR - sqBotR - blinkAmt * 12;
-    const botRotL = clamp(curMush, 0, 1) * -6 * curSmirkSide;
-    const botRotR = clamp(curMush, 0, 1) * -10 * curSmirkSide;
-    lidBotL.setAttribute('cy', botCYL.toFixed(2));
-    lidBotR.setAttribute('cy', botCYR.toFixed(2));
-    lidBotL.setAttribute('transform', `rotate(${botRotL.toFixed(2)})`);
-    lidBotR.setAttribute('transform', `rotate(${botRotR.toFixed(2)})`);
+        const sqBotL = Math.max(0, -curSquint) * 10;
+        const sqBotR = Math.max(0, curSquint) * 10;
+        const happyLiftL = Math.max(curHappy * 44, smirkL * 45);
+        const happyLiftR = Math.max(curHappy * 44, smirkR * 45);
+        const botCYL = 68 - happyLiftL - sqBotL - blinkAmt * 12;
+        const botCYR = 68 - happyLiftR - sqBotR - blinkAmt * 12;
+        const botRotL = clamp(curMush, 0, 1) * -6 * curSmirkSide;
+        const botRotR = clamp(curMush, 0, 1) * -10 * curSmirkSide;
+        lidBotL.setAttribute('cy', botCYL.toFixed(2));
+        lidBotR.setAttribute('cy', botCYR.toFixed(2));
+        lidBotL.setAttribute('transform', `rotate(${botRotL.toFixed(2)})`);
+        lidBotR.setAttribute('transform', `rotate(${botRotR.toFixed(2)})`);
 
-    /* 3D Foreshortening & Mush Squash/Stretch on Eye Body */
-    const perspLX = 1 - Math.max(0, -eyeX) * 0.14;
-    const perspRX = 1 - Math.max(0,  eyeX) * 0.14;
-    const widenX = 1 + blinkAmt * 0.10 + curHappy * 0.06 + mushSquish * 0.08;
-    const scaleLY = (1 + Math.max(0, curSquint) * 0.10) * (1 - blinkAmt * 0.12) * (1 - mushSquish * 0.06);
-    const scaleRY = (1 + Math.max(0, -curSquint) * 0.10) * (1 - blinkAmt * 0.12) * (1 - mushSquish * 0.06);
+        /* 3D Foreshortening & Mush Squash/Stretch on Eye Body */
+        const perspLX = 1 - Math.max(0, -eyeX) * 0.14;
+        const perspRX = 1 - Math.max(0, eyeX) * 0.14;
+        const widenX = 1 + blinkAmt * 0.10 + curHappy * 0.06 + mushSquish * 0.08;
+        const scaleLY = (1 + Math.max(0, curSquint) * 0.10) * (1 - blinkAmt * 0.12) * (1 - mushSquish * 0.06);
+        const scaleRY = (1 + Math.max(0, -curSquint) * 0.10) * (1 - blinkAmt * 0.12) * (1 - mushSquish * 0.06);
 
-    const eyeTiltL = -eyeX * 4.0 - mushSquish * 5 * curSmirkSide;
-    const eyeTiltR = -eyeX * 4.0 + mushSquish * 7 * curSmirkSide;
-    eyeLShape.setAttribute('transform', `rotate(${eyeTiltL.toFixed(2)}) scale(${(perspLX * widenX).toFixed(3)}, ${scaleLY.toFixed(3)})`);
-    eyeRShape.setAttribute('transform', `rotate(${eyeTiltR.toFixed(2)}) scale(${(perspRX * widenX).toFixed(3)}, ${scaleRY.toFixed(3)})`);
-  }
+        const eyeTiltL = -eyeX * 4.0 - mushSquish * 5 * curSmirkSide;
+        const eyeTiltR = -eyeX * 4.0 + mushSquish * 7 * curSmirkSide;
+        eyeLShape.setAttribute('transform', `rotate(${eyeTiltL.toFixed(2)}) scale(${(perspLX * widenX).toFixed(3)}, ${scaleLY.toFixed(3)})`);
+        eyeRShape.setAttribute('transform', `rotate(${eyeTiltR.toFixed(2)}) scale(${(perspRX * widenX).toFixed(3)}, ${scaleRY.toFixed(3)})`);
+      }
 
       let last = performance.now();
       function tick(now) {
