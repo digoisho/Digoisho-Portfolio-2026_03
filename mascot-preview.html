@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>digoisho — 500x500 Mascot Head Animation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&family=Open+Sans:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --white: #FFFFFF;
+    --paper: #F5F4F4;
+    --black: #0A0A0A;
+    --orange: #FA4D11;
+    --rule: rgba(10, 10, 10, 0.10);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    background: var(--white);
+    font-family: 'Open Sans', system-ui, sans-serif;
+    color: var(--black);
+    padding: 24px;
+    overflow: hidden;
+  }
+
+  /* Exact 500x500 White Stage */
+  .mascot-stage {
+    position: relative;
+    width: 500px;
+    height: 500px;
+    background: #FFFFFF;
+    border-radius: 36px;
+    border: 1px solid var(--rule);
+    box-shadow: 0 24px 60px rgba(10, 10, 10, 0.06);
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+    user-select: none;
+    cursor: grab;
+    touch-action: none;
+  }
+  .mascot-stage:active {
+    cursor: grabbing;
+  }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      background: var(--white);
+      font-family: 'Open Sans', system-ui, sans-serif;
+      color: var(--black);
+      padding: 24px;
+      overflow: hidden;
+    }
+
+  .hud-note {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #666;
+  }
+  .m-thought {
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: 15% 90%;
+    transform: translate3d(-6px, 8px, 0) scale(0.2);
+    transition: opacity 0.42s cubic-bezier(0.22, 1, 0.36, 1), transform 0.56s cubic-bezier(0.34, 1.56, 0.64, 1);
+    pointer-events: none;
+  }
+  .m-thought.is-popped {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  .m-thought-comma {
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: 50% 50%;
+    transform: scale(0.2);
+    transition: opacity 0.32s cubic-bezier(0.22, 1, 0.36, 1), transform 0.44s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .m-thought.is-popped .m-thought-comma {
+    opacity: 1;
+    transform: scale(1);
+  }
+  .m-thought-top {
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: 20% 100%;
+    transform: translate3d(0, 6px, 0) scale(0.4);
+    transition: opacity 0.38s cubic-bezier(0.22, 1, 0.36, 1) 0.09s, transform 0.52s cubic-bezier(0.34, 1.56, 0.64, 1) 0.09s;
+  }
+  .m-thought.is-popped .m-thought-top {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+</style>
+</head>
+
+<body>
+
+  <!-- EXACT 500x500 WHITE STAGE (Pebble + Tuft + Pixel/Pebble Eyes Only) -->
+  <div class="mascot-stage" id="mascot-stage" title="Move cursor to look · Hover or drag over head to mush & shy smirk!">
+    <svg class="mascot-svg" id="mascot-svg" viewBox="0 0 500 500" width="500" height="500"
+      aria-label="digoisho 500x500 mascot head looping animation">
+      <defs>
+        <!-- Sculptural 3D Carbon Black Shell Shading -->
+        <radialGradient id="shell-3d" cx="38%" cy="22%" r="78%">
+          <stop offset="0%" stop-color="#303033" />
+          <stop offset="36%" stop-color="#151517" />
+          <stop offset="78%" stop-color="#0A0A0B" />
+          <stop offset="100%" stop-color="#1E1E22" />
+        </radialGradient>
+
+        <!-- Warm Blaze Orange (#FA4D11) Crown Subsurface Hint -->
+        <radialGradient id="orange-crown" cx="52%" cy="8%" r="34%">
+          <stop offset="0%" stop-color="#FA4D11" stop-opacity="0.92" />
+          <stop offset="42%" stop-color="#FA4D11" stop-opacity="0.22" />
+          <stop offset="100%" stop-color="#FA4D11" stop-opacity="0" />
+        </radialGradient>
+
+        <linearGradient id="shell-rim-grad" x1="20%" y1="0%" x2="80%" y2="100%">
+          <stop offset="0%" stop-color="#FA4D11" stop-opacity="0.85" />
+          <stop offset="28%" stop-color="#FFFFFF" stop-opacity="0.28" />
+          <stop offset="70%" stop-color="#FFFFFF" stop-opacity="0.06" />
+          <stop offset="100%" stop-color="#FA4D11" stop-opacity="0.45" />
+        </linearGradient>
+
+        <!-- Recessed Visor Lip Bevel -->
+        <linearGradient id="visor-lip" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#040404" />
+          <stop offset="55%" stop-color="#141416" />
+          <stop offset="100%" stop-color="#343438" />
+        </linearGradient>
+
+        <!-- Deep Domed Glass Visor Surface -->
+        <radialGradient id="visor-dome" cx="48%" cy="32%" r="68%">
+          <stop offset="0%" stop-color="#222226" />
+          <stop offset="58%" stop-color="#0D0D0F" />
+          <stop offset="100%" stop-color="#050506" />
+        </radialGradient>
+
+        <!-- Shy Orange Cheek Blush (Only visible when hovering/dragging over head) -->
+        <radialGradient id="shy-blush-grad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#FA4D11" stop-opacity="0.65"/>
+          <stop offset="55%" stop-color="#FA4D11" stop-opacity="0.22"/>
+          <stop offset="100%" stop-color="#FA4D11" stop-opacity="0"/>
+        </radialGradient>
+
+        <!-- Soft Floor Shadow on White BG -->
+        <radialGradient id="floor-shadow-grad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#0A0A0A" stop-opacity="0.16" />
+          <stop offset="55%" stop-color="#0A0A0A" stop-opacity="0.06" />
+          <stop offset="100%" stop-color="#0A0A0A" stop-opacity="0" />
+        </radialGradient>
+
+        <!-- Clip for Visor Interior -->
+        <clipPath id="visor-clip-pebble">
+          <path d="M 0,-74
+               C 32,-74 58,-82 84,-70
+               C 118,-54 134,-14 130,32
+               C 126,76 92,102 44,102
+               C 18,102 10,96 0,96
+               C -10,96 -18,102 -44,102
+               C -92,102 -126,76 -130,32
+               C -134,-14 -118,-54 -84,-70
+               C -58,-82 -32,-74 0,-74 Z" />
+        </clipPath>
+
+        <!-- Natural Eyelid Masks (Upper Blink/Smirk Lid + Lower Cheek/Smile Lid) -->
+        <mask id="eye-mask-l" maskUnits="userSpaceOnUse" x="-60" y="-60" width="120" height="120">
+          <rect x="-60" y="-60" width="120" height="120" fill="white" />
+          <rect id="m-lid-top-l" x="-48" y="-98" width="96" height="68" rx="18" fill="black"/>
+          <ellipse id="m-lid-bot-l" cx="0" cy="68" rx="40" ry="32" fill="black"/>
+        </mask>
+
+        <mask id="eye-mask-r" maskUnits="userSpaceOnUse" x="-60" y="-60" width="120" height="120">
+          <rect x="-60" y="-60" width="120" height="120" fill="white"/>
+          <rect id="m-lid-top-r" x="-48" y="-98" width="96" height="68" rx="18" fill="black"/>
+          <ellipse id="m-lid-bot-r" cx="0" cy="68" rx="40" ry="32" fill="black"/>
+        </mask>
+      </defs>
+
+      <!-- Soft Floating Floor Shadow -->
+      <ellipse id="m-shadow" cx="250" cy="436" rx="112" ry="16" fill="url(#floor-shadow-grad)" />
+
+      <!-- =========================================================
+           MASCOT ROOT (Centered in 500x500 White Stage)
+           ========================================================= -->
+      <g id="m-root" transform="translate(250, 256)">
+        <g id="m-head">
+
+          <!-- 1. SEAMLESS SCULPTURAL PEBBLE HEAD SILHOUETTE -->
+          <g id="m-shell-wrap">
+            <path id="m-shell-tufted" d="M -38,-140
+                 C -36,-174 -4,-182 6,-156
+                 C 14,-174 40,-168 38,-138
+                 C 112,-128 160,-72 170,16
+                 C 178,92 138,144 64,144
+                 C 28,144 16,136 0,136
+                 C -16,136 -28,144 -64,144
+                 C -138,144 -178,92 -170,16
+                 C -160,-72 -112,-128 -38,-140 Z" fill="url(#shell-3d)" stroke="url(#shell-rim-grad)"
+              stroke-width="2.5" />
+
+            <!-- Warm Blaze Orange (#FA4D11) Crown Subsurface Wash on Top Tuft -->
+            <path id="m-crown-wash" d="M -38,-140
+                 C -36,-174 -4,-182 6,-156
+                 C 14,-174 40,-168 38,-138
+                 C 112,-128 160,-72 170,16
+                 C 178,92 138,144 64,144
+                 C 28,144 16,136 0,136
+                 C -16,136 -28,144 -64,144
+                 C -138,144 -178,92 -170,16
+                 C -160,-72 -112,-128 -38,-140 Z" fill="url(#orange-crown)" />
+
+            <!-- Crisp Blaze Orange (#FA4D11) Accent Tip on Secondary Crown Bump -->
+            <path id="m-tuft-accent" d="M 7,-155 C 14,-171 36,-166 36,-141 C 26,-145 15,-149 7,-155 Z" fill="#FA4D11" />
+          </g>
+
+          <!-- 2. RECESSED GLOSSY VISOR CAVITY -->
+          <g id="m-visor" transform="translate(0, 6)">
+            <!-- Outer Recessed Bevel Lip -->
+            <path d="M 0,-78
+                 C 34,-78 60,-86 88,-74
+                 C 124,-57 140,-15 136,34
+                 C 132,80 96,108 46,108
+                 C 19,108 11,101 0,101
+                 C -11,101 -19,108 -46,108
+                 C -96,108 -132,80 -136,34
+                 C -140,-15 -124,-57 -88,-74
+                 C -60,-86 -34,-78 0,-78 Z" fill="url(#visor-lip)" />
+
+            <!-- Inner Domed Glass Screen -->
+            <path d="M 0,-74
+                 C 32,-74 58,-82 84,-70
+                 C 118,-54 134,-14 130,32
+                 C 126,76 92,102 44,102
+                 C 18,102 10,96 0,96
+                 C -10,96 -18,102 -44,102
+                 C -92,102 -126,76 -130,32
+                 C -134,-14 -118,-54 -84,-70
+                 C -58,-82 -32,-74 0,-74 Z" fill="url(#visor-dome)" />
+
+            <!-- Clipped Interior of Glass Visor -->
+            <g clip-path="url(#visor-clip-pebble)">
+              <!-- Shy Blush Cheeks (0 opacity normally; fades in softly on shy/mush hover) -->
+              <g id="m-shy-blush" opacity="0">
+                <ellipse cx="-68" cy="48" rx="34" ry="20" fill="url(#shy-blush-grad)"/>
+                <ellipse cx="68" cy="48" rx="34" ry="20" fill="url(#shy-blush-grad)"/>
+              </g>
+
+              <!-- 3. PEBBLE PIXEL EYES (100% Solid Eyelid-Masked Shapes) -->
+              <g id="m-eyes" transform="translate(0, 12)">
+
+                <!-- LEFT EYE -->
+                <g id="m-eye-l" transform="translate(-44, 0)">
+                  <g id="m-eye-l-shape" mask="url(#eye-mask-l)">
+                    <rect id="m-eye-l-rect" x="-23" y="-31" width="46" height="62" rx="10" ry="10" fill="#FFFFFF"/>
+                  </g>
+                </g>
+
+                <!-- RIGHT EYE -->
+                <g id="m-eye-r" transform="translate(44, 0)">
+                  <g id="m-eye-r-shape" mask="url(#eye-mask-r)">
+                    <rect id="m-eye-r-rect" x="-23" y="-31" width="46" height="62" rx="10" ry="10" fill="#FFFFFF"/>
+                  </g>
+                </g>
+
+              </g>
+            </g>
+
+            <!-- 4. SPECULAR GLASS REFLECTION ARCS ON VISOR -->
+            <g id="m-gloss" pointer-events="none">
+              <path d="M 18,-62 C 28,-63 38,-61 46,-57" fill="none" stroke="#FFFFFF" stroke-width="5.5"
+                stroke-linecap="round" opacity="0.76" />
+              <path d="M 62,-49 C 84,-36 99,-14 105,12" fill="none" stroke="#FFFFFF" stroke-width="5.5"
+                stroke-linecap="round" opacity="0.84" />
+              <circle cx="94" cy="72" r="3.5" fill="#FA4D11" opacity="0.9" />
+            </g>
+          </g>
+
+          <!-- Semicolon ";" Thought Cloud ("hello" in Minecraft Enchantment Font after 2s) -->
+          <g transform="translate(146, -134)">
+            <g class="m-thought" id="m-thought" aria-label="hello">
+              <g class="m-thought-comma">
+                <path d="M -11,-6 A 11,11 0 1,1 11,-6 C 11,7 1,17 -11,20 C -14,21 -15,17 -12,15 C -5,11 -2,5 -2,1 A 11,11 0 0,1 -11,-6 Z" fill="#0E0E0E" stroke="rgba(255,255,255,0.22)" stroke-width="1.5"/>
+              </g>
+              <g class="m-thought-top">
+                <rect x="-46" y="-68" width="144" height="44" rx="22" fill="#0E0E0E" stroke="rgba(255,255,255,0.22)" stroke-width="1.5"/>
+                <path d="M -24,-61 L 76,-61" stroke="rgba(255,255,255,0.14)" stroke-width="2" stroke-linecap="round"/>
+                <g transform="translate(-25, -55)" shape-rendering="crispEdges">
+                  <path fill="#FFFFFF" d="M0,0h15v3H0z M6,3h3v6H6z M6,12h3v6H6z"/>
+                  <path fill="#FFFFFF" transform="translate(21,0)" d="M0,0h9v3H0z M6,3h3v3H6z M3,6h3v3H3z M9,6h3v3H9z M0,9h3v3H0z M12,9h3v6h-3z M0,15h9v3H0z"/>
+                  <path fill="#FFFFFF" transform="translate(42,0)" d="M3,0h3v15H3z M9,3h3v12H9z M6,15h3v3H6z"/>
+                  <path fill="#FFFFFF" transform="translate(60,0)" d="M3,0h3v15H3z M9,3h3v12H9z M6,15h3v3H6z"/>
+                  <path fill="#FFFFFF" transform="translate(78,0)" d="M6,0h9v3H6z M6,3h3v12H6z M0,12h3v3H0z M0,15h9v3H0z"/>
+                  <rect x="99" y="15" width="3" height="3" fill="#FA4D11"/>
+                </g>
+              </g>
+            </g>
+          </g>
+
+        </g>
+      </g>
+    </svg>
+  </div>
+
+  <p class="hud-note">Move cursor to look · Drag or hover over head to mush &amp; shy smirk</p>
+
+<script>
+(() => {
+  const stage = document.getElementById('mascot-stage');
+  const thought = document.getElementById('m-thought');
+  setTimeout(() => { if (thought) thought.classList.add('is-popped'); }, 2000);
+  const head = document.getElementById('m-head');
+  const visor = document.getElementById('m-visor');
+  const eyes = document.getElementById('m-eyes');
+  const gloss = document.getElementById('m-gloss');
+  const shyBlush = document.getElementById('m-shy-blush');
+  const eyeL = document.getElementById('m-eye-l');
+  const eyeR = document.getElementById('m-eye-r');
+  const eyeLShape = document.getElementById('m-eye-l-shape');
+  const eyeRShape = document.getElementById('m-eye-r-shape');
+  const lidTopL = document.getElementById('m-lid-top-l');
+  const lidTopR = document.getElementById('m-lid-top-r');
+  const lidBotL = document.getElementById('m-lid-bot-l');
+  const lidBotR = document.getElementById('m-lid-bot-r');
+  const shadow = document.getElementById('m-shadow');
+
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const lerp = (a, b, t) => a + (b - a) * t;
+
+      const easyEase = t => {
+        const x = clamp(t, 0, 1);
+        return x * x * (3 - 2 * x);
+      };
+      const easyEaseInOut = t => {
+        const x = clamp(t, 0, 1);
+        return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+      };
+
+      /* ---- 1. Natural Eyelid Blink Controller ---- */
+      let blinkStart = -10;
+      let secondBlinkAt = -10;
+      let nextAutoBlink = 1.6;
+
+      function triggerBlink(nowSec, isDouble = false) {
+        if (nowSec - blinkStart < 0.25) return;
+        blinkStart = nowSec;
+        if (isDouble) secondBlinkAt = nowSec + 0.25;
+      }
+
+      function evalBlink(nowSec) {
+        if (secondBlinkAt > 0 && nowSec >= secondBlinkAt) {
+          blinkStart = secondBlinkAt;
+          secondBlinkAt = -10;
+        }
+        const elapsed = nowSec - blinkStart;
+        if (elapsed < 0 || elapsed > 0.25) return 0;
+        if (elapsed < 0.055) {
+          const u = elapsed / 0.055;
+          return u * u;
+        }
+        if (elapsed < 0.080) {
+          return 1.0;
+        }
+        const u = (elapsed - 0.080) / 0.170;
+        return 1 - easyEase(u);
+      }
+
+  /* ---- 2. Always-On Window Cursor Tracking + Shy/Mush Smirk Detection ---- */
+  let cursorX = 0, cursorY = 0;
+  let lastCursorMoveSec = -10;
+  let prevTargetX = 0, prevTargetY = 0;
+
+  let isOverHead = false;
+  let isPointerDown = false;
+  let overIntensity = 0;
+  let rubOffsetX = 0;
+  let rubEnergy = 0;
+  let lastClientX = 0, lastClientY = 0;
+
+  function onPointer(clientX, clientY) {
+    const nowSec = performance.now() * 0.001;
+    const r = stage.getBoundingClientRect();
+    const cx = r.left + r.width * 0.5;
+    const cy = r.top + r.height * 0.52;
+
+    const dx = clientX - cx;
+    const dy = clientY - cy;
+    const headRadius = r.width * 0.36;
+    const dist = Math.hypot(dx, dy);
+
+    /* Detect when dragging or moving mouse directly over the mascot head */
+    if (dist < headRadius) {
+      isOverHead = true;
+      overIntensity = easyEase(1 - dist / headRadius * 0.55);
+      rubOffsetX = clamp(dx / (headRadius * 0.7), -1, 1);
+      const moveDelta = Math.hypot(clientX - lastClientX, clientY - lastClientY);
+      rubEnergy = clamp(rubEnergy + moveDelta * 0.025, 0, 1.35);
+    } else {
+      isOverHead = false;
+      overIntensity = 0;
+    }
+    lastClientX = clientX;
+    lastClientY = clientY;
+
+    const rawX = dx / (Math.max(window.innerWidth, 500) * 0.40);
+    const rawY = dy / (Math.max(window.innerHeight, 500) * 0.40);
+    cursorX = Math.tanh(rawX * 1.4);
+    cursorY = Math.tanh(rawY * 1.4);
+    lastCursorMoveSec = nowSec;
+  }
+
+  window.addEventListener('pointermove', e => onPointer(e.clientX, e.clientY), { passive: true });
+  window.addEventListener('pointerdown', e => {
+    isPointerDown = true;
+    onPointer(e.clientX, e.clientY);
+  }, { passive: true });
+  window.addEventListener('pointerup', () => { isPointerDown = false; }, { passive: true });
+  window.addEventListener('touchmove', e => {
+    if (e.touches[0]) onPointer(e.touches[0].clientX, e.touches[0].clientY);
+  }, { passive: true });
+
+  /* ---- 3. Autonomous Keyframed Saccade Loop (with Easy Ease) when Cursor Rests ---- */
+  const LOOP_DUR = 7.2;
+  const KEYFRAMES = [
+    { t: 0.00, d: 0.48, x:  0.00, y:  0.00, tilt:  0.0, sq:  0.00, hap: 0 },
+    { t: 0.75, d: 0.46, x: -0.76, y: -0.14, tilt: -6.2, sq:  0.22, hap: 0, blink: true },
+    { t: 2.00, d: 0.50, x:  0.82, y: -0.50, tilt:  6.4, sq: -0.26, hap: 0, blink: true },
+    { t: 3.20, d: 0.42, x:  0.08, y: -0.16, tilt:  2.8, sq:  0.00, hap: 1 },
+    { t: 4.60, d: 0.50, x: -0.40, y:  0.32, tilt: -3.4, sq:  0.12, hap: 0, blink: true },
+    { t: 5.90, d: 0.48, x:  0.00, y:  0.00, tilt:  0.0, sq:  0.00, hap: 0 },
+    { t: 7.20, d: 0.48, x:  0.00, y:  0.00, tilt:  0.0, sq:  0.00, hap: 0 }
+  ];
+
+      let lastKfIdx = -1;
+
+      function sampleAutonomousLoop(nowSec) {
+        const lt = ((nowSec % LOOP_DUR) + LOOP_DUR) % LOOP_DUR;
+        let idx = 0;
+        for (let i = 0; i < KEYFRAMES.length - 1; i++) {
+          if (lt >= KEYFRAMES[i].t && lt < KEYFRAMES[i + 1].t) {
+            idx = i;
+            break;
+          }
+        }
+        const k0 = KEYFRAMES[idx === 0 ? KEYFRAMES.length - 2 : idx - 1];
+        const k1 = KEYFRAMES[idx];
+        const d = k1.d || 0.46;
+        const rawP = clamp((lt - k1.t) / d, 0, 1);
+        const e = easyEaseInOut(rawP);
+
+    if (idx !== lastKfIdx) {
+      lastKfIdx = idx;
+      if (k1.blink) triggerBlink(nowSec, idx === 1);
+    }
+
+        return {
+          x: lerp(k0.x, k1.x, e),
+          y: lerp(k0.y, k1.y, e),
+          tilt: lerp(k0.tilt, k1.tilt, e),
+          sq: lerp(k0.sq, k1.sq, e),
+          hap: lerp(k0.hap, k1.hap, e)
+        };
+      }
+
+  /* ---- 4. Dual-Rate Easy-Ease Spring State + Shy Mush Smirk ---- */
+  let eyeX = 0, eyeY = 0, eyeVX = 0, eyeVY = 0;
+  let headX = 0, headY = 0, headTilt = 0, headVX = 0, headVY = 0, headVTilt = 0;
+  let curSquint = 0, curHappy = 0, curMush = 0, curSmirkSide = 1;
+
+  function stepAnimation(nowSec, dt) {
+    rubEnergy = Math.max(0, rubEnergy - dt * 1.8);
+
+    const timeSinceMove = nowSec - lastCursorMoveSec;
+    const cursorWeight = 1 - easyEaseInOut(clamp((timeSinceMove - 1.8) / 0.9, 0, 1));
+        const auto = sampleAutonomousLoop(nowSec);
+
+    /* Shy/mush state when hovering or dragging over the mascot head */
+    const targetMush = isOverHead
+      ? clamp(overIntensity * (isPointerDown ? 1.18 : 0.95) + rubEnergy * 0.25, 0, 1.25)
+      : 0;
+    const kMush = 1 - Math.exp(-10 * dt);
+    curMush = lerp(curMush, targetMush, kMush);
+
+    const targetSmirkSide = Math.abs(rubOffsetX) > 0.12 ? Math.sign(rubOffsetX) : 1;
+    curSmirkSide = lerp(curSmirkSide, targetSmirkSide, 1 - Math.exp(-8 * dt));
+
+    if (nowSec >= nextAutoBlink) {
+      if (cursorWeight > 0.3 && curMush < 0.2) triggerBlink(nowSec, Math.random() < 0.28);
+      nextAutoBlink = nowSec + 2.2 + Math.random() * 2.4;
+    }
+
+    /* When shy/mushed, eyes glance shyly down-and-aside with a cheeky smirk */
+    const shyLookX = curSmirkSide * 0.34 + Math.sin(nowSec * 9) * rubEnergy * 0.12;
+    const shyLookY = 0.24;
+
+    const baseTargetX = lerp(auto.x, cursorX, cursorWeight);
+    const baseTargetY = lerp(auto.y, cursorY, cursorWeight);
+    const targetX = lerp(baseTargetX, shyLookX, clamp(curMush, 0, 1));
+    const targetY = lerp(baseTargetY, shyLookY, clamp(curMush, 0, 1));
+
+    const shyTilt = -curSmirkSide * 8.5 + rubOffsetX * 6.5 + Math.sin(nowSec * 11) * rubEnergy * 2.5;
+    const baseTilt = lerp(auto.tilt, cursorX * 7.5 - cursorY * 1.5, cursorWeight);
+    const targetTilt = lerp(baseTilt, shyTilt, clamp(curMush, 0, 1));
+
+    const targetSq = lerp(auto.sq, -cursorX * 0.16, cursorWeight);
+    const targetHappy = Math.max(auto.hap * (1 - cursorWeight * 0.8), clamp(curMush * 1.05, 0, 1));
+
+    const jumpDist = Math.hypot(targetX - prevTargetX, targetY - prevTargetY);
+    if (jumpDist > 0.55 && curMush < 0.2) triggerBlink(nowSec, false);
+    prevTargetX = lerp(prevTargetX, targetX, 0.25);
+    prevTargetY = lerp(prevTargetY, targetY, 0.25);
+
+        /* Eyes lead head: smooth Easy-Ease critically-damped dynamics */
+        const eStiff = 220, eDamp = 27;
+        eyeVX += ((targetX - eyeX) * eStiff - eyeVX * eDamp) * dt;
+        eyeVY += ((targetY - eyeY) * eStiff - eyeVY * eDamp) * dt;
+        eyeX += eyeVX * dt;
+        eyeY += eyeVY * dt;
+
+        const hStiff = 86, hDamp = 17;
+        headVX += ((targetX - headX) * hStiff - headVX * hDamp) * dt;
+        headVY += ((targetY - headY) * hStiff - headVY * hDamp) * dt;
+        headVTilt += ((targetTilt - headTilt) * hStiff - headVTilt * hDamp) * dt;
+        headX += headVX * dt;
+        headY += headVY * dt;
+        headTilt += headVTilt * dt;
+
+        const kExp = 1 - Math.exp(-11 * dt);
+        curSquint = lerp(curSquint, targetSq, kExp);
+        curHappy = lerp(curHappy, targetHappy, kExp);
+
+    /* Breathing float + tactile mush squash when cursor drags over head */
+    const breathPhase = nowSec * (Math.PI * 2 / 3.6);
+    const mushSquish = easyEase(clamp(curMush, 0, 1.2));
+    const rubWiggle = Math.sin(nowSec * 14) * rubEnergy * 0.022;
+
+    const bobY = Math.sin(breathPhase) * 8.5 * (1 - mushSquish * 0.5) + mushSquish * 12;
+    const sx = 1 + Math.sin(breathPhase) * 0.018 + mushSquish * 0.088 + rubWiggle;
+    const sy = 1 - Math.sin(breathPhase) * 0.018 - mushSquish * 0.082 - rubWiggle;
+
+    /* 1. Apply Head Transform */
+    head.setAttribute(
+      'transform',
+      `translate(${(headX * 9 + rubOffsetX * mushSquish * 6).toFixed(2)}, ${(bobY + headY * 6).toFixed(2)}) rotate(${headTilt.toFixed(2)}) scale(${sx.toFixed(3)}, ${sy.toFixed(3)})`
+    );
+
+    /* 2. Ground Shadow Inverse Scale */
+    const shScale = 1 - (bobY + headY * 6) * 0.008 + mushSquish * 0.08;
+    shadow.setAttribute('rx', (112 * shScale).toFixed(1));
+
+    /* 3. Visor Intermediate Parallax + Shy Blush */
+    const vx = lerp(headX, eyeX, 0.55) * 15;
+    const vy = 6 + lerp(headY, eyeY, 0.55) * 11 + mushSquish * 3;
+    visor.setAttribute('transform', `translate(${vx.toFixed(2)}, ${vy.toFixed(2)})`);
+    gloss.setAttribute('transform', `translate(${(-headX * 5).toFixed(2)}, ${(-headY * 4).toFixed(2)})`);
+    shyBlush.setAttribute('opacity', (clamp(mushSquish * 0.85, 0, 0.85)).toFixed(3));
+
+        /* 4. Fast Leading Eye Parallax + 3D Sphere Foreshortening */
+        const ex = eyeX * 24;
+        const ey = 10 + eyeY * 16;
+        eyes.setAttribute('transform', `translate(${ex.toFixed(2)}, ${ey.toFixed(2)})`);
+
+    const eyeSpread = 44 * (1 - Math.abs(eyeX) * 0.08 + mushSquish * 0.04);
+    eyeL.setAttribute('transform', `translate(${(-eyeSpread).toFixed(2)}, 0)`);
+    eyeR.setAttribute('transform', `translate(${(eyeSpread).toFixed(2)}, 0)`);
+
+    /* 5. Physical Upper & Lower Eyelids inside Mask (with Asymmetric Shy Smirk!) */
+    const blinkAmt = evalBlink(nowSec);
+
+    /* Asymmetric smirk when mushed: one cheek pushes higher while the other brow tilts coyly */
+    const smirkL = clamp(curMush, 0, 1) * (curSmirkSide < 0 ? 1.18 : 0.72);
+    const smirkR = clamp(curMush, 0, 1) * (curSmirkSide >= 0 ? 1.18 : 0.72);
+
+    const sqTopL = Math.max(0, -curSquint) * 14 + clamp(curMush, 0, 1) * (curSmirkSide >= 0 ? 11 : 4);
+    const sqTopR = Math.max(0,  curSquint) * 14 + clamp(curMush, 0, 1) * (curSmirkSide < 0 ? 11 : 4);
+    const topYL = -98 + sqTopL + blinkAmt * 62;
+    const topYR = -98 + sqTopR + blinkAmt * 62;
+    const topRotL = clamp(curMush, 0, 1) * (curSmirkSide >= 0 ? 8 : -5);
+    const topRotR = clamp(curMush, 0, 1) * (curSmirkSide >= 0 ? 5 : -8);
+    lidTopL.setAttribute('y', topYL.toFixed(2));
+    lidTopR.setAttribute('y', topYR.toFixed(2));
+    lidTopL.setAttribute('transform', `rotate(${topRotL.toFixed(2)})`);
+    lidTopR.setAttribute('transform', `rotate(${topRotR.toFixed(2)})`);
+
+    const sqBotL = Math.max(0, -curSquint) * 10;
+    const sqBotR = Math.max(0,  curSquint) * 10;
+    const happyLiftL = Math.max(curHappy * 44, smirkL * 45);
+    const happyLiftR = Math.max(curHappy * 44, smirkR * 45);
+    const botCYL = 68 - happyLiftL - sqBotL - blinkAmt * 12;
+    const botCYR = 68 - happyLiftR - sqBotR - blinkAmt * 12;
+    const botRotL = clamp(curMush, 0, 1) * -6 * curSmirkSide;
+    const botRotR = clamp(curMush, 0, 1) * -10 * curSmirkSide;
+    lidBotL.setAttribute('cy', botCYL.toFixed(2));
+    lidBotR.setAttribute('cy', botCYR.toFixed(2));
+    lidBotL.setAttribute('transform', `rotate(${botRotL.toFixed(2)})`);
+    lidBotR.setAttribute('transform', `rotate(${botRotR.toFixed(2)})`);
+
+    /* 3D Foreshortening & Mush Squash/Stretch on Eye Body */
+    const perspLX = 1 - Math.max(0, -eyeX) * 0.14;
+    const perspRX = 1 - Math.max(0,  eyeX) * 0.14;
+    const widenX = 1 + blinkAmt * 0.10 + curHappy * 0.06 + mushSquish * 0.08;
+    const scaleLY = (1 + Math.max(0, curSquint) * 0.10) * (1 - blinkAmt * 0.12) * (1 - mushSquish * 0.06);
+    const scaleRY = (1 + Math.max(0, -curSquint) * 0.10) * (1 - blinkAmt * 0.12) * (1 - mushSquish * 0.06);
+
+    const eyeTiltL = -eyeX * 4.0 - mushSquish * 5 * curSmirkSide;
+    const eyeTiltR = -eyeX * 4.0 + mushSquish * 7 * curSmirkSide;
+    eyeLShape.setAttribute('transform', `rotate(${eyeTiltL.toFixed(2)}) scale(${(perspLX * widenX).toFixed(3)}, ${scaleLY.toFixed(3)})`);
+    eyeRShape.setAttribute('transform', `rotate(${eyeTiltR.toFixed(2)}) scale(${(perspRX * widenX).toFixed(3)}, ${scaleRY.toFixed(3)})`);
+  }
+
+      let last = performance.now();
+      function tick(now) {
+        const dt = Math.min(0.04, Math.max(0.001, (now - last) * 0.001));
+        last = now;
+        stepAnimation(now * 0.001, dt);
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    })();
+  </script>
+</body>
+
+</html>

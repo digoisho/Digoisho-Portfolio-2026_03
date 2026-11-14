@@ -255,26 +255,54 @@ img{display:block;max-width:100%}
 .prefoot-mascot-wrap{
   position:relative;
   padding-left:var(--rail-w);
-  padding-top:8px;
-  padding-bottom:12px;
+  margin-top:44px;
+  margin-bottom:calc(var(--flap-up-h, 240px) * -0.82);
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  z-index:3;
+  z-index:5;
+  pointer-events:none;
 }
 .prefoot-mascot-slot{
-  width:clamp(210px,20vw,285px);
+  width:clamp(230px,24vw,340px);
+  pointer-events:auto;
 }
-.mascot-hint{
-  margin-top:-6px;
-  font-family:var(--mono);
-  font-size:10.5px;
-  letter-spacing:.12em;
-  text-transform:uppercase;
-  color:var(--ink-45);
-  text-align:center;
+
+/* Semicolon Thought Cloud ("hello" in Minecraft Enchantment Font after 2s) */
+.m-thought{
+  opacity:0;
+  transform-box:fill-box;
+  transform-origin:15% 90%;
+  transform:translate3d(-6px,8px,0) scale(0.2);
+  transition:opacity .42s var(--ease),transform .56s cubic-bezier(.34,1.56,.64,1);
   pointer-events:none;
+}
+.m-thought.is-popped{
+  opacity:1;
+  transform:translate3d(0,0,0) scale(1);
+}
+.m-thought-comma{
+  opacity:0;
+  transform-box:fill-box;
+  transform-origin:50% 50%;
+  transform:scale(0.2);
+  transition:opacity .32s var(--ease),transform .44s cubic-bezier(.34,1.56,.64,1);
+}
+.m-thought.is-popped .m-thought-comma{
+  opacity:1;
+  transform:scale(1);
+}
+.m-thought-top{
+  opacity:0;
+  transform-box:fill-box;
+  transform-origin:20% 100%;
+  transform:translate3d(0,6px,0) scale(0.4);
+  transition:opacity .38s var(--ease) .09s,transform .52s cubic-bezier(.34,1.56,.64,1) .09s;
+}
+.m-thought.is-popped .m-thought-top{
+  opacity:1;
+  transform:translate3d(0,0,0) scale(1);
 }
 
 .hero-sub-row{
@@ -329,29 +357,25 @@ img{display:block;max-width:100%}
    ============================================================ */
 #work{
   position:relative;width:100%;height:100vh;height:100svh;
+  padding-left:var(--rail-w);
   overflow:hidden;overflow:clip;
   font-family:var(--font);color:var(--black);
   background:transparent;
 }
-.stage{z-index:1;position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0;touch-action:pan-y}
-.work-hdr{
-  position:absolute;left:133px;right:153px;top:36px;z-index:5;
-  display:flex;align-items:baseline;justify-content:space-between;gap:16px;
-  padding-bottom:14px;border-bottom:1px solid var(--rule);
+.work-top-wrap{
+  position:relative;z-index:5;
+  padding-top:28px;
   pointer-events:none;
 }
-.work-title{
-  font-weight:800;font-size:52px;line-height:.95;letter-spacing:-.035em;
-  text-transform:uppercase;color:var(--black);
-}
-.work-title i{
-  display:inline-block;width:10px;height:10px;background:var(--orange);
-  margin-left:8px;vertical-align:baseline;
+.work-header{
+  display:flex;align-items:baseline;justify-content:space-between;gap:16px 40px;flex-wrap:wrap;
+  padding-bottom:18px;border-bottom:1px solid var(--rule);
 }
 .work-sub{
-  font-family:var(--mono);font-size:14px;font-weight:500;
+  font-family:var(--mono);font-size:12.5px;font-weight:500;
   letter-spacing:.12em;text-transform:uppercase;color:var(--ink-70);
 }
+.stage{z-index:1;position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0;touch-action:pan-y}
 .view{position:absolute;inset:0;transition:transform .9s var(--ease)}
 #car{z-index:2}#gal{z-index:1}
 .stage:not(.go) #gal{pointer-events:none}
@@ -433,10 +457,6 @@ img{display:block;max-width:100%}
 #ll{left:133px}#lr{left:1767px}
 
 /* mobile / portrait stage (560x900) */
-.m .work-hdr{left:18px;right:21px;top:12px;padding-bottom:12px}
-.m .work-title{font-size:42px}
-.m .work-title i{width:8px;height:8px;margin-left:6px}
-.m .work-sub{font-size:11.5px;letter-spacing:.1em}
 .m .fold{left:-52px;top:168px;transform-origin:50% 0%;transition:transform .68s var(--ease),opacity .42s var(--ease),--fc .42s var(--ease)}
 .m .fold .body{transition:height .68s var(--ease)}
 .m .fold.side .ttl,.m .fold.side .lbl,.m .fold.side .pen,
@@ -1009,8 +1029,28 @@ img{display:block;max-width:100%}
   .poem-stanzas{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media (max-width:860px){
-  .hero-center{grid-template-columns:1fr;gap:20px}
-  .hero-mascot-slot{justify-self:center;order:-1;width:clamp(195px,44vw,245px);margin-bottom:-8px}
+  .hero-top{order:1}
+  .hero-center{display:contents}
+  .hero-copy-col{
+    order:2;
+    width:100%;max-width:var(--maxw);margin:0 auto;
+    padding:32px var(--gutter) 28px;
+  }
+  .folder-strip{order:3}
+  .hero-mascot-slot{
+    order:4;
+    align-self:center;
+    justify-self:center;
+    width:clamp(220px,54vw,260px);
+    margin:18px auto -10px;
+    pointer-events:none;
+    cursor:default;
+  }
+  .prefoot-mascot-slot{
+    width:clamp(220px,54vw,260px);
+    pointer-events:none;
+    cursor:default;
+  }
   .profile-spread{grid-template-columns:1fr}
   .studio-portrait{max-width:310px}
   .toolkit-spread{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -1022,11 +1062,13 @@ img{display:block;max-width:100%}
   .mob-nav{display:flex}
   .stage-sec{padding-left:0}
   .env-body{padding-left:0}
-  .prefoot-mascot-wrap{padding-left:0;padding-top:0;padding-bottom:6px}
-  .prefoot-mascot-slot{width:clamp(185px,44vw,225px)}
+  .prefoot-mascot-wrap{padding-left:0;margin-top:12px;margin-bottom:-72px}
   #contact{--flap-up-h:clamp(165px,22vh,215px)}
-  #hero{padding-top:70px;padding-bottom:44px;min-height:auto}
-  #work{transition:height .68s var(--ease)}
+  #hero{padding-top:70px;padding-bottom:16px;min-height:auto}
+  #work{padding-left:0;transition:height .68s var(--ease)}
+  .work-top-wrap{padding-top:18px}
+  .work-header{padding-bottom:6px}
+  .work-sub{font-size:11px;letter-spacing:.1em}
   #work,#about,#contact{scroll-margin-top:54px}
   #about{padding-top:24px;padding-bottom:16px;min-height:auto}
   .folder-strip{padding-right:var(--gutter);display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 14px}
@@ -1106,6 +1148,21 @@ img{display:block;max-width:100%}
     <clipPath id="m-visor-clip-pebble">
       <path d="M 0,-74 C 32,-74 58,-82 84,-70 C 118,-54 134,-14 130,32 C 126,76 92,102 44,102 C 18,102 10,96 0,96 C -10,96 -18,102 -44,102 C -92,102 -126,76 -130,32 C -134,-14 -118,-54 -84,-70 C -58,-82 -32,-74 0,-74 Z"/>
     </clipPath>
+    <!-- "hello" in Minecraft Enchantment Font (Standard Galactic Alphabet: ⍑ ᒷ ꖎ ꖎ 𝙹) -->
+    <g id="m-sga-hello" shape-rendering="crispEdges">
+      <!-- H (⍑) -->
+      <path fill="#FFFFFF" d="M0,0h15v3H0z M6,3h3v6H6z M6,12h3v6H6z"/>
+      <!-- E (ᒷ) -->
+      <path fill="#FFFFFF" transform="translate(21,0)" d="M0,0h9v3H0z M6,3h3v3H6z M3,6h3v3H3z M9,6h3v3H9z M0,9h3v3H0z M12,9h3v6h-3z M0,15h9v3H0z"/>
+      <!-- L (ꖎ) -->
+      <path fill="#FFFFFF" transform="translate(42,0)" d="M3,0h3v15H3z M9,3h3v12H9z M6,15h3v3H6z"/>
+      <!-- L (ꖎ) -->
+      <path fill="#FFFFFF" transform="translate(60,0)" d="M3,0h3v15H3z M9,3h3v12H9z M6,15h3v3H6z"/>
+      <!-- O (𝙹) -->
+      <path fill="#FFFFFF" transform="translate(78,0)" d="M6,0h9v3H6z M6,3h3v12H6z M0,12h3v3H0z M0,15h9v3H0z"/>
+      <!-- Tiny Blaze Orange Enchantment Accent Pixel -->
+      <rect x="99" y="15" width="3" height="3" fill="#FA4D11"/>
+    </g>
   </defs>
 </svg>
 
@@ -1225,6 +1282,19 @@ img{display:block;max-width:100%}
                   <circle cx="94" cy="72" r="3.5" fill="#FA4D11" opacity="0.9"/>
                 </g>
               </g>
+              <!-- Semicolon ";" Thought Cloud ("hello" in Minecraft Enchantment Font after 2s) -->
+              <g transform="translate(146, -134)">
+                <g class="m-thought" aria-label="hello">
+                  <g class="m-thought-comma">
+                    <path d="M -11,-6 A 11,11 0 1,1 11,-6 C 11,7 1,17 -11,20 C -14,21 -15,17 -12,15 C -5,11 -2,5 -2,1 A 11,11 0 0,1 -11,-6 Z" fill="#0E0E0E" stroke="rgba(255,255,255,0.22)" stroke-width="1.5"/>
+                  </g>
+                  <g class="m-thought-top">
+                    <rect x="-46" y="-68" width="144" height="44" rx="22" fill="#0E0E0E" stroke="rgba(255,255,255,0.22)" stroke-width="1.5"/>
+                    <path d="M -24,-61 L 76,-61" stroke="rgba(255,255,255,0.14)" stroke-width="2" stroke-linecap="round"/>
+                    <use href="#m-sga-hello" transform="translate(-25, -55)"/>
+                  </g>
+                </g>
+              </g>
             </g>
           </g>
         </svg>
@@ -1243,11 +1313,13 @@ img{display:block;max-width:100%}
 
   <!-- ============ 2. WORK (Original Folder Carousel + Pocket Gallery) ============ -->
   <section id="work" aria-label="Selected Works">
-    <div class="stage" id="stage">
-      <div class="work-hdr">
-        <h2 class="work-title">WORK<i></i></h2>
+    <div class="wrap work-top-wrap">
+      <div class="work-header">
+        <h2 class="sec-title">WORK</h2>
         <span class="work-sub">06 COLLECTIONS</span>
       </div>
+    </div>
+    <div class="stage" id="stage">
       <div class="view" id="car">
         <div id="folds"></div>
         <button class="nav l" id="cp" aria-label="Previous collection"><svg viewBox="0 0 100 100"><use href="#al"/></svg></button>
@@ -1451,6 +1523,19 @@ img{display:block;max-width:100%}
                 <path d="M 18,-62 C 28,-63 38,-61 46,-57" fill="none" stroke="#FFFFFF" stroke-width="5.5" stroke-linecap="round" opacity="0.76"/>
                 <path d="M 62,-49 C 84,-36 99,-14 105,12" fill="none" stroke="#FFFFFF" stroke-width="5.5" stroke-linecap="round" opacity="0.84"/>
                 <circle cx="94" cy="72" r="3.5" fill="#FA4D11" opacity="0.9"/>
+              </g>
+            </g>
+            <!-- Semicolon ";" Thought Cloud ("hello" in Minecraft Enchantment Font after 2s) -->
+            <g transform="translate(146, -134)">
+              <g class="m-thought" aria-label="hello">
+                <g class="m-thought-comma">
+                  <path d="M -11,-6 A 11,11 0 1,1 11,-6 C 11,7 1,17 -11,20 C -14,21 -15,17 -12,15 C -5,11 -2,5 -2,1 A 11,11 0 0,1 -11,-6 Z" fill="#0E0E0E" stroke="rgba(255,255,255,0.22)" stroke-width="1.5"/>
+                </g>
+                <g class="m-thought-top">
+                  <rect x="-46" y="-68" width="144" height="44" rx="22" fill="#0E0E0E" stroke="rgba(255,255,255,0.22)" stroke-width="1.5"/>
+                  <path d="M -24,-61 L 76,-61" stroke="rgba(255,255,255,0.14)" stroke-width="2" stroke-linecap="round"/>
+                  <use href="#m-sga-hello" transform="translate(-25, -55)"/>
+                </g>
               </g>
             </g>
           </g>
@@ -1951,10 +2036,11 @@ function fit(){
   }
   if(M){
     const W=560,s=Math.min(w/W,(vh-54)/760);
-    const targetH=Math.round(14+(open?744:676)*s)+'px';
+    const topOff=20;
+    const targetH=Math.round(topOff+(open?744:676)*s)+'px';
     if(sec.style.height!==targetH)sec.style.height=targetH;
     st.style.left=(rail+(w-W*s)/2)+'px';
-    st.style.top='14px';
+    st.style.top=topOff+'px';
     st.style.transform=`scale(${s})`;
   }else{
     if(sec.style.height)sec.style.height='';
@@ -2151,16 +2237,41 @@ syncNav();
   const cvs=$('#bg-canvas'),ctx=cvs.getContext('2d');
   if(!cvs||!ctx)return;
 
-  let vw=window.innerWidth,vh=window.innerHeight,dpr=1;
+  let vw=window.innerWidth,vh=window.innerHeight,dpr=1,rafBg=0;
+  function drawStaticMobileGrid(){
+    ctx.clearRect(0,0,vw,vh);
+    const step=56;
+    const cols=Math.ceil(vw/step)+1,rows=Math.ceil(vh/step)+2;
+    for(let r=0;r<rows;r++){
+      const gy=r*step;
+      for(let c=0;c<cols;c++){
+        const gx=c*step;
+        const idxHash=(c*7+r*13)%16;
+        if(idxHash===0){
+          ctx.fillStyle='rgba(10,10,10,0.24)';
+          ctx.fillRect(gx-3.5,gy-.5,7,1);
+          ctx.fillRect(gx-.5,gy-3.5,1,7);
+        }else{
+          ctx.fillStyle='rgba(10,10,10,0.20)';
+          ctx.fillRect(gx-1,gy-1,2,2);
+        }
+      }
+    }
+  }
   function resizeBg(){
     vw=window.innerWidth;vh=window.innerHeight;
     dpr=Math.min(window.devicePixelRatio||1,1.5);
     cvs.width=Math.round(vw*dpr);
     cvs.height=Math.round(vh*dpr);
     ctx.setTransform(dpr,0,0,dpr,0,0);
+    if(vw<=768){
+      if(rafBg){cancelAnimationFrame(rafBg);rafBg=0;}
+      drawStaticMobileGrid();
+    }else if(!rafBg&&!reducedMotion){
+      lastT=performance.now();
+      rafBg=requestAnimationFrame(drawFrame);
+    }
   }
-  resizeBg();
-  window.addEventListener('resize',resizeBg,{passive:true});
 
   /* Second-order cascaded filter: target -> mid -> cur gives true C1 ease-in-out */
   let ptx=vw*.52,pty=vh*.42;
@@ -2169,16 +2280,23 @@ syncNav();
   let hasPointer=false;
 
   window.addEventListener('pointermove',e=>{
+    if(vw<=768)return;
     hasPointer=true;
     ptx=e.clientX;pty=e.clientY;
   },{passive:true});
   window.addEventListener('scroll',()=>{
+    if(vw<=768)return;
     const maxS=Math.max(1,document.documentElement.scrollHeight-vh);
     stTarget=Math.min(1,Math.max(0,window.scrollY/maxS));
   },{passive:true});
 
   let lastT=performance.now();
   function drawFrame(now){
+    rafBg=0;
+    if(vw<=768){
+      drawStaticMobileGrid();
+      return;
+    }
     const dt=Math.min(.05,Math.max(.001,(now-lastT)*.001));
     lastT=now;
 
@@ -2199,8 +2317,8 @@ syncNav();
     ctx.clearRect(0,0,vw,vh);
 
     /* 30% Opacity Interactive Pixel Lattice — Zero Glow */
-    const step=vw<768?56:72;
-    const R=vw<768?260:440,R2=R*R;
+    const step=72;
+    const R=440,R2=R*R;
     const yShift=(stCur*108)%step;
     const cols=Math.ceil(vw/step)+1,rows=Math.ceil(vh/step)+2;
 
@@ -2251,9 +2369,10 @@ syncNav();
       }
     }
 
-    if(!reducedMotion)requestAnimationFrame(drawFrame);
+    if(!reducedMotion)rafBg=requestAnimationFrame(drawFrame);
   }
-  requestAnimationFrame(drawFrame);
+  resizeBg();
+  window.addEventListener('resize',resizeBg,{passive:true});
 })();
 
 /* ============================================================
@@ -2295,6 +2414,7 @@ syncNav();
     eyes:slot.querySelector('.m-eyes'),
     gloss:slot.querySelector('.m-gloss'),
     shyBlush:slot.querySelector('.m-shy-blush'),
+    thought:slot.querySelector('.m-thought'),
     eyeL:slot.querySelector('.m-eye-l'),
     eyeR:slot.querySelector('.m-eye-r'),
     eyeLShape:slot.querySelector('.m-eye-l-shape'),
@@ -2308,11 +2428,13 @@ syncNav();
     headX:0,headY:0,headTilt:0,headVX:0,headVY:0,headVTilt:0,
     curSquint:0,curHappy:0,curMush:0,curSmirkSide:1,
     overIntensity:0,rubOffsetX:0,rubEnergy:0,tapMushUntil:-10,
+    visibleSec:0,thoughtPopped:false,
     prevTargetX:0,prevTargetY:0,
     blinkStart:-10,secondBlinkAt:-10,nextAutoBlink:1.6+idx*0.9,lastKfIdx:-1
   }));
 
   function updatePointer(cx,cy){
+    if(window.innerWidth<=860)return;
     const nowSec=performance.now()*.001;
     const moveDelta=Math.hypot(cx-prevPtrX,cy-prevPtrY);
     prevPtrX=cx;prevPtrY=cy;
@@ -2340,10 +2462,10 @@ syncNav();
   window.addEventListener('pointermove',e=>updatePointer(e.clientX,e.clientY),{passive:true});
   window.addEventListener('pointerdown',e=>{isDown=true;updatePointer(e.clientX,e.clientY)},{passive:true});
   window.addEventListener('pointerup',()=>{isDown=false},{passive:true});
-  window.addEventListener('touchmove',e=>{if(e.touches[0])updatePointer(e.touches[0].clientX,e.touches[0].clientY)},{passive:true});
 
   rigs.forEach(rig=>{
     rig.slot.addEventListener('click',()=>{
+      if(window.innerWidth<=860)return;
       rig.tapMushUntil=performance.now()*.001+1.35;
       rig.rubEnergy=0.9;
     });
@@ -2394,14 +2516,23 @@ syncNav();
     const dt=Math.min(.04,Math.max(.001,(now-lastT)*.001));
     lastT=now;
     const nowSec=now*.001;
+    const isMob=window.innerWidth<=860;
     const timeSinceMove=nowSec-lastMoveSec;
-    const cursorWeight=1-easyEaseInOut(clamp((timeSinceMove-1.8)/.9,0,1));
+    const cursorWeight=isMob?0:(1-easyEaseInOut(clamp((timeSinceMove-1.8)/.9,0,1)));
 
     rigs.forEach(rig=>{
       const r=rig.slot.getBoundingClientRect();
       if(!r.width||r.bottom<-120||r.top>window.innerHeight+120)return;
 
-      rig.rubEnergy=Math.max(0,rig.rubEnergy-dt*1.8);
+      if(r.bottom>40&&r.top<window.innerHeight-40){
+        rig.visibleSec+=dt;
+        if(rig.thought&&!rig.thoughtPopped&&rig.visibleSec>=2.0){
+          rig.thoughtPopped=true;
+          rig.thought.classList.add('is-popped');
+        }
+      }
+
+      rig.rubEnergy=isMob?0:Math.max(0,rig.rubEnergy-dt*1.8);
       const auto=sampleLoop(rig,nowSec);
 
       const mx=r.left+r.width*.5;
@@ -2409,8 +2540,8 @@ syncNav();
       const cX=Math.tanh(((ptrX-mx)/(Math.max(window.innerWidth,500)*.40))*1.4);
       const cY=Math.tanh(((ptrY-my)/(Math.max(window.innerHeight,500)*.40))*1.4);
 
-      const tapMush=nowSec<rig.tapMushUntil?easyEase(clamp((rig.tapMushUntil-nowSec)/.3,0,1)):0;
-      const targetMush=Math.max(
+      const tapMush=(!isMob&&nowSec<rig.tapMushUntil)?easyEase(clamp((rig.tapMushUntil-nowSec)/.3,0,1)):0;
+      const targetMush=isMob?0:Math.max(
         tapMush,
         rig.overIntensity>0?clamp(rig.overIntensity*(isDown?1.18:.95)+rig.rubEnergy*.25,0,1.25):0
       );
