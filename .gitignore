@@ -1,8 +1,8 @@
-# Source design files & unreferenced raw video folders (moving to YouTube)
+# Source design files & unreferenced raw folders
 Design/
-Works/Videos/
 Works/3d/
-*.mp4
+Works/Videos/Videos/
+Works/2D Artworks/*.mp4
 
 # Local tooling & OS files
 .vercel/
