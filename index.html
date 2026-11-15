@@ -602,29 +602,30 @@ img{display:block;max-width:100%}
 
 /* gallery */
 .cards{position:absolute;inset:0;clip-path:inset(117px 151px 121px 135px);z-index:2}
-.card{position:absolute;left:665px;top:189px;width:590px;height:698px;border-radius:28px;background:var(--orange) center/cover;color:var(--white);overflow:hidden;transition:transform .84s var(--ease),top .84s var(--ease),height .84s var(--ease);box-shadow:0 20px 36px rgba(10,10,10,.18);border:0}
+.card{position:absolute;left:665px;top:189px;width:590px;height:698px;border-radius:28px;background:var(--orange) center/cover;color:var(--white);overflow:hidden;transition:transform .84s var(--ease),left .62s var(--ease),top .84s var(--ease),width .62s var(--ease),height .84s var(--ease);box-shadow:0 20px 36px rgba(10,10,10,.18);border:0}
 .card:not(.x){will-change:transform}
 .card.has-img{background:var(--black);cursor:zoom-in}
 .card.has-img.has-vid{cursor:pointer}
 .card .c-amb{position:absolute;inset:0;background-position:center bottom;background-size:cover;transform:scale(1.08);pointer-events:none}
 .card.x .c-amb{display:none}
 .card .c-pic{position:relative;z-index:1;display:block;width:100%;height:auto;max-height:100%;object-fit:cover;object-position:top center;border-radius:28px 28px 12px 12px;box-shadow:0 10px 24px rgba(0,0,0,.28);pointer-events:none;user-select:none}
-.card .c-media{position:relative;z-index:1;width:100%;max-height:100%;overflow:hidden;border-radius:28px 28px 12px 12px;box-shadow:0 10px 24px rgba(0,0,0,.28)}
-.card .c-media .c-pic{max-height:698px;object-position:center 35%;border-radius:0;box-shadow:none}
-.card.is-wide .c-media{margin-top:96px;border-radius:18px}
-.card.is-wide .c-media .c-pic{object-position:center}
-.card .c-vid{position:absolute;inset:0;z-index:2;width:100%;height:100%;object-fit:cover;object-position:center 35%;opacity:0;transition:opacity .26s var(--ease);pointer-events:none}
-.card.is-wide .c-vid{object-position:center}
-.card .c-vid.on{opacity:1}
+.card.has-vid .c-media{position:absolute;inset:0;z-index:1;width:100%;height:100%;border-radius:inherit;overflow:hidden}
+.card.has-vid .c-media .c-pic{width:100%;height:100%;max-height:none;object-fit:cover;object-position:center;border-radius:0;box-shadow:none}
+.card.has-vid .c-vid{position:absolute;inset:0;z-index:2;width:100%;height:100%;object-fit:cover;object-position:center;opacity:0;transition:opacity .22s ease;pointer-events:none}
+.card.has-vid .c-vid.on{opacity:1}
 .card .vid-pill{
-  position:absolute;right:20px;top:20px;z-index:3;
-  height:36px;padding:0 13px;border-radius:10px;
-  background:rgba(10,10,10,.86);color:var(--white);backdrop-filter:blur(6px);
-  display:inline-flex;align-items:center;gap:7px;
-  font-family:var(--mono);font-size:11.5px;font-weight:600;letter-spacing:.08em;
+  position:absolute;right:16px;top:16px;z-index:3;
+  height:32px;padding:0 11px;border-radius:9px;
+  background:rgba(10,10,10,.82);color:var(--white);backdrop-filter:blur(6px);
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.08em;
   pointer-events:none;
 }
-.card .vid-tri{width:0;height:0;border-style:solid;border-width:5px 0 5px 8px;border-color:transparent transparent transparent var(--orange)}
+.card .vid-tri{width:0;height:0;border-style:solid;border-width:4.5px 0 4.5px 7.5px;border-color:transparent transparent transparent var(--orange)}
+/* Video-aspect card sizes & stage alignment (Desktop 1920x1080) */
+.card.ar-9-16{left:758px;top:196px;width:405px;height:720px;border-radius:24px}
+.card.ar-1-1{left:665px;top:256px;width:590px;height:590px;border-radius:26px}
+.card.ar-16-9{left:528px;top:308px;width:864px;height:486px;border-radius:24px}
 .card b{position:absolute;left:28px;top:18px;z-index:3;font-size:45.3px;font-weight:700;line-height:1}
 .card.has-img b{
   left:20px;top:20px;font-size:20px;font-weight:700;
@@ -632,6 +633,7 @@ img{display:block;max-width:100%}
   background:rgba(10,10,10,.86);color:var(--white);
   backdrop-filter:blur(6px);
 }
+.card.has-vid b{left:16px;top:16px;font-size:17px;padding:5px 10px;border-radius:9px}
 .card.empty-card{
   background:var(--stone);color:var(--black);cursor:default;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
@@ -652,14 +654,35 @@ img{display:block;max-width:100%}
 .card.x{pointer-events:none}
 .card.x.xl{transform:translate(-1300px,1px) rotate(10.23deg)}
 .card.x.xr{transform:translate(1300px,68px) rotate(10.23deg)}
+.card.ar-9-16.l{transform:translate(-835px,14px) rotate(9deg)}
+.card.ar-9-16.r{transform:translate(819px,46px) rotate(9deg)}
+.card.ar-9-16.x.xl{transform:translate(-1220px,14px) rotate(9deg)}
+.card.ar-9-16.x.xr{transform:translate(1220px,46px) rotate(9deg)}
+.card.ar-16-9.l{transform:translate(-1126px,16px) rotate(7deg)}
+.card.ar-16-9.r{transform:translate(1112px,42px) rotate(7deg)}
+.card.ar-16-9.x.xl{transform:translate(-1560px,16px) rotate(7deg)}
+.card.ar-16-9.x.xr{transform:translate(1560px,42px) rotate(7deg)}
 .line{position:absolute;top:117px;width:5px;height:842px;background:rgba(10,10,10,.26);z-index:4;pointer-events:none}
-.gt{position:absolute;left:665px;top:132px;font-weight:700;font-size:31.2px;letter-spacing:.01em;color:var(--black);z-index:4;display:flex;align-items:baseline;gap:14px}
+.gt{position:absolute;left:665px;top:132px;font-weight:700;font-size:31.2px;letter-spacing:.01em;color:var(--black);z-index:4;display:flex;align-items:baseline;gap:14px;transition:left .56s var(--ease),top .56s var(--ease),font-size .38s var(--ease),opacity .45s var(--ease)}
 .gt small{font-size:19px;font-weight:600;color:var(--ink-45);letter-spacing:.04em}
-.close{position:absolute;left:1191px;top:103px;width:100px;height:100px;color:rgba(10,10,10,.58);z-index:4;transition:color .3s var(--ease)}
+.close{position:absolute;left:1191px;top:103px;width:100px;height:100px;color:rgba(10,10,10,.58);z-index:4;transition:left .56s var(--ease),top .56s var(--ease),color .3s var(--ease),opacity .45s var(--ease)}
 .close svg{width:100%;height:100%}
 .close:hover,.close:focus-visible,.nav:focus-visible{color:var(--orange);outline:none}
 #cp{left:616px;top:946px}#cn{left:1204px;top:946px}#gp{left:518px;top:468px;z-index:4}#gn{left:1302px;top:468px;z-index:4}
 #ll{left:133px}#lr{left:1767px}
+.stage.vid-mode:not(.m)[data-ar="9-16"] .gt{left:758px;top:132px;font-size:26px;gap:10px}
+.stage.vid-mode:not(.m)[data-ar="9-16"] .gt small{font-size:16px}
+.stage.vid-mode:not(.m)[data-ar="9-16"] .close{left:1091px;top:99px}
+.stage.vid-mode:not(.m)[data-ar="9-16"] #gp{left:604px;top:506px}
+.stage.vid-mode:not(.m)[data-ar="9-16"] #gn{left:1216px;top:506px}
+.stage.vid-mode:not(.m)[data-ar="1-1"] .gt{left:665px;top:190px}
+.stage.vid-mode:not(.m)[data-ar="1-1"] .close{left:1191px;top:161px}
+.stage.vid-mode:not(.m)[data-ar="1-1"] #gp{left:515px;top:501px}
+.stage.vid-mode:not(.m)[data-ar="1-1"] #gn{left:1305px;top:501px}
+.stage.vid-mode:not(.m)[data-ar="16-9"] .gt{left:528px;top:242px}
+.stage.vid-mode:not(.m)[data-ar="16-9"] .close{left:1318px;top:213px}
+.stage.vid-mode:not(.m)[data-ar="16-9"] #gp{left:382px;top:501px}
+.stage.vid-mode:not(.m)[data-ar="16-9"] #gn{left:1438px;top:501px}
 
 /* mobile / portrait stage (560x900) */
 .m .fold{left:-52px;top:168px;transform-origin:50% 0%;transition:transform .68s var(--ease),opacity .42s var(--ease),--fc .42s var(--ease)}
@@ -672,22 +695,28 @@ img{display:block;max-width:100%}
 .m .nav{width:72px;height:72px}
 .m #cp{left:108px;top:574px}.m #cn{left:380px;top:574px}
 .m #gp{left:184px;top:670px}.m #gn{left:304px;top:670px}
+.m.vid-mode #gp,.m.vid-mode #gn{top:686px}
 .m #gal .nav.hide{transform:scale(1);opacity:.22;pointer-events:none}
 .m .cards{clip-path:inset(124px 54px 251px 54px round 0 0 26px 26px)}
+.m.vid-mode .cards{clip-path:inset(124px 22px 218px 22px)}
 .m .line{top:84px;height:658px;width:3px}
 .m #ll{left:18px}.m #lr{left:539px}
-.m .card{left:54px;top:146px;width:452px;height:476px;transition:transform .68s var(--ease),top .68s var(--ease),height .68s var(--ease)}
+.m .card{left:54px;top:146px;width:452px;height:476px;transition:transform .68s var(--ease),left .54s var(--ease),top .68s var(--ease),width .54s var(--ease),height .68s var(--ease)}
+.m .card.ar-9-16{left:132px;top:142px;width:297px;height:528px;border-radius:20px}
+.m .card.ar-1-1{left:64px;top:186px;width:432px;height:432px;border-radius:22px}
+.m .card.ar-16-9{left:48px;top:272px;width:464px;height:261px;border-radius:18px}
 .m .card:not(.x){will-change:transform,top,height}
 .m .card b{font-size:36px;left:20px;top:14px}
 .m .card.has-img b{font-size:17px;left:16px;top:16px;padding:5px 10px}
-.m .card .c-media .c-pic{max-height:476px}
-.m .card.is-wide .c-media{margin-top:64px;border-radius:14px}
-.m .card .vid-pill{right:16px;top:16px;height:30px;padding:0 10px;font-size:10px;gap:5px}
+.m .card.has-vid b{font-size:14px;left:12px;top:12px;padding:4px 8px;border-radius:8px}
+.m .card .vid-pill{right:12px;top:12px;height:26px;padding:0 8px;font-size:9.5px;gap:5px;border-radius:8px}
 .m .card.empty-card{padding:36px 28px 115px}
 .m .empty-ico{width:84px;height:84px;margin-bottom:14px}
 .m .empty-sub{font-size:17px}
 .m .card.l{transform:translate3d(-495px,18px,0) rotate(-6deg)}
 .m .card.r{transform:translate3d(495px,18px,0) rotate(6deg)}
+.m .card.ar-9-16.l{transform:translate3d(-390px,18px,0) rotate(-6deg)}
+.m .card.ar-9-16.r{transform:translate3d(390px,18px,0) rotate(6deg)}
 .m .card.x.xl{transform:translate3d(-680px,32px,0) rotate(-8deg)}
 .m .card.x.xr{transform:translate3d(680px,32px,0) rotate(8deg)}
 .m .gt{left:54px;top:88px;font-size:22px;max-width:374px;flex-wrap:wrap;gap:4px 10px}
@@ -696,19 +725,22 @@ img{display:block;max-width:100%}
 .m .fold.lipmode{top:168px;height:488px}
 
 .fold.lipmode{top:715px;height:207px;filter:drop-shadow(0 -1.5px 0 rgba(255,255,255,.16)) drop-shadow(0 20px 30px rgba(10,10,10,.18))}
+.vid-mode .fold.lipmode{top:985px;height:140px;opacity:0;pointer-events:none}
+.m.vid-mode .fold.lipmode{top:420px;opacity:0;pointer-events:none}
 .fold.lipmode .body{height:108px}
 .fold.lipmode .lbl{transform:translateY(80px);opacity:0;transition:transform .38s var(--ease),opacity .18s ease}
 .fold.lipmode .ttl{opacity:0;transform:translateY(18px);transition:opacity .16s ease,transform .2s ease}
 .pill,.dots{transition:transform .8s var(--ease),opacity .35s ease}
 #cp,#cn{transition:transform .65s var(--ease),color .3s var(--ease),opacity .35s ease}
 .go #cp,.go #cn,.go .pill,.go .dots{transform:translateY(240px);opacity:0;pointer-events:none}
-#gal .gt,#gal .close,#gal .line,#gal .nav{transition-delay:.38s}
-#gal .nav{transition:transform .5s var(--ease),color .3s var(--ease),opacity .45s var(--ease) .38s}
-#gal .gt,#gal .line{transition:opacity .45s var(--ease) .38s}
-#gal .close{transition:color .3s var(--ease),opacity .45s var(--ease) .38s}
+#gal .gt,#gal .close,#gal .line{transition-delay:.38s}
+#gal .nav{transition:left .52s var(--ease),top .52s var(--ease),transform .5s var(--ease),color .3s var(--ease),opacity .45s var(--ease) .38s}
+#gal .gt{transition:left .56s var(--ease),top .56s var(--ease),font-size .38s var(--ease),opacity .45s var(--ease) .38s}
+#gal .line{transition:opacity .45s var(--ease) .38s}
+#gal .close{transition:left .56s var(--ease),top .56s var(--ease),color .3s var(--ease),opacity .45s var(--ease) .38s}
 .stage:not(.go) #gal .gt,.stage:not(.go) #gal .close,.stage:not(.go) #gal .line,.stage:not(.go) #gal .nav{opacity:0;transition:opacity .25s}
-.stage:not(.go) .card{top:565px;height:190px;visibility:hidden;transition:transform .8s var(--ease),top .8s var(--ease),height .8s var(--ease),visibility 0s linear .9s}
-.stage.m:not(.go) .card{top:324px;height:150px;visibility:hidden;transition:transform .68s var(--ease),top .68s var(--ease),height .68s var(--ease),visibility 0s linear .7s}
+.stage:not(.go) .card{top:565px;height:190px;visibility:hidden;transition:transform .8s var(--ease),left .62s var(--ease),top .8s var(--ease),width .62s var(--ease),height .8s var(--ease),visibility 0s linear .9s}
+.stage.m:not(.go) .card{top:324px;height:150px;visibility:hidden;transition:transform .68s var(--ease),left .54s var(--ease),top .68s var(--ease),width .54s var(--ease),height .68s var(--ease),visibility 0s linear .7s}
 
 /* ============================================================
    3. ABOUT - Folder-Tabbed Studio Stage (One screen, zero boxes)
@@ -1949,12 +1981,13 @@ const FOLDERS=[
   },
   {
     title:'AI MICRO<br>DRAMAS',name:'AI MICRO DRAMAS',label:'COMING SOON',icon:'ai',
-    dir:'Works/Videos/AI Micro Dramas/',isVideo:true,
+    dir:'Works/Videos/AI Micro Dramas/',isVideo:true,aspect:'9-16',
     emptyNote:'New AI micro dramas dropping soon.',images:[]
   },
   {
     title:'MOTION<br>VIDEOS',name:'MOTION VIDEOS',label:'19 VIDEOS',icon:'mo',
-    dir:'Works/Videos/Motion Video/',isVideo:true,
+    dir:'Works/Videos/Motion Video/',isVideo:true,aspect:'9-16',
+    itemAspect:{'17_motion_video.mp4':'1-1'},
     images:[
       '01_motion_video.mp4','02_motion_video.mp4','03_motion_video.mp4','04_motion_video.mp4','05_motion_video.mp4',
       '06_motion_video.mp4','07_motion_video.mp4','08_motion_video.mp4','09_motion_video.mp4','10_motion_video.mp4',
@@ -1964,14 +1997,14 @@ const FOLDERS=[
   },
   {
     title:'2D<br>ANIMATIONS',name:'2D ANIMATIONS',label:'2 FILMS',icon:'an',
-    dir:'Works/Videos/2d Animation/',isVideo:true,isLandscape:true,
+    dir:'Works/Videos/2d Animation/',isVideo:true,aspect:'16-9',
     images:[
       '01_2d_animation.mp4','02_2d_animation.mp4'
     ]
   },
   {
     title:'SHORT<br>REELS',name:'SHORT REELS',label:'16 REELS',icon:'sr',
-    dir:'Works/Videos/Reels/',isVideo:true,
+    dir:'Works/Videos/Reels/',isVideo:true,aspect:'9-16',
     images:[
       '01_reel.mp4','02_reel.mp4','03_reel.mp4','04_reel.mp4',
       '05_reel.mp4','06_reel.mp4','07_reel.mp4','08_reel.mp4',
@@ -2103,8 +2136,15 @@ $('#cn').onclick=()=>{dir=1;cur=(cur+1)%n;renderCar()};
 
 /* ---- Pocket Gallery (Lightweight WebP Previews + Pre-Blurred Ambients) ---- */
 function fullUrl(f,k){return encodeURI((f.dir||'')+f.images[k])}
-function previewUrl(f,k){return encodeURI('Works/_preview/'+(f.dir||'').replace(/^Works\//,'')+f.images[k].replace(/\.[^.]+$/,'.webp'))}
-function ambientUrl(f,k){return encodeURI('Works/_ambient/'+(f.dir||'').replace(/^Works\//,'')+f.images[k].replace(/\.[^.]+$/,'.webp'))}
+function previewUrl(f,k){
+  const sub=(f.dir||'').replace(/^Works\//,''),stem=f.images[k].replace(/\.[^.]+$/,'.webp');
+  return encodeURI(f.isVideo?'Works/Videos/Posters/preview/'+sub.replace(/^Videos\//,'')+stem:'Works/_preview/'+sub+stem);
+}
+function ambientUrl(f,k){
+  const sub=(f.dir||'').replace(/^Works\//,''),stem=f.images[k].replace(/\.[^.]+$/,'.webp');
+  return encodeURI(f.isVideo?'Works/Videos/Posters/ambient/'+sub.replace(/^Videos\//,'')+stem:'Works/_ambient/'+sub+stem);
+}
+function itemAr(f,k){return(f.itemAspect&&f.itemAspect[f.images[k]])||f.aspect||'9-16'}
 
 const warmCache=new Map();
 function warmImg(url){
@@ -2132,14 +2172,21 @@ function hydrateCard(c,f,k){
   const aUrl=ambientUrl(f,k),pUrl=previewUrl(f,k);
   c.querySelector('.c-amb').style.backgroundImage=`url("${aUrl}")`;
   const pic=c.querySelector('.c-pic');
-  if(!f.isVideo)pic.onerror=()=>{pic.onerror=null;pic.src=fullUrl(f,k)};
+  if(f.isVideo){
+    pic.onload=()=>{pic.style.opacity=''};
+    pic.onerror=()=>{pic.style.opacity='0'};
+  }else{
+    pic.onerror=()=>{pic.onerror=null;pic.src=fullUrl(f,k)};
+  }
   pic.src=pUrl;
 }
 
 function cardMods(c){
   return(c.classList.contains('has-img')?' has-img':'')
     +(c.classList.contains('has-vid')?' has-vid':'')
-    +(c.classList.contains('is-wide')?' is-wide':'')
+    +(c.classList.contains('ar-9-16')?' ar-9-16':'')
+    +(c.classList.contains('ar-1-1')?' ar-1-1':'')
+    +(c.classList.contains('ar-16-9')?' ar-16-9':'')
     +(c.classList.contains('empty-card')?' empty-card':'');
 }
 
@@ -2147,8 +2194,8 @@ function cardMods(c){
 const stageVid=document.createElement('video');
 stageVid.className='c-vid';
 stageVid.muted=true;stageVid.defaultMuted=true;stageVid.loop=true;stageVid.playsInline=true;stageVid.preload='auto';
-stageVid.setAttribute('muted','');stageVid.setAttribute('playsinline','');
-stageVid.addEventListener('playing',()=>stageVid.classList.add('on'));
+stageVid.setAttribute('muted','');stageVid.setAttribute('playsinline','');stageVid.setAttribute('webkit-playsinline','');
+['loadeddata','canplay','playing'].forEach(ev=>stageVid.addEventListener(ev,()=>stageVid.classList.add('on')));
 let vidTimer=0,workInView=true;
 
 function stopStageVid(){
@@ -2164,7 +2211,7 @@ function stopStageVid(){
 function syncStageVid(){
   clearTimeout(vidTimer);
   const f=FOLDERS[cur];
-  if(!open||lbOpen||!workInView||reducedMotion||!f||!f.isVideo||!f.images[g]){
+  if(!open||lbOpen||!workInView||!f||!f.isVideo||!f.images[g]){
     stopStageVid();
     return;
   }
@@ -2188,8 +2235,9 @@ function syncStageVid(){
     stageVid.src=targetSrc;
     stageVid.muted=true;
     if(stageVid.parentNode!==mediaNow)mediaNow.appendChild(stageVid);
+    stageVid.load();
     stageVid.play().catch(()=>{});
-  },90);
+  },40);
 }
 
 if('IntersectionObserver' in window){
@@ -2207,7 +2255,7 @@ if('IntersectionObserver' in window){
 function openGal(i){
   if(open)return;
   cur=i;g=0;
-  const f=FOLDERS[i],total=f.images.length;
+  const f=FOLDERS[i],total=f.images.length,isVidGal=Boolean(f.isVideo&&total>0);
   const frag=document.createDocumentFragment();
 
   if(total===0){
@@ -2216,12 +2264,12 @@ function openGal(i){
     c.innerHTML=`<b>00</b><svg class="empty-ico"><use href="#i-${f.icon}"/></svg><p class="empty-sub">${f.emptyNote}</p>`;
     frag.appendChild(c);
   }else{
-    const vCls=(f.isVideo?' has-vid':'')+(f.isLandscape?' is-wide':'');
     for(let k=0;k<total;k++){
       const c=document.createElement('div');
+      const vCls=f.isVideo?` has-vid ar-${itemAr(f,k)}`:'';
       c.className=(k===0?'card':k===1?'card r':'card x xr')+' has-img'+vCls;
       if(f.isVideo){
-        c.innerHTML=`<div class="c-amb"></div><div class="c-media"><img class="c-pic" alt="${f.name} ${pad(k+1)}" decoding="async"></div><b>${pad(k+1)}</b><span class="vid-pill"><span class="vid-tri"></span>PLAY</span>`;
+        c.innerHTML=`<div class="c-amb"></div><div class="c-media"><img class="c-pic" alt="" decoding="async"></div><b>${pad(k+1)}</b><span class="vid-pill"><span class="vid-tri"></span>PLAY</span>`;
       }else{
         c.innerHTML=`<div class="c-amb"></div><img class="c-pic" alt="${f.name} ${pad(k+1)}" decoding="async"><b>${pad(k+1)}</b>`;
       }
@@ -2232,6 +2280,9 @@ function openGal(i){
     if(total>3){warmImg(previewUrl(f,3));warmImg(ambientUrl(f,3))}
   }
   $('#cards').replaceChildren(frag);
+  st.classList.toggle('vid-mode',isVidGal);
+  if(isVidGal)st.dataset.ar=itemAr(f,0);
+  else delete st.dataset.ar;
 
   $('#gal').setAttribute('aria-hidden','false');
   requestAnimationFrame(()=>requestAnimationFrame(()=>{
@@ -2245,7 +2296,8 @@ function closeGal(){
   if(lbOpen)closeLb();
   stopStageVid();
   open=false;
-  st.classList.remove('go');
+  st.classList.remove('go','vid-mode');
+  delete st.dataset.ar;
   [...$('#cards').children].forEach((c,k)=>{
     const cls=cardMods(c);
     if(k!==g){c.className='card x '+(k>g?'xr':'xl')+cls}else{c.className='card'+cls}
@@ -2258,6 +2310,7 @@ function closeGal(){
 function renderGal(){
   const f=FOLDERS[cur],total=f.images.length,count=Math.max(1,total);
   $('#gt').innerHTML=total>0?`${f.name} <small>${pad(g+1)} / ${pad(total)}</small>`:f.name;
+  if(f.isVideo&&total>0)st.dataset.ar=itemAr(f,g);
   [...$('#cards').children].forEach((c,k)=>{
     const d=k-g;
     const cls=cardMods(c);
@@ -2324,6 +2377,7 @@ function syncLb(animateSwap){
     lbVid.poster=previewUrl(f,g);
     lbVid.src=nextSrc;
     lbVid.muted=false;
+    lbVid.load();
     lbVid.play().catch(()=>{lbVid.muted=true;lbVid.play().catch(()=>{})});
     return;
   }
@@ -2498,7 +2552,8 @@ function fit(){
     if(workTopWrap&&workTopWrap.style.paddingTop)workTopWrap.style.paddingTop='';
     const W=560,s=Math.min(w/W,(vh-54)/760);
     const topOff=20;
-    const targetH=Math.round(topOff+(open?744:668)*s+20)+'px';
+    const openH=st.classList.contains('vid-mode')?768:744;
+    const targetH=Math.round(topOff+(open?openH:668)*s+20)+'px';
     if(sec.style.height!==targetH)sec.style.height=targetH;
     st.style.left=(rail+(w-W*s)/2)+'px';
     st.style.top=topOff+'px';
