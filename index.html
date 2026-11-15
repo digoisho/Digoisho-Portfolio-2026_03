@@ -37,6 +37,7 @@
   --rail-w:clamp(62px,4.6vw,88px);
   --gutter:clamp(24px,5.5vw,88px);
   --maxw:1360px;
+  --flap-up-h:clamp(140px,17vh,185px);
 
   --font:'Open Sans',system-ui,-apple-system,sans-serif;
   --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
@@ -237,10 +238,10 @@ img{display:block;max-width:100%}
   align-items:center;
   justify-content:center;
   user-select:none;
-  cursor:grab;
+  cursor:pointer;
   touch-action:pan-y;
+  -webkit-tap-highlight-color:transparent;
 }
-.mascot-slot:active{cursor:grabbing}
 .mascot-slot svg{
   width:100%;
   height:auto;
@@ -254,10 +255,12 @@ img{display:block;max-width:100%}
   animation:fadeUp .84s var(--ease) .12s both;
 }
 .prefoot-mascot-wrap{
+  --m-gap:clamp(92px,11.5vh,124px);
+  --m-size:clamp(230px,24vw,340px);
   position:relative;
   padding-left:var(--rail-w);
-  margin-top:44px;
-  margin-bottom:calc(var(--flap-up-h, 240px) * -0.82);
+  margin-top:calc(var(--m-gap) - var(--m-size) * .172);
+  margin-bottom:calc(var(--m-gap) - var(--m-size) * .096 - var(--flap-up-h));
   display:flex;
   flex-direction:column;
   align-items:center;
@@ -266,7 +269,7 @@ img{display:block;max-width:100%}
   pointer-events:none;
 }
 .prefoot-mascot-slot{
-  width:clamp(230px,24vw,340px);
+  width:var(--m-size);
   pointer-events:auto;
 }
 
@@ -375,6 +378,78 @@ img{display:block;max-width:100%}
 .m-thought.is-question .m-hello-game{
   opacity:1;
   transform:translateY(0);
+}
+.m-hero-hello{
+  font-family:var(--mono);
+  font-size:20px;
+  font-weight:700;
+  fill:#FFFFFF;
+}
+.m-pew-txt{
+  opacity:0;
+  font-family:var(--mono);
+  font-size:16.5px;
+  font-weight:700;
+  letter-spacing:.03em;
+  fill:#FFFFFF;
+  transform-box:fill-box;
+  transform-origin:50% 50%;
+  transform:translateY(10px) scale(.86);
+  transition:opacity .16s var(--ease),transform .28s cubic-bezier(.34,1.56,.64,1);
+}
+.m-thought.is-pew .m-pill-sm{
+  opacity:1;
+}
+.m-thought.is-pew .m-pill-lg{
+  opacity:0;
+  transform:scale(0.76,0.82);
+}
+.m-thought.is-pew .m-hello-sga,
+.m-thought.is-pew .m-hello-eng,
+.m-thought.is-pew .m-hello-game{
+  opacity:0;
+  transition:opacity .12s var(--ease);
+}
+.m-thought.is-pew .m-pew-txt{
+  opacity:1;
+  transform:translateY(0) scale(1);
+}
+@keyframes mPewKick{
+  0%{transform:translateY(2px) scale(.82)}
+  55%{transform:translateY(-2px) scale(1.08)}
+  100%{transform:translateY(0) scale(1)}
+}
+.m-thought.is-pew .m-pew-txt.is-kick{
+  animation:mPewKick .24s cubic-bezier(.34,1.56,.64,1);
+}
+.mascot-pew-layer{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  overflow:hidden;
+  z-index:86;
+}
+.m-pew-bullet{
+  position:absolute;
+  left:0;top:0;
+  width:14px;height:6px;
+  border-radius:999px;
+  background:var(--orange);
+  box-shadow:0 1px 3px rgba(10,10,10,.18);
+  will-change:transform,opacity;
+}
+.m-pew-muzzle{
+  position:absolute;
+  left:0;top:0;
+  width:14px;height:14px;
+  margin-left:-7px;margin-top:-7px;
+  border-radius:50%;
+  border:2px solid var(--orange);
+  animation:mMuzzlePop .2s var(--ease-out) forwards;
+}
+@keyframes mMuzzlePop{
+  0%{opacity:.95;transform:translate3d(var(--mx),var(--my),0) scale(.35)}
+  100%{opacity:0;transform:translate3d(var(--mx),var(--my),0) scale(1.65)}
 }
 
 .hero-sub-row{
@@ -513,9 +588,10 @@ img{display:block;max-width:100%}
 
 /* gallery */
 .cards{position:absolute;inset:0;clip-path:inset(117px 151px 121px 135px);z-index:2}
-.card{position:absolute;left:665px;top:189px;width:590px;height:698px;border-radius:28px;background:var(--orange) center/cover;color:var(--white);overflow:hidden;will-change:transform;transition:transform .84s var(--ease),top .84s var(--ease),height .84s var(--ease);box-shadow:0 20px 36px rgba(10,10,10,.18);border:0}
+.card{position:absolute;left:665px;top:189px;width:590px;height:698px;border-radius:28px;background:var(--orange) center/cover;color:var(--white);overflow:hidden;transition:transform .84s var(--ease),top .84s var(--ease),height .84s var(--ease);box-shadow:0 20px 36px rgba(10,10,10,.18);border:0}
+.card:not(.x){will-change:transform}
 .card.has-img{background:var(--black);cursor:zoom-in}
-.card .c-amb{position:absolute;inset:0;background-position:center bottom;background-size:cover;filter:blur(24px) brightness(.44);transform:scale(1.14);pointer-events:none}
+.card .c-amb{position:absolute;inset:0;background-position:center bottom;background-size:cover;transform:scale(1.08);pointer-events:none}
 .card.x .c-amb{display:none}
 .card .c-pic{position:relative;z-index:1;display:block;width:100%;height:auto;max-height:100%;object-fit:cover;object-position:top center;border-radius:28px 28px 12px 12px;box-shadow:0 10px 24px rgba(0,0,0,.28);pointer-events:none;user-select:none}
 .card b{position:absolute;left:28px;top:18px;z-index:3;font-size:45.3px;font-weight:700;line-height:1}
@@ -569,16 +645,17 @@ img{display:block;max-width:100%}
 .m .cards{clip-path:inset(124px 54px 251px 54px round 0 0 26px 26px)}
 .m .line{top:84px;height:658px;width:3px}
 .m #ll{left:18px}.m #lr{left:539px}
-.m .card{left:54px;top:146px;width:452px;height:476px;will-change:transform,top,height;transition:transform .68s var(--ease),top .68s var(--ease),height .68s var(--ease)}
+.m .card{left:54px;top:146px;width:452px;height:476px;transition:transform .68s var(--ease),top .68s var(--ease),height .68s var(--ease)}
+.m .card:not(.x){will-change:transform,top,height}
 .m .card b{font-size:36px;left:20px;top:14px}
 .m .card.has-img b{font-size:17px;left:16px;top:16px;padding:5px 10px}
 .m .card.empty-card{padding:36px 28px 115px}
 .m .empty-ico{width:84px;height:84px;margin-bottom:14px}
 .m .empty-sub{font-size:17px}
-.m .card.l{transform:translate3d(495px,18px,0) rotate(6deg)}
-.m .card.r{transform:translate3d(-495px,18px,0) rotate(-6deg)}
-.m .card.x.xl{transform:translate3d(680px,32px,0) rotate(8deg)}
-.m .card.x.xr{transform:translate3d(-680px,32px,0) rotate(-8deg)}
+.m .card.l{transform:translate3d(-495px,18px,0) rotate(-6deg)}
+.m .card.r{transform:translate3d(495px,18px,0) rotate(6deg)}
+.m .card.x.xl{transform:translate3d(-680px,32px,0) rotate(-8deg)}
+.m .card.x.xr{transform:translate3d(680px,32px,0) rotate(8deg)}
 .m .gt{left:54px;top:88px;font-size:22px;max-width:374px;flex-wrap:wrap;gap:4px 10px}
 .m .gt small{font-size:15px}
 .m .close{left:444px;top:64px;width:76px;height:76px}
@@ -603,8 +680,10 @@ img{display:block;max-width:100%}
    3. ABOUT — Folder-Tabbed Studio Stage (One screen, zero boxes)
    ============================================================ */
 #about{
-  padding-top:72px;padding-bottom:24px;
-  justify-content:center;
+  min-height:auto;
+  padding-top:clamp(64px,7vh,92px);
+  padding-bottom:0;
+  justify-content:flex-start;
 }
 .about-header{
   display:flex;align-items:flex-end;justify-content:space-between;gap:16px 40px;flex-wrap:wrap;
@@ -673,8 +752,9 @@ img{display:block;max-width:100%}
 
 /* Stacked grid crossfade — zero display:none snap */
 .about-panels{
-  padding-top:48px;min-height:430px;
+  padding-top:48px;min-height:0;
   display:grid;align-items:start;
+  transition:height .46s var(--ease);
 }
 .a-panel{
   grid-area:1/1;
@@ -789,7 +869,6 @@ img{display:block;max-width:100%}
     dark-mode #0A0A0A contact stage as user scrolls to bottom)
    ============================================================ */
 #contact{
-  --flap-up-h:clamp(215px,28vh,310px);
   padding-top:var(--flap-up-h);
   padding-bottom:0;
   padding-left:0;
@@ -988,39 +1067,36 @@ img{display:block;max-width:100%}
   position:absolute;right:4px;bottom:4px;width:9px;height:9px;border-radius:50%;
   background:var(--orange);border:1.5px solid var(--black);pointer-events:none;
 }
-.sm-bub-txt{text-align:left;line-height:1.15}
+.sm-bub-txt{display:flex;align-items:center;text-align:left;line-height:1}
 .sm-bub-txt small{
-  display:block;font-family:var(--mono);font-size:9.5px;
+  display:block;font-family:var(--mono);font-size:10.5px;font-weight:600;
   letter-spacing:.12em;text-transform:uppercase;color:var(--orange);
 }
-.sm-bub-txt b{font-size:13px;font-weight:700;letter-spacing:.01em;color:var(--white)}
 
-/* Revealed Special Mentions Overlay */
+/* Revealed Special Mentions Overlay (Lightweight GPU Composited — Zero Blur/Clip Glitch) */
 .sm-overlay{
-  --bx:calc(100% - 80px);
-  --by:calc(100% - 45px);
   position:fixed;inset:0;z-index:88;
-  background:rgba(245,244,244,.97);
-  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  background:var(--paper);
   display:grid;place-items:center;
   padding:48px clamp(20px,6vw,96px) 90px;
-  opacity:0;pointer-events:none;
-  clip-path:circle(0px at var(--bx) var(--by));
-  transition:opacity .52s var(--ease),clip-path .72s var(--ease);
+  opacity:0;visibility:hidden;pointer-events:none;
+  will-change:opacity;
+  transition:opacity .36s cubic-bezier(.22,1,.36,1),visibility 0s linear .36s;
   overflow-y:auto;
+  overscroll-behavior:contain;
 }
 .sm-overlay.is-open{
-  opacity:1;pointer-events:auto;
-  clip-path:circle(150vmax at var(--bx) var(--by));
+  opacity:1;visibility:visible;pointer-events:auto;
+  transition:opacity .36s cubic-bezier(.22,1,.36,1),visibility 0s;
 }
 .sm-stage{
   width:100%;max-width:1040px;position:relative;
   opacity:0;transform:translate3d(0,18px,0) scale(.985);
-  transition:opacity .54s var(--ease),transform .62s var(--ease);
+  will-change:transform,opacity;
+  transition:opacity .36s cubic-bezier(.22,1,.36,1),transform .42s cubic-bezier(.22,1,.36,1);
 }
 .sm-overlay.is-open .sm-stage{
   opacity:1;transform:translate3d(0,0,0) scale(1);
-  transition-delay:.1s;
 }
 .sm-head{
   display:flex;align-items:center;justify-content:space-between;gap:20px;
@@ -1077,6 +1153,9 @@ img{display:block;max-width:100%}
   margin-top:32px;padding-top:22px;border-top:1px solid var(--rule);
   display:flex;flex-wrap:wrap;gap:14px 34px;
 }
+.sm-links .soc-link{color:var(--black)}
+.sm-links .soc-link small{color:var(--ink-45);transition:color .38s var(--ease)}
+.sm-links .soc-link:hover,.sm-links .soc-link:hover small{color:var(--orange)}
 .sm-foot{
   margin-top:40px;font-family:var(--mono);font-size:11px;
   letter-spacing:.1em;text-transform:uppercase;color:var(--ink-45);
@@ -1141,13 +1220,14 @@ img{display:block;max-width:100%}
     justify-self:center;
     width:clamp(220px,54vw,260px);
     margin:18px auto -10px;
-    pointer-events:none;
-    cursor:default;
+    pointer-events:auto;
+    cursor:pointer;
   }
+  .prefoot-mascot-wrap{--m-size:clamp(220px,54vw,260px)}
   .prefoot-mascot-slot{
-    width:clamp(220px,54vw,260px);
-    pointer-events:none;
-    cursor:default;
+    width:var(--m-size);
+    pointer-events:auto;
+    cursor:pointer;
   }
   .profile-spread{grid-template-columns:1fr}
   .studio-portrait{max-width:310px}
@@ -1156,19 +1236,19 @@ img{display:block;max-width:100%}
   .sm-photo{max-width:250px}
 }
 @media (max-width:768px){
+  :root{--flap-up-h:clamp(115px,16vh,145px)}
   .menubar{display:none}
   .mob-nav{display:flex}
   .stage-sec{padding-left:0}
   .env-body{padding-left:0}
-  .prefoot-mascot-wrap{padding-left:0;margin-top:12px;margin-bottom:-72px}
-  #contact{--flap-up-h:clamp(165px,22vh,215px)}
+  .prefoot-mascot-wrap{--m-gap:54px;padding-left:0}
   #hero{padding-top:70px;padding-bottom:16px;min-height:auto}
   #work{padding-left:0;transition:height .68s var(--ease)}
   .work-top-wrap{padding-top:18px}
   .work-header{padding-bottom:6px}
   .work-sub{font-size:11px;letter-spacing:.1em}
   #work,#about,#contact{scroll-margin-top:54px}
-  #about{padding-top:24px;padding-bottom:16px;min-height:auto}
+  #about{padding-top:24px;padding-bottom:0;min-height:auto}
   .folder-strip{padding-right:var(--gutter);display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 14px}
   .folder-jump{font-size:11px;gap:6px}
   .studio-id{display:none}
@@ -1330,7 +1410,7 @@ img{display:block;max-width:100%}
       </div>
 
       <!-- Top Interactive Pebble Mascot -->
-      <div class="mascot-slot hero-mascot-slot" data-mascot-slot title="Drag or hover over head to mush &amp; shy smirk">
+      <div class="mascot-slot hero-mascot-slot" data-mascot-slot data-mascot-role="hero" title="Click to say hello">
         <svg viewBox="0 0 500 500" aria-label="Interactive digoisho mascot">
           <defs>
             <mask id="eye-mask-l-hero" maskUnits="userSpaceOnUse" x="-60" y="-60" width="120" height="120">
@@ -1377,6 +1457,21 @@ img{display:block;max-width:100%}
                   <path d="M 18,-62 C 28,-63 38,-61 46,-57" fill="none" stroke="#FFFFFF" stroke-width="5.5" stroke-linecap="round" opacity="0.76"/>
                   <path d="M 62,-49 C 84,-36 99,-14 105,12" fill="none" stroke="#FFFFFF" stroke-width="5.5" stroke-linecap="round" opacity="0.84"/>
                   <circle cx="94" cy="72" r="3.5" fill="#FA4D11" opacity="0.9"/>
+                </g>
+              </g>
+              <!-- Semicolon ";" Thought Cloud (Hero mascot: appears on click -> 'hello.', disappears after 1.5s) -->
+              <g transform="translate(146, -134)">
+                <g class="m-thought m-hero-thought" aria-label="hello">
+                  <g class="m-thought-comma">
+                    <path d="M -11,-6 A 11,11 0 1,1 11,-6 C 11,7 1,17 -11,20 C -14,21 -15,17 -12,15 C -5,11 -2,5 -2,1 A 11,11 0 0,1 -11,-6 Z" fill="#0E0E0E" stroke="rgba(255,255,255,0.22)" stroke-width="1.5"/>
+                  </g>
+                  <g class="m-thought-top">
+                    <g class="m-pill-sm">
+                      <rect x="-46" y="-68" width="144" height="44" rx="22" fill="#0E0E0E" stroke="rgba(255,255,255,0.22)" stroke-width="1.5"/>
+                      <path d="M -24,-61 L 76,-61" stroke="rgba(255,255,255,0.14)" stroke-width="2" stroke-linecap="round"/>
+                    </g>
+                    <text class="m-hero-hello" x="24" y="-39" text-anchor="middle">hello<tspan fill="#FA4D11">.</tspan></text>
+                  </g>
                 </g>
               </g>
             </g>
@@ -1565,7 +1660,7 @@ img{display:block;max-width:100%}
 
   <!-- ============ PRE-FOOTER INTERACTIVE PEBBLE MASCOT ============ -->
   <div class="prefoot-mascot-wrap" aria-label="Interactive companion before footer">
-    <div class="mascot-slot prefoot-mascot-slot" data-mascot-slot title="Drag or hover over head to mush &amp; shy smirk">
+    <div class="mascot-slot prefoot-mascot-slot" data-mascot-slot data-mascot-role="shooter" title="Click to shoot — pew pew!">
       <svg viewBox="0 0 500 500" aria-label="Interactive digoisho mascot">
         <defs>
           <mask id="eye-mask-l-foot" maskUnits="userSpaceOnUse" x="-60" y="-60" width="120" height="120">
@@ -1662,6 +1757,10 @@ img{display:block;max-width:100%}
                     <text x="28" y="-53" text-anchor="middle">do you play</text>
                     <text x="28" y="-35" text-anchor="middle">video games<tspan fill="#FA4D11">?</tspan></text>
                   </g>
+                  <!-- On click -> 'pew pew!' -->
+                  <g class="m-pew-txt">
+                    <text x="26" y="-40" text-anchor="middle">pew pew<tspan fill="#FA4D11">!</tspan></text>
+                  </g>
                 </g>
               </g>
             </g>
@@ -1747,11 +1846,10 @@ img{display:block;max-width:100%}
 <!-- Floating Bubble Button -> Reveals Special Mentions (Elma) -->
 <button type="button" class="sm-bubble" id="sm-bubble" aria-expanded="false" aria-controls="sm-overlay">
   <span class="sm-bub-ava">
-    <img src="Images/elma.jpg" alt="" decoding="async">
+    <img src="Images/elma-ava.webp" alt="" decoding="async">
   </span>
   <span class="sm-bub-txt">
-    <small>Special Mentions</small>
-    <b id="sm-bub-lbl">Not only mine</b>
+    <small id="sm-bub-lbl">Special Mentions</small>
   </span>
   <span class="sm-bub-dot" aria-hidden="true"></span>
 </button>
@@ -1770,7 +1868,7 @@ img{display:block;max-width:100%}
 
     <div class="sm-grid">
       <figure class="sm-photo">
-        <img src="Images/elma.jpg" alt="Portrait of Elma Zarin Khan" loading="lazy" decoding="async">
+        <img src="Images/elma.webp" alt="Portrait of Elma Zarin Khan" decoding="async">
       </figure>
 
       <div>
@@ -1946,18 +2044,44 @@ function renderCar(){
   });
   $('#pill').textContent=pad(cur+1);
   $$('#dots button').forEach((d,i)=>d.className=i===cur?'on':'');
+  if(typeof warmFolderHead==='function')warmFolderHead(cur,4);
 }
 $('#cp').onclick=()=>{dir=-1;cur=(cur+n-1)%n;renderCar()};
 $('#cn').onclick=()=>{dir=1;cur=(cur+1)%n;renderCar()};
 
-/* ---- Pocket Gallery ---- */
-function cardUrl(f,k){return encodeURI((f.dir||'')+f.images[k])}
+/* ---- Pocket Gallery (Lightweight WebP Previews + Pre-Blurred Ambients) ---- */
+function fullUrl(f,k){return encodeURI((f.dir||'')+f.images[k])}
+function previewUrl(f,k){return encodeURI('Works/_preview/'+(f.dir||'').replace(/^Works\//,'')+f.images[k].replace(/\.[^.]+$/,'.webp'))}
+function ambientUrl(f,k){return encodeURI('Works/_ambient/'+(f.dir||'').replace(/^Works\//,'')+f.images[k].replace(/\.[^.]+$/,'.webp'))}
+
+const warmCache=new Map();
+function warmImg(url){
+  if(!url||warmCache.has(url))return;
+  if(warmCache.size>64){const first=warmCache.keys().next().value;warmCache.delete(first)}
+  const im=new Image();
+  im.decoding='async';
+  im.src=url;
+  warmCache.set(url,im);
+  if(im.decode)im.decode().catch(()=>{});
+}
+function warmFolderHead(idx,limit=4){
+  const f=FOLDERS[idx];
+  if(!f||!f.images.length)return;
+  const nWarm=Math.min(limit,f.images.length);
+  for(let k=0;k<nWarm;k++){
+    warmImg(ambientUrl(f,k));
+    warmImg(previewUrl(f,k));
+  }
+}
+
 function hydrateCard(c,f,k){
   if(c._loaded||!f.images[k])return;
   c._loaded=true;
-  const u=cardUrl(f,k);
-  c.querySelector('.c-amb').style.backgroundImage=`url("${u}")`;
-  c.querySelector('.c-pic').src=u;
+  const aUrl=ambientUrl(f,k),pUrl=previewUrl(f,k);
+  c.querySelector('.c-amb').style.backgroundImage=`url("${aUrl}")`;
+  const pic=c.querySelector('.c-pic');
+  pic.onerror=()=>{pic.onerror=null;pic.src=fullUrl(f,k)};
+  pic.src=pUrl;
 }
 
 function openGal(i){
@@ -1974,12 +2098,13 @@ function openGal(i){
   }else{
     for(let k=0;k<total;k++){
       const c=document.createElement('div');
-      c.className=(k===0?'card':k===1?'card l':'card x xl')+' has-img';
+      c.className=(k===0?'card':k===1?'card r':'card x xr')+' has-img';
       c.innerHTML=`<div class="c-amb"></div><img class="c-pic" alt="${f.name} ${pad(k+1)}" decoding="async"><b>${pad(k+1)}</b>`;
       c.onclick=()=>{if(g!==k){g=k;renderGal()}else{openLb()}};
       if(k<=2)hydrateCard(c,f,k);
       frag.appendChild(c);
     }
+    if(total>3){warmImg(previewUrl(f,3));warmImg(ambientUrl(f,3))}
   }
   $('#cards').replaceChildren(frag);
 
@@ -1997,7 +2122,7 @@ function closeGal(){
   st.classList.remove('go');
   [...$('#cards').children].forEach((c,k)=>{
     const cls=c.classList.contains('has-img')?' has-img':c.classList.contains('empty-card')?' empty-card':'';
-    if(k!==g){c.className='card x '+(k>g?'xl':'xr')+cls}else{c.className='card'+cls}
+    if(k!==g){c.className='card x '+(k>g?'xr':'xl')+cls}else{c.className='card'+cls}
     c.style.zIndex='';
   });
   $('#gal').setAttribute('aria-hidden','true');
@@ -2010,9 +2135,10 @@ function renderGal(){
   [...$('#cards').children].forEach((c,k)=>{
     const d=k-g;
     const cls=c.classList.contains('has-img')?' has-img':c.classList.contains('empty-card')?' empty-card':'';
-    c.className='card'+(d===0?'':d===1?' l':d===-1?' r':' x '+(d>0?'xl':'xr'))+cls;
+    c.className='card'+(d===0?'':d===1?' r':d===-1?' l':' x '+(d>0?'xr':'xl'))+cls;
     c.style.zIndex=d===0?3:Math.abs(d)===1?2:1;
-    if(total>0&&Math.abs(d)<=3)hydrateCard(c,f,k);
+    if(total>0&&Math.abs(d)<=2)hydrateCard(c,f,k);
+    else if(total>0&&Math.abs(d)===3){warmImg(ambientUrl(f,k));warmImg(previewUrl(f,k))}
   });
   $('#gp').classList.toggle('hide',g===0);
   $('#gn').classList.toggle('hide',g>=count-1);
@@ -2023,7 +2149,17 @@ $('#gp').onclick=()=>{if(g>0){g--;renderGal()}};
 $('#gn').onclick=()=>{const total=FOLDERS[cur].images.length;if(g<total-1){g++;renderGal()}};
 $('#close').onclick=closeGal;
 
-/* ---- Lightbox (Smooth Crossfade — Zero Image Snap) ---- */
+/* Idle warm-up for Special Mentions portrait + first preview cards of Work folders */
+(function scheduleWarmup(){
+  const run=()=>{
+    warmImg('Images/elma.webp');
+    FOLDERS.forEach((_,idx)=>warmFolderHead(idx,4));
+  };
+  if('requestIdleCallback' in window)window.requestIdleCallback(run,{timeout:1500});
+  else setTimeout(run,500);
+})();
+
+/* ---- Lightbox (Smooth Crossfade — Full-Res Artwork View) ---- */
 const lbox=$('#lbox'),lbImg=$('#lb-img'),smBub=$('#sm-bubble'),smOv=$('#sm-overlay');
 let lbSwapTimer=0;
 function lockBodyScroll(lock){
@@ -2039,7 +2175,9 @@ function lockBodyScroll(lock){
 function syncLb(animateSwap){
   const f=FOLDERS[cur];
   if(!f.images[g])return;
-  const nextSrc=cardUrl(f,g);
+  const nextSrc=fullUrl(f,g);
+  if(f.images[g+1])warmImg(fullUrl(f,g+1));
+  if(f.images[g-1])warmImg(fullUrl(f,g-1));
   $('#lb-cap').textContent=`${f.name} · ${pad(g+1)} / ${pad(f.images.length)}`;
   $('#lbp').classList.toggle('hide',g===0);
   $('#lbn').classList.toggle('hide',g>=f.images.length-1);
@@ -2077,25 +2215,17 @@ lbox.addEventListener('click',e=>{if(e.target===lbox)closeLb()});
 $('#lbp').onclick=e=>{e.stopPropagation();if(g>0){g--;renderGal()}};
 $('#lbn').onclick=e=>{e.stopPropagation();if(g<FOLDERS[cur].images.length-1){g++;renderGal()}};
 
-/* ---- Special Mentions Bubble Reveal (Exact Origin + Silk Ease-In-Out) ---- */
-function syncBubbleOrigin(){
-  const r=smBub.getBoundingClientRect();
-  if(r.width){
-    smOv.style.setProperty('--bx',(r.left+r.width*.5).toFixed(1)+'px');
-    smOv.style.setProperty('--by',(r.top+r.height*.5).toFixed(1)+'px');
-  }
-}
+/* ---- Special Mentions Bubble Reveal (Lightweight GPU Fade/Slide) ---- */
 function toggleSm(force){
   const next=typeof force==='boolean'?force:!smOpen;
   if(next===smOpen)return;
-  syncBubbleOrigin();
   smOpen=next;
   lockBodyScroll(smOpen);
   smOv.classList.toggle('is-open',smOpen);
   smOv.setAttribute('aria-hidden',smOpen?'false':'true');
   smBub.classList.toggle('is-open',smOpen);
   smBub.setAttribute('aria-expanded',smOpen?'true':'false');
-  $('#sm-bub-lbl').textContent=smOpen?'Close ×':'Not only mine';
+  $('#sm-bub-lbl').textContent=smOpen?'Close ×':'Special Mentions';
 }
 smBub.onclick=()=>toggleSm();
 $('#sm-close').onclick=()=>toggleSm(false);
@@ -2120,7 +2250,15 @@ document.addEventListener('keydown',e=>{
   }
 });
 
-/* ---- About Folder Tabs ---- */
+/* ---- About Folder Tabs + Dynamic Panel Height ---- */
+const aboutPanelsWrap=$('.about-panels');
+function syncAboutHeight(){
+  if(!aboutPanelsWrap)return;
+  const activePanel=aboutPanelsWrap.querySelector('.a-panel.is-on');
+  if(!activePanel)return;
+  const padTop=parseFloat(getComputedStyle(aboutPanelsWrap).paddingTop)||0;
+  aboutPanelsWrap.style.height=(padTop+activePanel.offsetHeight)+'px';
+}
 $$('[data-atab]').forEach(tab=>{
   tab.onclick=()=>{
     const target=tab.dataset.atab;
@@ -2130,11 +2268,17 @@ $$('[data-atab]').forEach(tab=>{
       t.setAttribute('aria-selected',on?'true':'false');
     });
     $$('.a-panel').forEach(p=>p.classList.toggle('is-on',p.id===`panel-${target}`));
+    syncAboutHeight();
   };
 });
+if(aboutPanelsWrap){
+  const panelRo=new ResizeObserver(syncAboutHeight);
+  $$('.a-panel').forEach(p=>panelRo.observe(p));
+  syncAboutHeight();
+}
 
 /* ---- Fit Work Stage + Isotropic Menubar Tabs ---- */
-const sec=$('#work'),st=$('#stage');
+const sec=$('#work'),st=$('#stage'),workTopWrap=$('.work-top-wrap'),workHdr=$('.work-header');
 function syncTabs(){
   const t=$('.m-tab');
   if(t&&t.clientWidth){
@@ -2150,7 +2294,7 @@ function syncTabs(){
     if(s){s.setAttribute('viewBox',`0 0 ${W.toFixed(2)} 103.571`);s.firstElementChild.setAttribute('d',d)}
   });
 }
-if(document.fonts&&document.fonts.ready)document.fonts.ready.then(syncTabs);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{syncTabs();syncAboutHeight();fit()});
 function fit(){
   syncTabs();
   const rail=window.innerWidth>768?($('.m-tab')?.offsetWidth||0):0;
@@ -2162,24 +2306,31 @@ function fit(){
     renderCar();if(open)renderGal();
   }
   if(M){
+    if(workTopWrap&&workTopWrap.style.paddingTop)workTopWrap.style.paddingTop='';
     const W=560,s=Math.min(w/W,(vh-54)/760);
     const topOff=20;
-    const targetH=Math.round(topOff+(open?744:676)*s)+'px';
+    const targetH=Math.round(topOff+(open?744:668)*s+20)+'px';
     if(sec.style.height!==targetH)sec.style.height=targetH;
     st.style.left=(rail+(w-W*s)/2)+'px';
     st.style.top=topOff+'px';
     st.style.transform=`scale(${s})`;
   }else{
     if(sec.style.height)sec.style.height='';
-    const h=sec.clientHeight,W=1920,H=1080,s=Math.min(w/W,h/H);
-    st.style.left=(rail+(w-W*s)/2)+'px';
-    st.style.top=((h-H*s)/2)+'px';
+    const h=sec.clientHeight,W=1920;
+    const hdrH=workHdr?workHdr.offsetHeight:76;
+    const hdrGap=20,stageTop=117,stageBot=1042,stageSpan=stageBot-stageTop;
+    const s=Math.min(w/W,Math.max(0.35,(h-hdrH-hdrGap-48)/stageSpan));
+    const totalH=hdrH+hdrGap+stageSpan*s;
+    const equalGap=Math.max(20,(h-totalH)/2);
+    if(workTopWrap)workTopWrap.style.paddingTop=equalGap.toFixed(1)+'px';
+    st.style.left=(rail+(w-W*s)/2).toFixed(1)+'px';
+    st.style.top=(equalGap+hdrH+hdrGap-stageTop*s).toFixed(1)+'px';
     st.style.transform=`scale(${s})`;
   }
 }
 let raf=0;
 new ResizeObserver(()=>{cancelAnimationFrame(raf);raf=requestAnimationFrame(fit)}).observe(sec);
-window.addEventListener('resize',syncTabs);
+window.addEventListener('resize',()=>{syncTabs();syncAboutHeight()});
 fit();
 
 let tx=null,ty=0;
@@ -2284,8 +2435,9 @@ syncNav();
     const c=Math.cos(p*Math.PI);
     const isMob=window.innerWidth<=768;
     const closedDepth=Math.min(H*.92,Math.max(320,window.innerHeight*.52));
-    /* Keep the 50px-rounded peak comfortably inside flapUpH (and below mobile nav bar) */
-    const openHeight=isMob?Math.max(60,(flapUpH-68)*.95):(flapUpH*.95);
+    /* Keep the 50px-rounded peak comfortably inside flapUpH and cleanly below the pre-footer mascot */
+    const mGapPx=Math.min(124,Math.max(92,window.innerHeight*.115));
+    const openHeight=isMob?Math.max(42,Math.min(50,(flapUpH-54)*.88)):Math.min(flapUpH*.92,mGapPx-12);
     const dy=c>=0?(c*closedDepth):(-(-c)*openHeight);
     const tipY=hy+dy;
 
@@ -2342,6 +2494,11 @@ syncNav();
 
   let lastEnvT=performance.now();
   function tickEnv(now){
+    if(smOpen||lbOpen){
+      lastEnvT=now;
+      if(!reducedMotion)requestAnimationFrame(tickEnv);
+      return;
+    }
     const dt=Math.min(.05,Math.max(.001,(now-lastEnvT)*.001));
     lastEnvT=now;
     calcTarget();
@@ -2424,6 +2581,11 @@ syncNav();
       drawStaticMobileGrid();
       return;
     }
+    if(smOpen||lbOpen){
+      lastT=now;
+      if(!reducedMotion)rafBg=requestAnimationFrame(drawFrame);
+      return;
+    }
     const dt=Math.min(.05,Math.max(.001,(now-lastT)*.001));
     lastT=now;
 
@@ -2504,9 +2666,9 @@ syncNav();
 
 /* ============================================================
    INTERACTIVE PEBBLE MASCOTS (Hero Top + Pre-Footer)
-   - After Effects Easy-Ease saccades & cursor tracking (eyes lead head)
-   - Asymmetric natural blinks
-   - Shy / Mush Smirk when hovering or dragging cursor over head
+   - Hero mascot: neutral gaze until clicked -> smirks & says "hello." for 1.5s
+   - Pre-footer mascot: click -> says "pew pew!" & shoots small orange bullet
+     (toward cursor if cursor is at distance; random ±20° left/right if near)
    ============================================================ */
 (function initMascotRigs(){
   const slots=$$('[data-mascot-slot]');
@@ -2533,32 +2695,190 @@ syncNav();
   let lastMoveSec=-10;
   let isDown=false;
 
-  const rigs=slots.map((slot,idx)=>({
-    slot,
-    phaseOffset:idx*1.7,
-    head:slot.querySelector('.m-head'),
-    visor:slot.querySelector('.m-visor'),
-    eyes:slot.querySelector('.m-eyes'),
-    gloss:slot.querySelector('.m-gloss'),
-    shyBlush:slot.querySelector('.m-shy-blush'),
-    thought:slot.querySelector('.m-thought'),
-    eyeL:slot.querySelector('.m-eye-l'),
-    eyeR:slot.querySelector('.m-eye-r'),
-    eyeLShape:slot.querySelector('.m-eye-l-shape'),
-    eyeRShape:slot.querySelector('.m-eye-r-shape'),
-    lidTopL:slot.querySelector('.m-lid-top-l'),
-    lidTopR:slot.querySelector('.m-lid-top-r'),
-    lidBotL:slot.querySelector('.m-lid-bot-l'),
-    lidBotR:slot.querySelector('.m-lid-bot-r'),
-    shadow:slot.querySelector('.m-shadow'),
-    eyeX:0,eyeY:0,eyeVX:0,eyeVY:0,
-    headX:0,headY:0,headTilt:0,headVX:0,headVY:0,headVTilt:0,
-    curSquint:0,curHappy:0,curMush:0,curSmirkSide:1,
-    overIntensity:0,rubOffsetX:0,rubEnergy:0,tapMushUntil:-10,
-    visibleSec:0,thoughtPopped:false,thoughtEnglish:false,thoughtQuestion:false,
-    prevTargetX:0,prevTargetY:0,
-    blinkStart:-10,secondBlinkAt:-10,nextAutoBlink:1.6+idx*0.9,lastKfIdx:-1
-  }));
+  /* Projectile Layer for Pre-Footer Mascot "pew pew!" Orange Bullets */
+  const pewLayer=document.createElement('div');
+  pewLayer.className='mascot-pew-layer';
+  pewLayer.setAttribute('aria-hidden','true');
+  document.body.appendChild(pewLayer);
+
+  const bullets=[];
+  let bulletRaf=0,lastBulletT=0;
+
+  function stepBullets(now){
+    const dt=Math.min(.05,Math.max(.001,(now-lastBulletT)*.001));
+    lastBulletT=now;
+    const vw=window.innerWidth,vh=window.innerHeight;
+
+    for(let i=bullets.length-1;i>=0;i--){
+      const b=bullets[i];
+      b.age+=dt;
+      b.x+=b.vx*dt;
+      b.y+=b.vy*dt;
+
+      const out=b.x<-80||b.x>vw+80||b.y<-80||b.y>vh+80||b.age>=b.maxAge;
+      if(out){
+        b.el.remove();
+        bullets.splice(i,1);
+        continue;
+      }
+      const fade=b.age>b.maxAge-.18?clamp((b.maxAge-b.age)/.18,0,1):1;
+      b.el.style.opacity=fade.toFixed(3);
+      b.el.style.transform=`translate3d(${(b.x-7).toFixed(1)}px,${(b.y-3).toFixed(1)}px,0) rotate(${b.deg}deg)`;
+    }
+
+    if(bullets.length){
+      bulletRaf=requestAnimationFrame(stepBullets);
+    }else{
+      bulletRaf=0;
+    }
+  }
+
+  function spawnOrangeBullet(x,y,angleRad){
+    const speed=960;
+    const deg=(angleRad*180/Math.PI).toFixed(2);
+
+    const muz=document.createElement('span');
+    muz.className='m-pew-muzzle';
+    muz.style.setProperty('--mx',`${x.toFixed(1)}px`);
+    muz.style.setProperty('--my',`${y.toFixed(1)}px`);
+    pewLayer.appendChild(muz);
+    setTimeout(()=>muz.remove(),220);
+
+    const el=document.createElement('span');
+    el.className='m-pew-bullet';
+    el.style.transform=`translate3d(${(x-7).toFixed(1)}px,${(y-3).toFixed(1)}px,0) rotate(${deg}deg)`;
+    pewLayer.appendChild(el);
+
+    bullets.push({
+      el,
+      x,y,
+      vx:Math.cos(angleRad)*speed,
+      vy:Math.sin(angleRad)*speed,
+      deg,
+      age:0,
+      maxAge:1.45
+    });
+
+    if(!bulletRaf){
+      lastBulletT=performance.now();
+      bulletRaf=requestAnimationFrame(stepBullets);
+    }
+  }
+
+  const rigs=slots.map((slot,idx)=>{
+    const role=slot.dataset.mascotRole||(idx===0?'hero':'shooter');
+    return {
+      slot,
+      role,
+      isHero:role==='hero',
+      isShooter:role==='shooter',
+      phaseOffset:idx*1.7,
+      head:slot.querySelector('.m-head'),
+      visor:slot.querySelector('.m-visor'),
+      eyes:slot.querySelector('.m-eyes'),
+      gloss:slot.querySelector('.m-gloss'),
+      shyBlush:slot.querySelector('.m-shy-blush'),
+      thought:slot.querySelector('.m-thought'),
+      pewTxt:slot.querySelector('.m-pew-txt'),
+      eyeL:slot.querySelector('.m-eye-l'),
+      eyeR:slot.querySelector('.m-eye-r'),
+      eyeLShape:slot.querySelector('.m-eye-l-shape'),
+      eyeRShape:slot.querySelector('.m-eye-r-shape'),
+      lidTopL:slot.querySelector('.m-lid-top-l'),
+      lidTopR:slot.querySelector('.m-lid-top-r'),
+      lidBotL:slot.querySelector('.m-lid-bot-l'),
+      lidBotR:slot.querySelector('.m-lid-bot-r'),
+      shadow:slot.querySelector('.m-shadow'),
+      eyeX:0,eyeY:0,eyeVX:0,eyeVY:0,
+      headX:0,headY:0,headTilt:0,headVX:0,headVY:0,headVTilt:0,
+      curSquint:0,curHappy:0,curMush:0,curSmirkSide:1,
+      overIntensity:0,rubOffsetX:0,rubEnergy:0,tapMushUntil:-10,
+      isPressing:false,heroHideTimer:0,
+      pewHideTimer:0,pewLookX:0,pewLookY:0,pewLookUntil:-10,lastShotMs:-1000,
+      visibleSec:0,thoughtPopped:false,thoughtEnglish:false,thoughtQuestion:false,
+      prevTargetX:0,prevTargetY:0,
+      blinkStart:-10,secondBlinkAt:-10,nextAutoBlink:1.6+idx*0.9,lastKfIdx:-1
+    };
+  });
+
+  function triggerHeroClick(rig,cx){
+    const nowSec=performance.now()*.001;
+    const r=rig.slot.getBoundingClientRect();
+    if(r.width&&typeof cx==='number'){
+      const dx=cx-(r.left+r.width*.5);
+      rig.rubOffsetX=Math.abs(dx)>10?clamp(dx/(r.width*.3),-.85,.85):.45;
+    }else{
+      rig.rubOffsetX=.45;
+    }
+    rig.tapMushUntil=nowSec+1.5;
+    if(rig.thought){
+      rig.thought.classList.add('is-popped');
+      clearTimeout(rig.heroHideTimer);
+      rig.heroHideTimer=setTimeout(()=>{
+        rig.thought.classList.remove('is-popped');
+      },1500);
+    }
+    if(reducedMotion)requestAnimationFrame(tickMascots);
+  }
+
+  function triggerShooterPew(rig,cx,cy){
+    const nowMs=performance.now();
+    if(nowMs-rig.lastShotMs<45)return;
+    rig.lastShotMs=nowMs;
+
+    const r=rig.slot.getBoundingClientRect();
+    if(!r.width)return;
+    const mx=r.left+r.width*.5;
+    const my=r.top+r.height*.52;
+
+    const hasCursor=typeof cx==='number'&&typeof cy==='number';
+    const dx=hasCursor?(cx-mx):0;
+    const dy=hasCursor?(cy-my):0;
+    const dist=Math.hypot(dx,dy);
+    const nearThreshold=r.width*.52;
+
+    let angle;
+    if(hasCursor&&dist>nearThreshold){
+      /* Cursor is at distance -> shoot directly toward cursor */
+      angle=Math.atan2(dy,dx);
+    }else{
+      /* Cursor is near -> shoot within 20° of right (0°) or left (180°), random */
+      const baseAngle=Math.random()<.5?0:Math.PI;
+      const randSpread=(Math.random()*40-20)*(Math.PI/180);
+      angle=baseAngle+randSpread;
+    }
+
+    const muzzleR=r.width*.24;
+    spawnOrangeBullet(mx+Math.cos(angle)*muzzleR,my+Math.sin(angle)*muzzleR,angle);
+
+    /* Snap gaze toward shot & apply playful recoil */
+    const nowSec=nowMs*.001;
+    rig.pewLookX=Math.cos(angle)*.88;
+    rig.pewLookY=Math.sin(angle)*.65;
+    rig.pewLookUntil=nowSec+.42;
+    rig.overIntensity=0;
+    rig.rubEnergy=0;
+    rig.curMush=0;
+    rig.headVX-=Math.cos(angle)*3.2;
+    rig.headVY-=Math.sin(angle)*2.0;
+
+    if(rig.thought){
+      rig.thoughtPopped=true;
+      rig.thoughtEnglish=true;
+      rig.thoughtQuestion=true;
+      rig.thought.classList.add('is-popped','is-english','is-question','is-pew');
+      if(rig.pewTxt){
+        rig.pewTxt.classList.remove('is-kick');
+        void rig.pewTxt.getBoundingClientRect();
+        rig.pewTxt.classList.add('is-kick');
+      }
+      clearTimeout(rig.pewHideTimer);
+      rig.pewHideTimer=setTimeout(()=>{
+        rig.thought.classList.remove('is-pew');
+      },1800);
+    }
+    if(reducedMotion)requestAnimationFrame(tickMascots);
+  }
 
   function updatePointer(cx,cy){
     if(window.innerWidth<=860)return;
@@ -2569,6 +2889,16 @@ syncNav();
     lastMoveSec=nowSec;
 
     rigs.forEach(rig=>{
+      /* Hero mascot must NOT smirk on hover before clicking */
+      if(rig.isHero){
+        rig.overIntensity=0;
+        rig.rubEnergy=0;
+        return;
+      }
+      if(nowSec<rig.pewLookUntil){
+        rig.overIntensity=0;
+        return;
+      }
       const r=rig.slot.getBoundingClientRect();
       if(!r.width)return;
       const mx=r.left+r.width*.5;
@@ -2586,15 +2916,43 @@ syncNav();
     });
   }
 
+  let activeShooterDown=null;
+
   window.addEventListener('pointermove',e=>updatePointer(e.clientX,e.clientY),{passive:true});
   window.addEventListener('pointerdown',e=>{isDown=true;updatePointer(e.clientX,e.clientY)},{passive:true});
-  window.addEventListener('pointerup',()=>{isDown=false},{passive:true});
+  window.addEventListener('pointerup',e=>{
+    isDown=false;
+    rigs.forEach(r=>{r.isPressing=false});
+    if(activeShooterDown){
+      const s=activeShooterDown;
+      activeShooterDown=null;
+      triggerShooterPew(s.rig,e.clientX,e.clientY);
+    }
+  },{passive:true});
+  window.addEventListener('pointercancel',()=>{
+    isDown=false;
+    activeShooterDown=null;
+    rigs.forEach(r=>{r.isPressing=false});
+  },{passive:true});
 
   rigs.forEach(rig=>{
-    rig.slot.addEventListener('click',()=>{
-      if(window.innerWidth<=860)return;
-      rig.tapMushUntil=performance.now()*.001+1.35;
-      rig.rubEnergy=0.9;
+    rig.slot.addEventListener('pointerdown',e=>{
+      if(e.button!==undefined&&e.button!==0)return;
+      if(rig.isHero){
+        rig.isPressing=true;
+        triggerHeroClick(rig,e.clientX);
+      }else if(rig.isShooter){
+        activeShooterDown={rig};
+      }
+    },{passive:true});
+
+    rig.slot.addEventListener('click',e=>{
+      if(rig.isHero){
+        triggerHeroClick(rig,e.clientX);
+      }else if(rig.isShooter){
+        /* Fallback for keyboard / assistive click when pointerup did not just fire */
+        triggerShooterPew(rig,e.clientX,e.clientY);
+      }
     });
   });
 
@@ -2651,7 +3009,8 @@ syncNav();
       const r=rig.slot.getBoundingClientRect();
       if(!r.width||r.bottom<-120||r.top>window.innerHeight+120)return;
 
-      if(r.bottom>40&&r.top<window.innerHeight-40){
+      /* Auto thought timeline runs ONLY on the pre-footer shooter mascot */
+      if(rig.isShooter&&r.bottom>40&&r.top<window.innerHeight-40){
         rig.visibleSec+=dt;
         if(rig.thought&&!rig.thoughtPopped&&rig.visibleSec>=2.0){
           rig.thoughtPopped=true;
@@ -2667,7 +3026,7 @@ syncNav();
         }
       }
 
-      rig.rubEnergy=isMob?0:Math.max(0,rig.rubEnergy-dt*1.8);
+      rig.rubEnergy=(isMob||rig.isHero)?0:Math.max(0,rig.rubEnergy-dt*1.8);
       const auto=sampleLoop(rig,nowSec);
 
       const mx=r.left+r.width*.5;
@@ -2675,12 +3034,12 @@ syncNav();
       const cX=Math.tanh(((ptrX-mx)/(Math.max(window.innerWidth,500)*.40))*1.4);
       const cY=Math.tanh(((ptrY-my)/(Math.max(window.innerHeight,500)*.40))*1.4);
 
-      const tapMush=(!isMob&&nowSec<rig.tapMushUntil)?easyEase(clamp((rig.tapMushUntil-nowSec)/.3,0,1)):0;
-      const targetMush=isMob?0:Math.max(
-        tapMush,
+      const tapMush=rig.isPressing?1:(nowSec<rig.tapMushUntil?easyEase(clamp((rig.tapMushUntil-nowSec)/.3,0,1)):0);
+      const hoverMush=(isMob||rig.isHero||nowSec<rig.pewLookUntil)?0:(
         rig.overIntensity>0?clamp(rig.overIntensity*(isDown?1.18:.95)+rig.rubEnergy*.25,0,1.25):0
       );
-      rig.curMush=lerp(rig.curMush,targetMush,1-Math.exp(-10*dt));
+      const targetMush=Math.max(tapMush,hoverMush);
+      rig.curMush=lerp(rig.curMush,targetMush,1-Math.exp(-12*dt));
 
       const targetSmirkSide=Math.abs(rig.rubOffsetX)>.12?Math.sign(rig.rubOffsetX):1;
       rig.curSmirkSide=lerp(rig.curSmirkSide,targetSmirkSide,1-Math.exp(-8*dt));
@@ -2690,22 +3049,24 @@ syncNav();
         rig.nextAutoBlink=nowSec+2.2+Math.random()*2.4;
       }
 
+      const isPewAim=rig.isShooter&&nowSec<rig.pewLookUntil;
       const shyLookX=rig.curSmirkSide*.34+Math.sin(nowSec*9)*rig.rubEnergy*.12;
       const shyLookY=.24;
-      const baseX=lerp(auto.x,cX,cursorWeight);
-      const baseY=lerp(auto.y,cY,cursorWeight);
+      const baseX=isPewAim?rig.pewLookX:lerp(auto.x,cX,cursorWeight);
+      const baseY=isPewAim?rig.pewLookY:lerp(auto.y,cY,cursorWeight);
       const targetX=lerp(baseX,shyLookX,clamp(rig.curMush,0,1));
       const targetY=lerp(baseY,shyLookY,clamp(rig.curMush,0,1));
 
       const shyTilt=-rig.curSmirkSide*8.5+rig.rubOffsetX*6.5+Math.sin(nowSec*11)*rig.rubEnergy*2.5;
-      const baseTilt=lerp(auto.tilt,cX*7.5-cY*1.5,cursorWeight);
+      const baseTilt=isPewAim?(rig.pewLookX*9):lerp(auto.tilt,cX*7.5-cY*1.5,cursorWeight);
       const targetTilt=lerp(baseTilt,shyTilt,clamp(rig.curMush,0,1));
 
-      const targetSq=lerp(auto.sq,-cX*.16,cursorWeight);
-      const targetHappy=Math.max(auto.hap*(1-cursorWeight*.8),clamp(rig.curMush*1.05,0,1));
+      const targetSq=isPewAim?(-Math.sign(rig.pewLookX||1)*.24):lerp(auto.sq,-cX*.16,cursorWeight);
+      const idleHappy=rig.isHero?0:auto.hap*(1-cursorWeight*.8);
+      const targetHappy=Math.max(idleHappy,clamp(rig.curMush*1.05,0,1));
 
       const jumpDist=Math.hypot(targetX-rig.prevTargetX,targetY-rig.prevTargetY);
-      if(jumpDist>.55&&rig.curMush<.2)triggerBlink(rig,nowSec,false);
+      if(jumpDist>.55&&rig.curMush<.2&&!isPewAim)triggerBlink(rig,nowSec,false);
       rig.prevTargetX=lerp(rig.prevTargetX,targetX,.25);
       rig.prevTargetY=lerp(rig.prevTargetY,targetY,.25);
 
