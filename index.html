@@ -6,7 +6,21 @@
 <title>digoisho — Design, Motion &amp; Animation</title>
 <meta name="description" content="Portfolio of digoisho — Design Head, motion designer, animator and video editor based in Siliguri, India.">
 <meta name="theme-color" content="#F5F4F4">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="digoisho">
+<meta property="og:title" content="digoisho — Design Head, Motion &amp; 2D Animation">
+<meta property="og:description" content="Campaign visuals, short-form edits, 2D animations and stories that move — by digoisho (Siliguri, India).">
+<meta property="og:image" content="https://raw.githubusercontent.com/digoisho/Digoisho-Portfolio-2026_03/main/Images/og-cover.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="digoisho — Design Head, Motion &amp; 2D Animation portfolio preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="digoisho — Design Head, Motion &amp; 2D Animation">
+<meta name="twitter:description" content="Campaign visuals, short-form edits, 2D animations and stories that move — by digoisho.">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/digoisho/Digoisho-Portfolio-2026_03/main/Images/og-cover.jpg">
 <link rel="icon" type="image/svg+xml" href="Images/Digoisho%20logo.svg">
+<link rel="preload" as="image" href="Images/Motion%20Video%20BG%20WebP/Motion%20Video%20BG_00001.webp" type="image/webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -483,7 +497,7 @@ img{display:block;max-width:100%}
 
 /* Direct Folder Jump Strip at bottom of Hero */
 .folder-strip{
-  padding-top:22px;padding-right:210px;border-top:1px solid var(--rule);
+  padding-top:22px;padding-right:252px;border-top:1px solid var(--rule);
   display:flex;align-items:center;justify-content:space-between;gap:14px 22px;flex-wrap:wrap;
   animation:fadeUp .78s var(--ease) .24s both;
 }
@@ -1017,7 +1031,7 @@ img{display:block;max-width:100%}
 }
 
 .foot-bar{
-  padding-top:20px;border-top:1px solid rgba(245,244,244,.14);
+  padding-top:20px;padding-right:252px;border-top:1px solid rgba(245,244,244,.14);
   display:flex;align-items:center;justify-content:space-between;gap:12px 24px;flex-wrap:wrap;
   font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
   color:#8A8988;
@@ -1256,9 +1270,9 @@ img{display:block;max-width:100%}
   .about-header .sec-title{padding-bottom:6px}
   .folder-tabs{--ft-h:34px;--ft-pad:7px;padding:14px 12px 0 10px;margin:-14px -12px 0 -10px}
   .f-tab{font-size:10px;letter-spacing:.04em}
-  .foot-bar{padding-right:var(--gutter);padding-bottom:68px}
+  .foot-bar{padding-right:var(--gutter);padding-bottom:82px}
   .sm-overlay{align-items:start;padding:28px 20px 104px}
-  .sm-bubble{height:48px;padding:5px 16px 5px 5px}
+  .sm-bubble{height:48px;padding:5px 16px 5px 5px;right:16px;bottom:16px}
   .sm-bub-ava{width:38px;height:38px}
 }
 @media (prefers-reduced-motion:reduce){
@@ -1390,7 +1404,6 @@ img{display:block;max-width:100%}
 
     <div class="wrap hero-center">
       <div class="hero-copy-col">
-        <p class="eyebrow">Design Head · Motion · 2D Animation</p>
         <h1 class="hero-h1">
           <span class="line-mask"><span>PORTFOLIO</span></span>
         </h1>
@@ -1529,15 +1542,15 @@ img{display:block;max-width:100%}
       <div class="about-header">
         <h2 class="sec-title" id="about-h">BEHIND THE <span>WORK</span></h2>
         <div class="folder-tabs" role="tablist" aria-label="About views">
-          <button type="button" class="f-tab is-on" role="tab" aria-selected="true" data-atab="profile">
+          <button type="button" class="f-tab is-on" id="tab-profile" role="tab" aria-selected="true" aria-controls="panel-profile" tabindex="0" data-atab="profile">
             <svg viewBox="0 0 380 103.571" aria-hidden="true"><path d="M0,104.5 L0,103.571 C11.847,103.571 22.585,96.598 27.405,85.775 L57.678,17.796 C62.498,6.973 73.236,0 85.084,0 L294.92,0 C306.76,0 317.50,6.973 322.32,17.796 L352.60,85.775 C357.42,96.598 368.15,103.571 380,103.571 L380,104.5 Z"/></svg>
             <span>Profile</span>
           </button>
-          <button type="button" class="f-tab" role="tab" aria-selected="false" data-atab="journey">
+          <button type="button" class="f-tab" id="tab-journey" role="tab" aria-selected="false" aria-controls="panel-journey" tabindex="-1" data-atab="journey">
             <svg viewBox="0 0 520 103.571" aria-hidden="true"><path d="M0,104.5 L0,103.571 C11.847,103.571 22.585,96.598 27.405,85.775 L57.678,17.796 C62.498,6.973 73.236,0 85.084,0 L434.92,0 C446.76,0 457.50,6.973 462.32,17.796 L492.60,85.775 C497.42,96.598 508.15,103.571 520,103.571 L520,104.5 Z"/></svg>
             <span>Experience</span>
           </button>
-          <button type="button" class="f-tab" role="tab" aria-selected="false" data-atab="toolkit">
+          <button type="button" class="f-tab" id="tab-toolkit" role="tab" aria-selected="false" aria-controls="panel-toolkit" tabindex="-1" data-atab="toolkit">
             <svg viewBox="0 0 460 103.571" aria-hidden="true"><path d="M0,104.5 L0,103.571 C11.847,103.571 22.585,96.598 27.405,85.775 L57.678,17.796 C62.498,6.973 73.236,0 85.084,0 L374.92,0 C386.76,0 397.50,6.973 402.32,17.796 L432.60,85.775 C437.42,96.598 448.15,103.571 460,103.571 L460,104.5 Z"/></svg>
             <span>Toolkit</span>
           </button>
@@ -1546,7 +1559,7 @@ img{display:block;max-width:100%}
 
       <div class="about-panels">
         <!-- Tab 1: Profile -->
-        <div class="a-panel is-on" id="panel-profile" role="tabpanel">
+        <div class="a-panel is-on" id="panel-profile" role="tabpanel" aria-labelledby="tab-profile" aria-hidden="false">
           <div class="profile-spread">
             <div>
               <p class="profile-lead">
@@ -1577,13 +1590,13 @@ img{display:block;max-width:100%}
             </div>
 
             <figure class="studio-portrait">
-              <img src="Images/digoisho.png" alt="Portrait of digoisho" loading="lazy" decoding="async">
+              <img src="Images/digoisho.webp" alt="Portrait of digoisho" width="633" height="765" loading="lazy" decoding="async">
             </figure>
           </div>
         </div>
 
         <!-- Tab 2: Experience & Education -->
-        <div class="a-panel" id="panel-journey" role="tabpanel">
+        <div class="a-panel" id="panel-journey" role="tabpanel" aria-labelledby="tab-journey" aria-hidden="true">
           <div class="journey-spread">
             <div class="exp-grid">
               <div class="exp-item">
@@ -1626,7 +1639,7 @@ img{display:block;max-width:100%}
         </div>
 
         <!-- Tab 3: Toolkit -->
-        <div class="a-panel" id="panel-toolkit" role="tabpanel">
+        <div class="a-panel" id="panel-toolkit" role="tabpanel" aria-labelledby="tab-toolkit" aria-hidden="true">
           <div class="toolkit-spread">
             <div class="tk-group">
               <small><svg viewBox="0 0 300 300" aria-hidden="true"><path d="M175 100Q175 110 182 118Q190 125 200 125Q210 125 218 118Q225 110 225 100Q225 90 218 82Q210 75 200 75Q190 75 182 82Q175 90 175 100ZM88 100Q88 110 95 118Q102 125 112 125Q123 125 130 118Q137 110 138 100Q138 90 130 82Q123 75 112 75Q102 75 95 82Q88 90 88 100ZM75 187Q75 198 82 205Q90 212 100 212Q110 212 118 205Q125 198 125 188Q125 177 118 170Q110 163 100 162Q90 162 82 170Q75 177 75 188ZM300 137Q297 100 277 69Q257 38 225 20Q193 2 156 0Q116 -1 80 18Q44 37 23 72Q2 107 1 148Q0 188 20 224Q40 259 75 280Q110 300 151 300L164 299Q171 299 176 294Q181 288 181 281L180 238Q180 227 186 218Q192 209 202 204Q212 200 223 202Q234 204 241 212L243 213Q248 219 256 221Q263 223 270 222Q277 220 283 215Q289 210 291 203Q304 171 300 137ZM260 179Q243 166 222 164Q202 163 183 172Q164 182 154 200Q143 217 143 238L143 262Q113 260 89 244Q65 228 52 202Q38 176 39 146Q40 116 55 91Q70 66 96 52Q121 38 151 37L155 38Q183 39 206 52Q230 66 245 89Q260 112 263 140Q265 160 260 179Z"/></svg>Design</small>
@@ -2195,13 +2208,16 @@ function syncLb(animateSwap){
     lbImg.alt=`${f.name} ${pad(g+1)}`;
   }
 }
+let lastFocusLb=null,lastFocusSm=null;
 function openLb(){
   if(!FOLDERS[cur].images[g])return;
+  lastFocusLb=document.activeElement;
   lbOpen=true;syncLb(false);
   lockBodyScroll(true);
   lbox.classList.add('on');
   lbox.setAttribute('aria-hidden','false');
   smBub.classList.add('hide-bub');
+  $('#lb-close').focus({preventScroll:true});
 }
 function closeLb(){
   lbOpen=false;
@@ -2209,6 +2225,8 @@ function closeLb(){
   lbox.setAttribute('aria-hidden','true');
   smBub.classList.remove('hide-bub');
   lockBodyScroll(false);
+  if(lastFocusLb&&typeof lastFocusLb.focus==='function')lastFocusLb.focus({preventScroll:true});
+  lastFocusLb=null;
 }
 $('#lb-close').onclick=closeLb;
 lbox.addEventListener('click',e=>{if(e.target===lbox)closeLb()});
@@ -2219,6 +2237,7 @@ $('#lbn').onclick=e=>{e.stopPropagation();if(g<FOLDERS[cur].images.length-1){g++
 function toggleSm(force){
   const next=typeof force==='boolean'?force:!smOpen;
   if(next===smOpen)return;
+  if(next)lastFocusSm=document.activeElement;
   smOpen=next;
   lockBodyScroll(smOpen);
   smOv.classList.toggle('is-open',smOpen);
@@ -2226,20 +2245,33 @@ function toggleSm(force){
   smBub.classList.toggle('is-open',smOpen);
   smBub.setAttribute('aria-expanded',smOpen?'true':'false');
   $('#sm-bub-lbl').textContent=smOpen?'Close ×':'Special Mentions';
+  if(smOpen)$('#sm-close').focus({preventScroll:true});
+  else if(lastFocusSm&&typeof lastFocusSm.focus==='function'){lastFocusSm.focus({preventScroll:true});lastFocusSm=null}
 }
 smBub.onclick=()=>toggleSm();
 $('#sm-close').onclick=()=>toggleSm(false);
 smOv.addEventListener('click',e=>{if(e.target===smOv)toggleSm(false)});
 
+function trapModalFocus(e,container){
+  if(e.key!=='Tab')return;
+  const nodes=[...container.querySelectorAll('a[href],button:not([disabled]):not(.hide),[tabindex]:not([tabindex="-1"])')];
+  if(!nodes.length)return;
+  const first=nodes[0],last=nodes[nodes.length-1];
+  if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}
+  else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}
+}
+
 document.addEventListener('keydown',e=>{
   if(['ArrowUp','ArrowDown','PageUp','PageDown',' '].includes(e.key))stopSmoothScroll();
   if(lbOpen){
+    trapModalFocus(e,lbox);
     if(e.key==='Escape')closeLb();
     if(e.key==='ArrowLeft')$('#lbp').click();
     if(e.key==='ArrowRight')$('#lbn').click();
     return;
   }
   if(smOpen){
+    trapModalFocus(e,smOv);
     if(e.key==='Escape')toggleSm(false);
     return;
   }
@@ -2251,7 +2283,7 @@ document.addEventListener('keydown',e=>{
 });
 
 /* ---- About Folder Tabs + Dynamic Panel Height ---- */
-const aboutPanelsWrap=$('.about-panels');
+const aboutPanelsWrap=$('.about-panels'),aboutTabs=$$('[data-atab]');
 function syncAboutHeight(){
   if(!aboutPanelsWrap)return;
   const activePanel=aboutPanelsWrap.querySelector('.a-panel.is-on');
@@ -2259,17 +2291,32 @@ function syncAboutHeight(){
   const padTop=parseFloat(getComputedStyle(aboutPanelsWrap).paddingTop)||0;
   aboutPanelsWrap.style.height=(padTop+activePanel.offsetHeight)+'px';
 }
-$$('[data-atab]').forEach(tab=>{
-  tab.onclick=()=>{
-    const target=tab.dataset.atab;
-    $$('[data-atab]').forEach(t=>{
-      const on=t===tab;
-      t.classList.toggle('is-on',on);
-      t.setAttribute('aria-selected',on?'true':'false');
-    });
-    $$('.a-panel').forEach(p=>p.classList.toggle('is-on',p.id===`panel-${target}`));
-    syncAboutHeight();
-  };
+function activateAboutTab(tab,focusTab){
+  const target=tab.dataset.atab;
+  aboutTabs.forEach(t=>{
+    const on=t===tab;
+    t.classList.toggle('is-on',on);
+    t.setAttribute('aria-selected',on?'true':'false');
+    t.tabIndex=on?0:-1;
+  });
+  $$('.a-panel').forEach(p=>{
+    const on=p.id===`panel-${target}`;
+    p.classList.toggle('is-on',on);
+    p.setAttribute('aria-hidden',on?'false':'true');
+  });
+  if(focusTab)tab.focus({preventScroll:true});
+  syncAboutHeight();
+}
+aboutTabs.forEach((tab,idx)=>{
+  tab.onclick=()=>activateAboutTab(tab,false);
+  tab.addEventListener('keydown',e=>{
+    let nextIdx=-1;
+    if(e.key==='ArrowRight')nextIdx=(idx+1)%aboutTabs.length;
+    else if(e.key==='ArrowLeft')nextIdx=(idx+aboutTabs.length-1)%aboutTabs.length;
+    else if(e.key==='Home')nextIdx=0;
+    else if(e.key==='End')nextIdx=aboutTabs.length-1;
+    if(nextIdx!==-1){e.preventDefault();activateAboutTab(aboutTabs[nextIdx],true)}
+  });
 });
 if(aboutPanelsWrap){
   const panelRo=new ResizeObserver(syncAboutHeight);
@@ -2405,15 +2452,23 @@ syncNav();
   if(!sec||!body||!letter||!flapSvg||!flapPath)return;
 
   let envTarget=0,envMid=0,envCur=0;
+  let envInView=true,rafEnv=0,lastEnvT=performance.now();
+  let cW=320,cH=320,cFlapUpH=150,cRailW=0,cVh=window.innerHeight;
+
+  function measureEnv(){
+    cVh=window.innerHeight;
+    cW=Math.max(320,body.clientWidth);
+    cH=Math.max(320,body.clientHeight);
+    cFlapUpH=Math.max(80,parseFloat(getComputedStyle(sec).paddingTop)||150);
+    cRailW=window.innerWidth<=768?0:(parseFloat(getComputedStyle(body).paddingLeft)||0);
+  }
 
   function calcTarget(){
     if(reducedMotion){envTarget=1;return;}
-    const vh=window.innerHeight;
     const rect=body.getBoundingClientRect();
-    const flapUpH=parseFloat(getComputedStyle(sec).paddingTop)||150;
-    const startY=vh*.76;
-    const endY=Math.max(flapUpH+20,vh*.26);
-    const maxS=Math.max(1,document.documentElement.scrollHeight-vh);
+    const startY=cVh*.76;
+    const endY=Math.max(cFlapUpH+20,cVh*.26);
+    const maxS=Math.max(1,document.documentElement.scrollHeight-cVh);
     let t=(startY-rect.top)/Math.max(90,startY-endY);
     if(window.scrollY>=maxS-10||rev.classList.contains('is-open'))t=1;
     t=Math.min(1,Math.max(0,t));
@@ -2421,10 +2476,7 @@ syncNav();
   }
 
   function renderEnvelope(p){
-    const W=Math.max(320,body.clientWidth);
-    const H=Math.max(320,body.clientHeight);
-    const flapUpH=Math.max(80,parseFloat(getComputedStyle(sec).paddingTop)||150);
-    const railW=window.innerWidth<=768?0:(parseFloat(getComputedStyle(body).paddingLeft)||0);
+    const W=cW,H=cH,flapUpH=cFlapUpH,railW=cRailW;
     const cx=railW*.5+W*.5;
     const hy=flapUpH;
 
@@ -2434,9 +2486,9 @@ syncNav();
     /* Cosine 3D hinge: c = +1 (closed down) -> 0 (hinge line) -> -1 (open up) */
     const c=Math.cos(p*Math.PI);
     const isMob=window.innerWidth<=768;
-    const closedDepth=Math.min(H*.92,Math.max(320,window.innerHeight*.52));
+    const closedDepth=Math.min(H*.92,Math.max(320,cVh*.52));
     /* Keep the 50px-rounded peak comfortably inside flapUpH and cleanly below the pre-footer mascot */
-    const mGapPx=Math.min(124,Math.max(92,window.innerHeight*.115));
+    const mGapPx=Math.min(124,Math.max(92,cVh*.115));
     const openHeight=isMob?Math.max(42,Math.min(50,(flapUpH-54)*.88)):Math.min(flapUpH*.92,mGapPx-12);
     const dy=c>=0?(c*closedDepth):(-(-c)*openHeight);
     const tipY=hy+dy;
@@ -2486,17 +2538,38 @@ syncNav();
     letter.style.pointerEvents=rs>.45?'auto':'none';
   }
 
-  window.addEventListener('scroll',calcTarget,{passive:true});
-  window.addEventListener('resize',()=>{calcTarget();renderEnvelope(envCur);},{passive:true});
+  function wakeEnv(){
+    calcTarget();
+    if(!rafEnv&&!reducedMotion&&envInView){
+      lastEnvT=performance.now();
+      rafEnv=requestAnimationFrame(tickEnv);
+    }else if(reducedMotion){
+      envMid=envCur=envTarget;
+      renderEnvelope(envCur);
+    }
+  }
+
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(entries=>{
+      envInView=entries[0].isIntersecting;
+      if(envInView)wakeEnv();
+    },{rootMargin:'280px 0px'}).observe(sec);
+  }
+  new ResizeObserver(()=>{measureEnv();calcTarget();renderEnvelope(envCur);wakeEnv()}).observe(body);
+  window.addEventListener('scroll',wakeEnv,{passive:true});
+  window.addEventListener('resize',()=>{measureEnv();calcTarget();renderEnvelope(envCur);wakeEnv()},{passive:true});
+
+  measureEnv();
   calcTarget();
   envMid=envCur=envTarget;
   renderEnvelope(envCur);
 
-  let lastEnvT=performance.now();
   function tickEnv(now){
+    rafEnv=0;
+    if(!envInView)return;
     if(smOpen||lbOpen){
       lastEnvT=now;
-      if(!reducedMotion)requestAnimationFrame(tickEnv);
+      if(!reducedMotion)rafEnv=requestAnimationFrame(tickEnv);
       return;
     }
     const dt=Math.min(.05,Math.max(.001,(now-lastEnvT)*.001));
@@ -2507,9 +2580,11 @@ syncNav();
     envMid+=(envTarget-envMid)*k1;
     envCur+=(envMid-envCur)*k2;
     renderEnvelope(envCur);
-    if(!reducedMotion)requestAnimationFrame(tickEnv);
+    if(!reducedMotion&&(Math.abs(envTarget-envCur)>.0004||Math.abs(envTarget-envMid)>.0004)){
+      rafEnv=requestAnimationFrame(tickEnv);
+    }
   }
-  requestAnimationFrame(tickEnv);
+  wakeEnv();
 })();
 
 /* ============================================================
@@ -2947,11 +3022,13 @@ syncNav();
     },{passive:true});
 
     rig.slot.addEventListener('click',e=>{
+      /* Run click handler ONLY for keyboard/assistive activation (e.detail===0)
+         so mouse/touch pointerdown/pointerup never double-fires */
+      if(e.detail!==0)return;
       if(rig.isHero){
-        triggerHeroClick(rig,e.clientX);
+        triggerHeroClick(rig,undefined);
       }else if(rig.isShooter){
-        /* Fallback for keyboard / assistive click when pointerup did not just fire */
-        triggerShooterPew(rig,e.clientX,e.clientY);
+        triggerShooterPew(rig,undefined,undefined);
       }
     });
   });
@@ -3205,9 +3282,11 @@ syncNav();
     io.observe(sec);
   }
 
-  function framePath(idx){
+  function framePath(idx,ext='webp'){
     const num=String(START_FRAME+idx).padStart(5,'0');
-    return `Images/Motion%20Video%20BG/Motion%20Video%20BG_${num}.png`;
+    return ext==='webp'
+      ?`Images/Motion%20Video%20BG%20WebP/Motion%20Video%20BG_${num}.webp`
+      :`Images/Motion%20Video%20BG/Motion%20Video%20BG_${num}.png`;
   }
 
   function inDecodeWindow(idx){
@@ -3292,13 +3371,18 @@ syncNav();
         pumpLoader();
       };
       img.onerror=()=>{
+        if(!img._triedPng){
+          img._triedPng=true;
+          img.src=framePath(idx,'png');
+          return;
+        }
         /* Mark skipped frame so one missing file cannot stall playback */
         loaded[idx]=2;
         activeLoads--;
         updateContiguous();
         pumpLoader();
       };
-      img.src=framePath(idx);
+      img.src=framePath(idx,'webp');
     }
   }
   pumpLoader();
