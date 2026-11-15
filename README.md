@@ -1,8 +1,8 @@
-# digoisho — Portfolio (`2026_03`)
+# digoisho - Portfolio (`2026_03`)
 
 ![digoisho portfolio preview](Images/og-cover.jpg)
 
-Personal studio portfolio of **digoisho** — Design Head, Motion Designer, 2D Animator, and Video Editor based in Siliguri, India.
+Personal studio portfolio of **digoisho** - Design Head, Motion Designer, 2D Animator, and Video Editor based in Siliguri, India.
 
 Built as a zero-dependency, single-document interactive stage (`index.html`) anchored around a strict **70 / 20 / 10** editorial color system (`#F5F4F4` Studio Off-White · `#0A0A0A` Jet Carbon · `#FA4D11` Blaze Vermilion) with zero neon glow washes, custom isotropic folder-tab geometry, spring-driven pebble mascots, a locked `30 fps` motion sequence showcase, an interactive folder-pocket gallery, and a scroll-reactive dark-mode envelope footer.
 
